@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!--[if !mso]>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <![endif]-->
+  <title></title>
+  <style type="text/css">
+    body {
+      width: 100%;
+      background-color: #ffffff;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      font-family: 'Roboto', Arial, Helvetica, sans-serif;
+      font-size: 12px;
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    .cuerpo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .cuerpo div {
+      width: 500px;
+      height: auto;
+      text-align: justify;
+    }
+
+    .lista {
+      padding-left: 3em;
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
+
+    .firma {
+      font-size: 1em;
+    }
+
+    .adjunto {
+      color: red;
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cuerpo">
+    <div>
+      <h4>Estimado Responsable de Inscripción MAC,</h4>
+    </div>
+    <div>
+      <p>Se solicita su apoyo con la revisión e inscripción del siguiente medicamento en el maestro de Medicamentos de
+        Alta Complejidad (MAC) según corresponda</p>
+    </div>
+    <div class="lista">
+      <ul>
+        <li><b>Medico Tratante / Prescriptor:</b> {{medicoTratante}} </li>
+        <li><b>Medicamento Solicitado:</b> {{descripcionMac}} </li>
+        <li><b>N° Solicitud de Carta Solben:</b> {{nroSolCartaSolben}} </li>
+      </ul>
+    </div>
+    <div class="adjunto">
+      <p>Adjuntar receta médica o sustento. {{nombreFile}}</p>
+    </div>
+    <div>
+      <p>
+        A la espera de su confirmación para seguir con el proceso de evaluación de la solicitud de Carta de Garantía
+        Solben.
+      </p>
+    </div>
+    <div class="firma">
+      <ul>
+        <li><b>_______________________________________________________</b></li>
+        <li><b>Saludos,</b></li>
+        <li><b>Médico Auditor {{medicoAuditor}}</b></li>
+        <li><b>Accesibilidad y Beneficios</b></li>
+      </ul>
+    </div>
+  </div>
+</body>
+
+</html>

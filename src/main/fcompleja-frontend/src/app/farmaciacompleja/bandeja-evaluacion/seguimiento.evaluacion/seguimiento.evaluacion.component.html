@@ -1,0 +1,108 @@
+<div class="page-seguimiento-evaluacion">
+  <ng4-loading-spinner [timeout]="300000"></ng4-loading-spinner>
+  <mat-card>
+    <mat-card-header class="box-section-header">
+      <mat-card-title class="box-section-title"> SEGUIMIENTO DE SOLICITUD DE EVALUACIÓN </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="container">
+        <div class="flex-item">
+          <form [formGroup]="segEvaFrmGrp" novalidate>
+            <mat-grid-list cols="12" rowHeight="45px">
+              <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 12, lg: 6, xl: 6}"
+                *ngIf="( txtNumeroSolicitud === valorMostrarOpcion ) || flagEvaluacion">
+                <mat-form-field appearance="fill">
+                  <mat-label>N° SOLICITUD</mat-label>
+                  <input matInput readonly formControlName="nroSolEvaFrmCtrl">
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 12, lg: 6, xl: 6}"
+                *ngIf="( txtEstadoActual === valorMostrarOpcion ) || flagEvaluacion">
+                <mat-form-field appearance="fill">
+                  <mat-label>ESTADO ACTUAL SOLICITUD EVALUACIÓN</mat-label>
+                  <input matInput readonly formControlName="estadoSolEvaFrmCtrl">
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 12, lg: 6, xl: 6}"
+                *ngIf="( txtCodigoMac === valorMostrarOpcion ) || flagEvaluacion">
+                <mat-form-field appearance="fill">
+                  <mat-label>CÓDIGO MAC</mat-label>
+                  <input matInput readonly formControlName="codMACFrmCtrl">
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 12, lg: 6, xl: 6}"
+                *ngIf="( txtDescripcionMac === valorMostrarOpcion ) || flagEvaluacion">
+                <mat-form-field appearance="fill">
+                  <mat-label>DESCRIPCIÓN MAC</mat-label>
+                  <input matInput readonly formControlName="descMACFrmCtrl">
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 12, lg: 6, xl: 6}"
+                *ngIf="( txtRolResponsable === valorMostrarOpcion ) || flagEvaluacion">
+                <mat-form-field appearance="fill">
+                  <mat-label>ROL RESPONSABLE PENDIENTE EVALUACIÓN</mat-label>
+                  <input matInput readonly formControlName="rolResponsableFrmCtrl">
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
+          </form>
+        </div>
+        <div class="flex-item">
+          <mat-grid-list cols="12" rowHeight="45px">
+            <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 12, lg: 12, xl: 12}"
+              *ngIf="( txtNumeroSolicitud === valorMostrarOpcion ) && (( btnActaMac === valorMostrarOpcion )  || flagEvaluacion) && (solicitud.codInformePDF)">
+              <button class="tableIconButton" mat-icon-button matTooltip="Descargar Acta MAC"
+                (click)="visualizarInformAutorizPDF()">
+                <mat-icon>picture_as_pdf</mat-icon>INFORME AUTORIZADOR
+              </button>
+            </mat-grid-tile>
+            <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 12, lg: 12, xl: 12}"
+              *ngIf="(txtNumeroSolicitud === valorMostrarOpcion) && (( btnActaMac === valorMostrarOpcion ) || flagEvaluacion) && (solicitud.codCmacPDF)">
+              <button class="tableIconButton" mat-icon-button matTooltip="Descargar Acta MAC"
+                (click)="visualizarActaCmacPDF()">
+                <mat-icon>picture_as_pdf</mat-icon>ACTA CMAC
+              </button>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+      </div>
+
+      <mat-card class="table-resultados" *ngIf="(displayedColumns.length > 0)">
+        <mat-card-header>
+          <mat-card-title> SEGUIMIENTO DE LA SOLICITUD </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="card-container">
+          <div class="table-container clear-both">
+            <table mat-table [dataSource]="dataSource" matSort>
+              <ng-container *ngFor="let column of columnsGrilla" [matColumnDef]="column.columnDef">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ column.header }} </th>
+                <td mat-cell *matCellDef="let row"> {{ column.cell(row) }} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            </table>
+
+            <div class="empty" *ngIf="!isLoading && dataSource === null">
+              No existe datos para mostrar en la tabla
+            </div>
+
+            <mat-card *ngIf="isLoading" class="spinerTable">
+              <mat-progress-spinner color="primary" mode="indeterminate">
+              </mat-progress-spinner>
+            </mat-card>
+
+            <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+            </mat-paginator>
+
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+    </mat-card-content>
+    <mat-card-actions class="btnCenter">
+      <button mat-raised-button class="btn-xl" color="primary" (click)="salirForm()"> SALIR </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -1,0 +1,137 @@
+<div class="mat-dialog-header">
+  <h1 class="mat-dialog-title" mat-dialog-title>{{data.title}}</h1>
+</div>
+
+<div class="mat-dialog-content modal-body" mat-dialog-content>
+  <mat-card class="modalCard">
+    <mat-card-content>
+      <form class="form form-solicitud validateForm" [formGroup]="indicadoresFrmGrp" novalidate>
+        <mat-grid-list cols="12" rowHeight="45px">
+          <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}">
+            <mat-form-field appearance="fill">
+              <mat-label>CÓDIGO</mat-label>
+              <input matInput formControlName="codigoFrmCtrl" readonly>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}">
+            <mat-form-field appearance="fill">
+              <mat-label>ESTADO</mat-label>
+              <mat-select formControlName="estadoFrmCtrl">
+                <mat-option *ngIf="cmbEstadoIndicador.length === 0" disabled>
+                  <div class="containerSpinner">
+                    <span>Cargando...</span>
+                    <mat-spinner class="spinner" diameter="20"></mat-spinner>
+                  </div>
+                </mat-option>
+                <mat-option *ngFor="let estado of cmbEstadoIndicador" [value]="estado.codigoParametro"
+                  [disabled]="estado.codigoParametro === null">
+                  {{estado.nombreParametro}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="estadoFrmCtrl.touched && estadoFrmCtrl.hasError('required')">
+                Estado es <strong>requerido</strong>
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 12, lg: 12, xl: 12}">
+            <mat-form-field appearance="fill">
+              <mat-label>DESCRIPCIÓN</mat-label>
+              <input matInput [appUpperCase] [appAlphaNumerico]="{tipo: 'camp'}" formControlName="descripcionFrmCtrl">
+              <mat-error *ngIf="descripcionFrmCtrl.touched && descripcionFrmCtrl.hasError('required')">
+                Descripción es <strong>requerido</strong>
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </form>
+
+      <div class="divBtnAgregar">
+        <button mat-raised-button type="button" color="primary" (click)="agregarCriterioIN($event)">CRITERIO INCLUSIÓN</button>
+      </div>
+
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSourceIN" matSort>
+
+          <ng-container *ngFor="let columnIN of columnsGrillaIN" [matColumnDef]="columnIN.columnDef">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ columnIN.header }} </th>
+            <td mat-cell *matCellDef="let rowIN"> {{ columnIN.cell(rowIN) }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="editarIN" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef> EDITAR </th>
+            <td mat-cell *matCellDef="let rowIN">
+              <button type="button" mat-icon-button class="tableIconButton" matTooltip="Editar Criterio Inclusión"
+                (click)="verEditarIN(rowIN)">
+                <mat-icon>create</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsIN; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsIN;"></tr>
+
+        </table>
+
+        <div class="empty" *ngIf="!isLoadingIN && dataSourceIN === null">
+          No existe datos para mostrar en la tabla
+        </div>
+
+        <mat-card *ngIf="isLoadingIN" class="spinerTable">
+          <mat-progress-spinner color="primary" mode="indeterminate">
+          </mat-progress-spinner>
+        </mat-card>
+
+        <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+        </mat-paginator>
+      </div>
+      <br>
+      <hr>
+      <br>
+      <div class="divBtnAgregar">
+        <button mat-raised-button color="primary" (click)="agregarCriterioEX($event)">CRITERIO EXCLUSIÓN</button>
+      </div>
+
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSourceEX" matSort>
+
+          <ng-container *ngFor="let columnEX of columnsGrillaEX" [matColumnDef]="columnEX.columnDef">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ columnEX.header }} </th>
+            <td mat-cell *matCellDef="let rowEX"> {{ columnEX.cell(rowEX) }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="editarEX" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef> EDITAR </th>
+            <td mat-cell *matCellDef="let rowEX">
+              <button type="button" mat-icon-button class="tableIconButton" matTooltip="Editar Criterio Exclusión"
+                (click)="verEditarEX(rowEX)">
+                <mat-icon>create</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsEX; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsEX;"></tr>
+
+        </table>
+
+        <div class="empty" *ngIf="!isLoadingEX && dataSourceEX === null">
+          No existe datos para mostrar en la tabla
+        </div>
+
+        <mat-card *ngIf="isLoadingEX" class="spinerTable">
+          <mat-progress-spinner color="primary" mode="indeterminate">
+          </mat-progress-spinner>
+        </mat-card>
+
+        <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+        </mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div class="mat-dialog-actions modal-mantenimiento">
+  <button mat-raised-button color="primary" (click)="grabarIndicacion()">GUARDAR</button>
+  <button mat-raised-button (click)="onClose()">CANCELAR</button>
+</div>

@@ -1,0 +1,28 @@
+@import "../../../../main";
+
+.h3Table {
+  color: $color-secundario;
+  font-size: 1em;
+  font-weight: 500;
+  margin-bottom: .5em;
+}
+
+@include mat-table-columns(
+  (
+    codVersion: (
+      width: 5rem
+    ),
+    nombreArchivo: (
+      width: 15rem
+    ),
+    fechaIniVigencia: (
+      width: 6rem
+    ),
+    fechaFinVigencia: (
+      width: 6rem
+    ),
+    estado: (
+      width: 5rem
+    )
+  )
+);

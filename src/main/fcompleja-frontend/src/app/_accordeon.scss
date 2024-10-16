@@ -1,0 +1,56 @@
+mat-expansion-panel {
+  margin-bottom: 0.9em !important;
+  mat-card {
+    :not([class*="mat-elevation-z"]) {
+      box-shadow: none !important;
+      line-height: 1;
+    }
+  }
+  mat-expansion-panel-header {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px $color-primario solid;
+    background-color: transparent;
+    margin: 0;
+    height: 35px !important;
+    padding: 0 1.5em;
+    mat-panel-title {
+      display: flex;
+      align-items: center;
+      color: $color-primario !important;
+      font-size: 0.8em;
+      font-weight: bold;
+    }
+    &:hover {
+      border-bottom: 2px $color-secundario solid;
+      mat-panel-title {
+        color: $color-secundario !important;
+      }
+    }
+    &.mat-expanded {
+      border-bottom: $color-secundario 2px solid;
+      height: 35px !important;
+      mat-panel-title {
+        color: $color-secundario !important;
+      }
+      &:hover {
+        border-bottom: 2px solid $color-primario;
+        mat-panel-title {
+          color: $color-primario !important;
+        }
+      }
+    }
+  }
+  .mat-expansion-panel-body {
+    padding: 0;
+    mat-card {
+      .mat-card-title {
+        font-weight: 500;
+        font-size: .85em;
+        padding-left: .5em;
+        color: $color-titulo;;
+        margin-bottom: .5em;
+      }
+    }
+  }
+}

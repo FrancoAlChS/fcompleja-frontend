@@ -1,0 +1,101 @@
+<div class="mat-dialog-header">
+    <h1 class="mat-dialog-title" mat-dialog-title>{{data.title}}</h1>
+  </div>
+  
+  <div class="mat-dialog-content modal-body" mat-dialog-content>
+    <mat-card class="modalCard">
+      <mat-card-content>
+        <form [formGroup]="complicacionForm" (ngSubmit)="accionComplicacion()" novalidate>
+          <mat-grid-list cols="12" rowHeight="56px">
+            <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}">
+              <mat-form-field class="item" appearance="fill">
+                <mat-label class="text-uppercase">CODIGO MAC</mat-label>
+                <input matInput formControlName="codigoMac" >
+                <mat-error *ngIf="complicacionFormMessages.codigoMac && (fc.codigoMac.errors || ( complicacionSubmitted && fc.codigoMac.errors ))" >
+                  <mat-error *ngFor="let validation of complicacionFormMessages.codigoMac">
+                    <mat-error class="error-message" *ngIf="complicacionForm.get('codigoMac').hasError(validation.type)">{{validation.message}}</mat-error>
+                  </mat-error>
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}">
+              <mat-form-field class="item" appearance="fill">
+                <mat-label class="text-uppercase">DESCRIPCION MAC</mat-label>
+                <input matInput formControlName="descripcionMac" >
+                <mat-error *ngIf="complicacionFormMessages.descripcionMac && (fc.descripcionMac.errors || ( complicacionSubmitted && fc.descripcionMac.errors ))" >
+                  <mat-error *ngFor="let validation of complicacionFormMessages.descripcionMac">
+                    <mat-error class="error-message" *ngIf="complicacionForm.get('descripcionMac').hasError(validation.type)">{{validation.message}}</mat-error>
+                  </mat-error>
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </form>
+  
+        <h3 class="h3Table">HISTORIAL DEL ARCHIVO DE COMPLICACIONES</h3>
+  
+        <div class="table-container">
+            <table mat-table [dataSource]="dataSource" class="example-table">
+  
+              <ng-container matColumnDef="codigoVersion">
+                  <th mat-header-cell *matHeaderCellDef >CÓDIGO-VERSIÓN</th>
+                  <td mat-cell *matCellDef="let row">{{row.codVersion}}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="nombreArchivo">
+                  <th mat-header-cell *matHeaderCellDef >NOMBRE ARCHIVO</th>
+                  <td mat-cell *matCellDef="let row">{{row.nombreArchivo}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="fechaInicio">
+                  <th mat-header-cell *matHeaderCellDef >FECHA DE CARGA</th>
+                  <td mat-cell *matCellDef="let row">{{row.fechaInicioVigencia}}</td>
+              </ng-container> 
+  
+              <!--<ng-container matColumnDef="fechaInicio">
+                  <th mat-header-cell *matHeaderCellDef >FECHA INICIO VIGENCIA</th>
+                  <td mat-cell *matCellDef="let row">{{row.fechaInicioVigencia}}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="fechaFin">
+                  <th mat-header-cell *matHeaderCellDef >FECHA FIN VIGENCIA</th>
+                  <td mat-cell *matCellDef="let row">{{row.fechaFinVigencia}}</td>
+              </ng-container>-->
+  
+              <ng-container matColumnDef="estado">
+                  <th mat-header-cell *matHeaderCellDef >ESTADO</th>
+                  <td mat-cell *matCellDef="let row">{{row.estado}}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="descargarFicha">
+                  <th mat-header-cell *matHeaderCellDef>DESCARGAR FICHA</th>
+                  <td mat-cell *matCellDef="let element">
+                    <button class="tableIconButton" mat-icon-button matTooltip="DESCARGAR" (click)="descargarDocumento(element)">
+                      <mat-icon>picture_as_pdf</mat-icon>
+                    </button>
+                  </td>
+              </ng-container>
+  
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>     
+          
+          <div class="empty" *ngIf="!isLoadingResults && ( resultsLength == 0 || resultsLength == null)">
+            No existe datos para mostrar en la tabla
+          </div>
+  
+          <mat-card *ngIf="isLoadingResults" class="spinerTable">
+            <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+          </mat-card>
+  
+          <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize"></mat-paginator>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+  <div class="mat-dialog-actions modal-mantenimiento">
+    <button mat-raised-button color="primary" (click)="openRegistrarComplicacion()">NUEVA VERSIÓN</button>
+    <button mat-raised-button (click)="onClose()">SALIR</button>
+  </div>
+  

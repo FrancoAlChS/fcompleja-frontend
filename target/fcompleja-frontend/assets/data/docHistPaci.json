@@ -1,0 +1,47 @@
+[
+    {   
+        "num": "1", 
+        "lin": "3", 
+        "medic": "LENALIDOMINA",
+        "tipo": "RECETA MÉDICA", 
+        "descrip": "RECETA MÉDICA",
+        "fecha": "02/05/2018", 
+        "descar": "LUCAS MORELOS, ESTHER HAYDEE"
+    },
+    {   
+        "num": "2", 
+        "lin": "3", 
+        "medic": "LENALIDOMINA",
+        "tipo": "INFORME MÉDICO", 
+        "descrip": "INFORME MÉDICO",
+        "fecha": "02/05/2018", 
+        "descar": "LUCAS MORELOS, ESTHER HAYDEE"
+    },
+    {   
+        "num": "3", 
+        "lin": "3", 
+        "medic": "LENALIDOMINA",
+        "tipo": "OTROS", 
+        "descrip": "RESULTADO ECOGRAFÍA",
+        "fecha": "02/05/2018", 
+        "descar": "LUCAS MORELOS, ESTHER HAYDEE"
+    },
+    {   
+        "num": "4", 
+        "lin": "2", 
+        "medic": "LENALIDOMINA + BORTEZOMIB",
+        "tipo": "RECETA MÉDICO", 
+        "descrip": "RECETA MÉDICO",
+        "fecha": "10/03/2018", 
+        "descar": "LUCAS MORELOS, ESTHER HAYDEE"
+    },
+    {   
+        "num": "5", 
+        "lin": "2", 
+        "medic": "LENALIDOMINA + BORTEZOMIB",
+        "tipo": "INFORME MÉDICO", 
+        "descrip": "INFORME MÉDICO",
+        "fecha": "10/03/2018", 
+        "descar": "LUCAS MORELOS, ESTHER HAYDEE"
+    }
+]

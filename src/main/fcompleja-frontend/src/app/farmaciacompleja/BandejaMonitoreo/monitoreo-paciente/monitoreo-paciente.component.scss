@@ -1,0 +1,59 @@
+@import "../../../main";
+
+.page-monitoreo-paciente {
+  .table-resultados {
+    margin-bottom: 0px;
+    .table-container {
+      max-height: 200px;
+    }
+  }
+}
+
+@include mat-table-columns(
+  (
+    nroEvolucion: (
+      width: 6rem
+    ),
+    codTareaMonitoreo: (
+      width: 6rem
+    ),
+    fPrograMonitoreo: (
+      width: 6rem
+    ),
+    fRealMonitoreo: (
+      width: 6rem
+    ),
+    descTolerancia: (
+      width: 10rem
+    ),
+    descToxicidad: (
+      width: 10rem
+    ),
+    descGrado: (
+      width: 5rem
+    ),
+    respuestaClinica: (
+      width: 8rem
+    ),
+    atencionAlertas: (
+      width: 10rem
+    ),
+    fUltimoConsumo: (
+      width: 6rem
+    ),
+    ultimaCantConsumida: (
+      width: 6rem
+    ),
+    verDetalle: (
+      width: 3rem
+    ),
+    descargarReporte:(
+      width:2rem
+    )
+  )
+);
+
+.mat-badge-seg-ejec {
+  left: -18px;
+  top: -16px;
+}

@@ -1,0 +1,85 @@
+@import "../../main";
+
+.titulo {
+  color: #ffffff;
+  font-size: 1em;
+}
+
+.user-icon {
+  font-size: 28px;
+  border: 1px solid #ffffff;
+  border-radius: 50%;
+}
+
+.mat-icon {
+  margin-right: 0 !important;
+  width: 30px !important;
+  height: 30px !important;
+  line-height: 30px !important;
+}
+
+::ng-deep .mat-toolbar-single-row {
+  white-space: pre-line;
+  line-height: 1.5;
+}
+
+.box-logo {
+  display: flex;
+  width: 400px;
+}
+
+.box-logo img {
+  margin: auto;
+}
+
+.box-photo {
+  display: flex;
+  padding: 4px 10px;
+}
+
+.mat-menu-item {
+  line-height: 18px !important;
+  height: auto !important;
+  padding: .7em .5em .7em .5em;
+}
+
+.box-info-rol {
+  border-bottom: 2px solid $color-icon;
+  .rolUser {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: $color-secundario;
+  }
+  .user-name {
+    font-size: 0.85em;
+    font-weight: 400;
+    color: $color-primario;
+  }
+}
+
+.h6logout {
+  font-size: .75em;
+  font-weight: 400;
+}
+
+.logout {
+  display: inline-block;
+  border-left: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+.box-perfil {
+  flex: 1;
+  text-align: right;
+}
+
+.box-perfil .box-perfil-content {
+  float: right;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.box-perfil img {
+  height: 46px;
+  border-radius: 46px;
+}

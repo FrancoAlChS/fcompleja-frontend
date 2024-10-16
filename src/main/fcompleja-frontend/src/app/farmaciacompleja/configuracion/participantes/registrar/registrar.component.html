@@ -1,0 +1,493 @@
+<div class="mat-dialog-header">
+    <h1 class="mat-dialog-title" mat-dialog-title> {{ titulo }} </h1>
+</div>
+<div class="mat-dialog-content" mat-dialog-content>
+    <form [formGroup]="marcadorForm" (ngSubmit)="accionMarcador()" novalidate>
+        <mat-grid-list cols="12" rowHeight="40px">
+            <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}">
+                <mat-form-field class="item" appearance="fill">
+                <mat-label class="text-uppercase">CODIGO</mat-label>
+                <input matInput formControlName="codigo" >
+                <mat-error *ngIf="marcadorFormMessages.codigo && (fc.codigo.errors || ( produccionSubmitted && fc.codigo.errors ))" >
+                    <mat-error *ngFor="let validation of marcadorFormMessages.codigo">
+                    <mat-error class="error-message" *ngIf="marcadorForm.get('codigo').hasError(validation.type)">{{validation.message}}</mat-error>
+                    </mat-error>
+                </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}">
+                <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">ESTADO</mat-label>
+                    <mat-select formControlName="estado" placeholder="ESTADO" >
+                    <mat-option *ngFor="let row of listaEstado" [value]="row.codigoParametro">
+                        {{row.nombreParametro}}
+                    </mat-option>
+                    </mat-select>
+                    <div class="select-placeholder-container inputSpinner" *ngIf="spinnerEstado === true">
+                    <mat-spinner class="spinner" diameter="15"></mat-spinner>
+                    </div>
+                    <mat-error *ngIf="marcadorFormMessages.estado && (fc.estado.errors || ( marcadorSubmitted && fc.estado.errors ))" >
+                    <mat-error *ngFor="let validation of marcadorFormMessages.estado">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('estado').hasError(validation.type)">{{validation.message}}</mat-error>
+                    </mat-error>
+                    </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="12" rowHeight="40px">
+            <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 12, lg: 12, xl: 12}">
+                <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">PERFIL</mat-label>
+                    <mat-select formControlName="perfil" placeholder="PERFIL" (selectionChange)="cambioTipoPerfil()">
+                        <mat-option *ngFor="let row of listaPerfil" [value]="row.codRol">
+                            {{row.nombreRol}}
+                        </mat-option>
+                    </mat-select>
+                    <div class="select-placeholder-container inputSpinner" *ngIf="spinnerPerfil === true">
+                        <mat-spinner class="spinner" diameter="15"></mat-spinner>
+                    </div>
+                    <mat-error *ngIf="marcadorFormMessages.perfil && (fc.perfil.errors || ( marcadorSubmitted && fc.perfil.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.perfil">
+                            <mat-error class="error-message" *ngIf="marcadorForm.get('perfil').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+        <ng-container *ngIf="flagAP">
+            <mat-grid-list cols="12" rowHeight="40px">
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 5, md: 5, lg: 5, xl: 5}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">CÓDIGO USUARIO</mat-label>
+                    <input matInput formControlName="codigoUsuario" >
+                    <mat-error *ngIf="marcadorFormMessages.codigoUsuario && (fc.codigoUsuario.errors || ( produccionSubmitted && fc.codigoUsuario.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.codigoUsuario">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('codigoUsuario').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 3, md: 3, lg: 3, xl: 3}">
+                    <button mat-raised-button color="primary" type="button" (click)="openBuscarUsuario()">BUSCAR</button>
+                </mat-grid-tile>
+                <!--<mat-grid-tile [responsiveRows]="{xs: 12, sm: 4, md: 4, lg: 4, xl: 4}">
+                    <mat-checkbox formControlName="coordinador" [labelPosition]="'after'">
+                        Coordinador
+                    </mat-checkbox>
+                    <mat-error *ngIf="marcadorFormMessages.coordinador && (fc.coordinador.errors || ( produccionSubmitted && fc.coordinador.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.coordinador">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('coordinador').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                </mat-grid-tile>-->
+            </mat-grid-list>
+            <mat-grid-list cols="12" rowHeight="40px">
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 12, lg: 12, xl: 12}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">NOMBRE</mat-label>
+                    <input matInput [appUpperCase] formControlName="nombreUsuario" >
+                    <mat-error *ngIf="marcadorFormMessages.nombreUsuario && (fc.nombreUsuario.errors || ( produccionSubmitted && fc.nombreUsuario.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.nombreUsuario">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('nombreUsuario').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="12" rowHeight="40px">
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 5, md: 5, lg: 5, xl: 5}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">CMP</mat-label>
+                    <input matInput [appUpperCase] formControlName="cmpUsuario" >
+                    <mat-error *ngIf="marcadorFormMessages.cmpUsuario && (fc.cmpUsuario.errors || ( produccionSubmitted && fc.cmpUsuario.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.cmpUsuario">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('cmpUsuario').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 7, md: 7, lg: 7, xl: 7}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">CORREO ELECTRÓNICO</mat-label>
+                    <input matInput [appUpperCase] formControlName="correoUsuario" >
+                    <mat-error *ngIf="marcadorFormMessages.correoUsuario && (fc.correoUsuario.errors || ( produccionSubmitted && fc.correoUsuario.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.correoUsuario">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('correoUsuario').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="12" rowHeight="40px">
+                <mat-grid-tile [responsiveRows]="{xs: 7, sm: 7, md: 7, lg: 7, xl: 7}">
+                    <mat-label class="text-uppercase text-center">ARCHIVO A CARGAR<br/>(Formato JPEG o PNG; Tamaño máximo de 50 KB)</mat-label>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 5, sm: 5, md: 5, lg: 5, xl: 5}">
+                    <mat-label class="labelCargado" *ngIf="flagEstadoFirma">FIRMA CARGADA</mat-label>
+                    <div class="select-placeholder-container inputSpinner" *ngIf="spinnerCargarArchivo">
+                        Cargando... <mat-spinner class="spinner" diameter="15"></mat-spinner>
+                    </div>
+                    <button *ngIf="!spinnerCargarArchivo && !flagEstadoFirma" type="button" class="tableIconButton" mat-icon-button matTooltip="Cargar Archivo" (click)="fileInput.click()">
+                        <mat-icon>attach_file</mat-icon>
+                        <input #fileInput type="file" (change)="openFileRequerido($event)" style="display:none;"
+                        accept="image/jpeg, image/png" />
+                    </button>
+                    <button class="tableIconButton" mat-icon-button matTooltip="Eliminar" (click)="eliminarFirma()"
+                        *ngIf="flagEstadoFirma">
+                        <mat-icon class="icon-red">delete</mat-icon>
+                    </button>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </ng-container>
+        <ng-container *ngIf="flagLT">
+            <mat-grid-list cols="12" rowHeight="40px">
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">APELLIDOS</mat-label>
+                    <input matInput [appUpperCase] formControlName="apellidos" >
+                    <mat-error *ngIf="marcadorFormMessages.apellidos && (fc.apellidos.errors || ( produccionSubmitted && fc.apellidos.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.apellidos">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('apellidos').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">NOMBRES</mat-label>
+                    <input matInput [appUpperCase] formControlName="nombres" >
+                    <mat-error *ngIf="marcadorFormMessages.nombres && (fc.nombres.errors || ( produccionSubmitted && fc.nombres.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.nombres">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('nombres').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="12" rowHeight="40px">
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 5, md: 5, lg: 5, xl: 5}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">CMP</mat-label>
+                    <input matInput [appUpperCase] formControlName="cmpUsuario" >
+                    <mat-error *ngIf="marcadorFormMessages.cmpUsuario && (fc.cmpUsuario.errors || ( produccionSubmitted && fc.cmpUsuario.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.cmpUsuario">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('cmpUsuario').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 7, md: 7, lg: 7, xl: 7}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">CORREO ELECTRÓNICO</mat-label>
+                    <input matInput [appUpperCase] formControlName="correoUsuario" >
+                    <mat-error *ngIf="marcadorFormMessages.correoUsuario && (fc.correoUsuario.errors || ( produccionSubmitted && fc.correoUsuario.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.correoUsuario">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('correoUsuario').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="12" rowHeight="40px">
+                <!--<mat-grid-tile [responsiveRows]="{xs: 12, sm: 5, md: 5, lg: 5, xl: 5}">
+                    <mat-form-field class="item" appearance="fill">
+                      <mat-label class="text-uppercase">GRUPO DIAGNOSTICO</mat-label>
+                      <mat-select formControlName="codigoGrupoDiagnostico" placeholder="Grupo Diagnostico" >
+                        <mat-option *ngFor="let row of listaGrupo" [value]="row.codigo">
+                          {{row.descripcion}}
+                        </mat-option>
+                      </mat-select>
+                      <div class="select-placeholder-container inputSpinner" *ngIf="spinnerGrupo === true">
+                        <mat-spinner class="spinner" diameter="15"></mat-spinner>
+                      </div>
+                      <mat-error *ngIf="marcadorFormMessages.codigoGrupoDiagnostico && (fc.codigoGrupoDiagnostico.errors || ( marcadorSubmitted && fc.codigoGrupoDiagnostico.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.codigoGrupoDiagnostico">
+                          <mat-error class="error-message" *ngIf="marcadorForm.get('codigoGrupoDiagnostico').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                      </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>-->
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 5, md: 5, lg: 5, xl: 5}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">GRUPO DIAGNOSTICO</mat-label>
+                    <input matInput formControlName="codigoGrupoDiagnostico" >
+                    <mat-error *ngIf="marcadorFormMessages.codigoGrupoDiagnostico && (fc.codigoGrupoDiagnostico.errors || ( produccionSubmitted && fc.codigoGrupoDiagnostico.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.codigoGrupoDiagnostico">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('codigoGrupoDiagnostico').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 3, md: 3, lg: 3, xl: 3}">
+                    <button mat-raised-button color="primary" type="button" (click)="openBuscarGrupoDiagnostico()">BUSCAR</button>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 4, md: 4, lg: 4, xl: 4}">
+                    <button mat-raised-button color="primary" type="button" (click)="agregarGrupo()">ASIGNAR</button>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <div class="table-container">
+                <br>
+                <h4 mat-dialog-title>LISTADO DE GRUPOS</h4>
+                <br>
+                <table mat-table [dataSource]="dataSource">
+                    <ng-container matColumnDef="valor">
+                        <th mat-header-cell *matHeaderCellDef> Grupo </th>
+                        <td mat-cell *matCellDef="let element"> {{element.valor}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="eliminar">
+                        <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+                        <td mat-cell *matCellDef="let element"> 
+                            <button class="tableIconButton" mat-icon-button matTooltip="Eliminar" (click)="eliminarGrupo(element)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+                    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <div class="empty" *ngIf="(resultsLength == 0 || resultsLength == null)">
+                    Sin valores.
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="flagRM">
+            <mat-grid-list cols="12" rowHeight="40px">
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 8, md: 8, lg: 8, xl: 8}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">CÓDIGO USUARIO</mat-label>
+                    <input matInput formControlName="codigoUsuario" >
+                    <mat-error *ngIf="marcadorFormMessages.codigoUsuario && (fc.codigoUsuario.errors || ( produccionSubmitted && fc.codigoUsuario.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.codigoUsuario">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('codigoUsuario').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 4, md: 4, lg: 4, xl: 4}">
+                    <button mat-raised-button color="primary" type="button" (click)="openBuscarUsuario()">BUSCAR</button>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="12" rowHeight="40px">
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 12, lg: 12, xl: 12}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">NOMBRE</mat-label>
+                    <input matInput [appUpperCase] formControlName="nombreUsuario" >
+                    <mat-error *ngIf="marcadorFormMessages.nombreUsuario && (fc.nombreUsuario.errors || ( produccionSubmitted && fc.nombreUsuario.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.nombreUsuario">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('nombreUsuario').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="12" rowHeight="40px">
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 5, md: 5, lg: 5, xl: 5}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">CMP</mat-label>
+                    <input matInput [appUpperCase] formControlName="cmpUsuario" >
+                    <mat-error *ngIf="marcadorFormMessages.cmpUsuario && (fc.cmpUsuario.errors || ( produccionSubmitted && fc.cmpUsuario.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.cmpUsuario">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('cmpUsuario').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 7, md: 7, lg: 7, xl: 7}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">CORREO ELECTRÓNICO</mat-label>
+                    <input matInput [appUpperCase] formControlName="correoUsuario" >
+                    <mat-error *ngIf="marcadorFormMessages.correoUsuario && (fc.correoUsuario.errors || ( produccionSubmitted && fc.correoUsuario.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.correoUsuario">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('correoUsuario').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="12" rowHeight="40px">
+                <!--<mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}">
+                    <mat-form-field class="item" appearance="fill">
+                        <mat-label class="text-uppercase">GRUPO DIAGNOSTICO</mat-label>
+                        <mat-select formControlName="codigoGrupoDiagnostico" placeholder="Grupo Diagnostico" >
+                        <mat-option *ngFor="let row of listaGrupo" [value]="row.codigo">
+                            {{row.descripcion}}
+                        </mat-option>
+                        </mat-select>
+                        <div class="select-placeholder-container inputSpinner" *ngIf="spinnerGrupo === true">
+                        <mat-spinner class="spinner" diameter="15"></mat-spinner>
+                        </div>
+                        <mat-error *ngIf="marcadorFormMessages.codigoGrupoDiagnostico && (fc.codigoGrupoDiagnostico.errors || ( marcadorSubmitted && fc.codigoGrupoDiagnostico.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.codigoGrupoDiagnostico">
+                            <mat-error class="error-message" *ngIf="marcadorForm.get('codigoGrupoDiagnostico').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>-->
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 4, md: 4, lg: 4, xl: 4}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">GRUPO DIAGNOSTICO</mat-label>
+                    <input matInput formControlName="codigoGrupoDiagnostico" >
+                    <mat-error *ngIf="marcadorFormMessages.codigoGrupoDiagnostico && (fc.codigoGrupoDiagnostico.errors || ( produccionSubmitted && fc.codigoGrupoDiagnostico.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.codigoGrupoDiagnostico">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('codigoGrupoDiagnostico').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 2, md: 2, lg: 2, xl: 2}">
+                    <button mat-raised-button color="primary" type="button" (click)="openBuscarGrupoDiagnostico()">BUSCAR</button>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 3, md: 3, lg: 3, xl: 3}">
+                    <mat-form-field class="item" appearance="fill">
+                        <mat-label class="text-uppercase">RANGO DE EDAD</mat-label>
+                        <mat-select formControlName="codigoRangoEdad" placeholder="Rango de Edad" >
+                        <mat-option *ngFor="let row of listaEdad" [value]="row.codigoParametro">
+                            {{row.nombreParametro}}
+                        </mat-option>
+                        </mat-select>
+                        <div class="select-placeholder-container inputSpinner" *ngIf="spinnerEdad === true">
+                        <mat-spinner class="spinner" diameter="15"></mat-spinner>
+                        </div>
+                        <mat-error *ngIf="marcadorFormMessages.codigoRangoEdad && (fc.codigoRangoEdad.errors || ( marcadorSubmitted && fc.codigoRangoEdad.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.codigoRangoEdad">
+                            <mat-error class="error-message" *ngIf="marcadorForm.get('codigoRangoEdad').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 3, md: 3, lg: 3, xl: 3}">
+                    <button mat-raised-button color="primary" type="button" (click)="agregarGrupoDiagnostico()">AGREGAR</button>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <div class="table-container">
+                <br>
+                <h4 mat-dialog-title>LISTADO DE GRUPOS</h4>
+                <br>
+                <table mat-table [dataSource]="dataSourceGrupoDiagnostico">
+                    <ng-container matColumnDef="valorGrupo">
+                        <th mat-header-cell *matHeaderCellDef> GRUPO DIAGNÓSTICO </th>
+                        <td mat-cell *matCellDef="let element"> {{element.valorGrupo}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="valorEdad">
+                        <th mat-header-cell *matHeaderCellDef> RANGO DE EDAD </th>
+                        <td mat-cell *matCellDef="let element"> {{element.valorEdad}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="eliminar">
+                        <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+                        <td mat-cell *matCellDef="let element"> 
+                            <button class="tableIconButton" mat-icon-button matTooltip="Eliminar" (click)="eliminarGrupoDiagnostico(element)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+                    
+                    <tr mat-header-row *matHeaderRowDef="displayedColumnsGrupoDiagnostico"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumnsGrupoDiagnostico;"></tr>
+                </table>
+                <div class="empty" *ngIf="(resultsLengthGrupoDiagnostico == 0 || resultsLengthGrupoDiagnostico == null)">
+                    Sin valores.
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="flagMC">
+            <mat-grid-list cols="12" rowHeight="40px">
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">APELLIDOS</mat-label>
+                    <input matInput [appUpperCase] formControlName="apellidos" >
+                    <mat-error *ngIf="marcadorFormMessages.apellidos && (fc.apellidos.errors || ( produccionSubmitted && fc.apellidos.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.apellidos">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('apellidos').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">NOMBRES</mat-label>
+                    <input matInput [appUpperCase] formControlName="nombres" >
+                    <mat-error *ngIf="marcadorFormMessages.nombres && (fc.nombres.errors || ( produccionSubmitted && fc.nombres.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.nombres">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('nombres').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="12" rowHeight="40px">
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">CMP</mat-label>
+                    <input matInput [appUpperCase] formControlName="cmpUsuario" >
+                    <mat-error *ngIf="marcadorFormMessages.cmpUsuario && (fc.cmpUsuario.errors || ( produccionSubmitted && fc.cmpUsuario.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.cmpUsuario">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('cmpUsuario').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">CORREO ELECTRÓNICO</mat-label>
+                    <input matInput [appUpperCase] formControlName="correoUsuario" >
+                    <mat-error *ngIf="marcadorFormMessages.correoUsuario && (fc.correoUsuario.errors || ( produccionSubmitted && fc.correoUsuario.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.correoUsuario">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('correoUsuario').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </ng-container>
+        <ng-container *ngIf="flagRIM || flagAC || flagES">
+            <mat-grid-list cols="12" rowHeight="40px">
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 8, md: 8, lg: 8, xl: 8}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">CÓDIGO USUARIO</mat-label>
+                    <input matInput formControlName="codigoUsuario" >
+                    <mat-error *ngIf="marcadorFormMessages.codigoUsuario && (fc.codigoUsuario.errors || ( produccionSubmitted && fc.codigoUsuario.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.codigoUsuario">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('codigoUsuario').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 4, md: 4, lg: 4, xl: 4}">
+                    <button mat-raised-button color="primary" type="button" (click)="openBuscarUsuario()">BUSCAR</button>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="12" rowHeight="40px">
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 12, lg: 12, xl: 12}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">NOMBRE</mat-label>
+                    <input matInput [appUpperCase] formControlName="nombreUsuario" >
+                    <mat-error *ngIf="marcadorFormMessages.nombreUsuario && (fc.nombreUsuario.errors || ( produccionSubmitted && fc.nombreUsuario.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.nombreUsuario">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('nombreUsuario').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="12" rowHeight="40px">
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 12, lg: 12, xl: 12}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">CORREO ELECTRÓNICO</mat-label>
+                    <input matInput [appUpperCase] formControlName="correoUsuario" >
+                    <mat-error *ngIf="marcadorFormMessages.correoUsuario && (fc.correoUsuario.errors || ( produccionSubmitted && fc.correoUsuario.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.correoUsuario">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('correoUsuario').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </ng-container>
+        <div class="mat-dialog-actions modal-mantenimiento">
+            <mat-spinner-button mat-raised-button color="primary" [options]="marcadorBtnOpts" ></mat-spinner-button>
+            <button mat-raised-button type="button" (click)="onDialogClose(false)">CANCELAR</button>
+        </div>
+    </form>
+    
+</div>

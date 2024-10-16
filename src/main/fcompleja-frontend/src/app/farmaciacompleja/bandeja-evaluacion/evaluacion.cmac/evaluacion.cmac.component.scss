@@ -1,0 +1,147 @@
+@import "./../../../main";
+
+mat-grid-tile {
+  mat-form-field {
+    width: 100% !important;
+    position: absolute;
+    left: 0;
+  }
+}
+
+mat-card {
+  &.cardActa {
+    box-shadow: none;
+    padding: 0 0.5em !important;
+    margin-bottom: 0;
+  }
+  &.cardAdd {
+    box-shadow: none;
+    padding: 0 0.5em !important;
+    margin-bottom: 0;
+  }
+  &.cardBar {
+    box-shadow: none;
+    padding: 0 0.5em !important;
+    margin-bottom: 0;
+  }
+  &.cardTablaCasos {
+    box-shadow: none;
+    padding: 0 0.5em !important;
+    margin-bottom: 0;
+  }
+}
+
+.btns {
+  text-align: center;
+  padding-top: 2em;
+}
+
+table {
+  width: 100%;
+}
+
+td,
+th {
+  width: auto;
+}
+
+.btns-right {
+  float: right;
+  margin-bottom: 0.5em;
+  button,
+  .file {
+    display: inline-block;
+  }
+}
+
+.title-table {
+  float: left;
+  padding-top: 0.5em;
+  color: $color-secundario;
+  font-size: 1em;
+}
+
+.file {
+  transition: none block 2s;
+}
+
+.codigo {
+  margin-bottom: 1em;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  h3 {
+    position: absolute;
+    left: 0.5em;
+    color: $color-secundario;
+    font-size: 1.2em;
+    font-weight: 500;
+  }
+  span {
+    padding-left: 0.5em;
+    color: $color-titulo;
+    font-size: 0.85em;
+    font-weight: 500;
+  }
+}
+
+.contenido {
+  margin-bottom: 0.5em;
+  h3 {
+    margin: 0.5em;
+    font-size: 1.2em;
+    font-weight: 500;
+    color: $color-secundario;
+  }
+}
+
+.table-container {
+  &.participantes {
+    height: 109px;
+    border-left: 1px rgba(0, 0, 0, 0.1) solid;
+    border-right: 1px rgba(0, 0, 0, 0.1) solid;
+  }
+}
+
+@include mat-table-columns(
+  (
+    asistio: (
+      width: 4rem
+    ),
+    nombreUsuarioRol: (
+      width: 15rem
+    )
+  )
+);
+
+@include mat-table-columns(
+  (
+    select: (
+      width: 3rem
+    ),
+    numeroSolEvaluacion: (
+      width: 7rem
+    ),
+    paciente: (
+      width: 15rem
+    ),
+    diagnostico: (
+      width: 15rem
+    ),
+    codMac: (
+      width: 5rem
+    ),
+    descripcionCmac: (
+      width: 13rem
+    ),
+    codigoResultado: (
+      width: 15rem
+    ),
+    observaciones: (
+      width: 8rem
+    ),
+    accion: (
+      width: 3rem
+    )
+  )
+);

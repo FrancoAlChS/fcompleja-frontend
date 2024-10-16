@@ -1,0 +1,141 @@
+<div class="mat-dialog-header">
+  <h1 class="mat-dialog-title" mat-dialog-title>{{ data.title }}</h1>
+</div>
+
+<div class="mat-dialog-content modalTable" mat-dialog-content>
+  <mat-card class="modalCard">
+    <mat-card-content>
+      <form
+        class="form form-solicitud validateForm"
+        [formGroup]="marcadorFrmGrp"
+        novalidate
+      >
+        <mat-grid-list cols="12" rowHeight="45px">
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>MEDICAMENTO MAC</mat-label>
+              <input matInput formControlName="descMACFrmCtrl" readonly />
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }"
+            *ngIf="
+              hideLineaTrat
+            "
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>LINEA TRATAMIENTO</mat-label>
+              <input matInput formControlName="lineaTrataFrmCtrl" readonly />
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 6, sm: 6, md: 6, lg: 6, xl: 6 }"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>FECHA INICIO LINEA TRATAMIENTO</mat-label>
+              <input matInput readonly formControlName="fecInicioFrmCtrl" />
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <div>
+    <div class="table-container clear-both">
+      <table class="mat-table">
+        <thead>
+          <tr class="mat-header-row">
+            <ng-container>
+              <th class="mat-header-cell" rowspan="2"></th>
+            </ng-container>
+            <ng-container>
+              <th class="mat-header-cell" rowspan="2">PERIODICIDAD MINIMA</th>
+            </ng-container>
+            <ng-container>
+              <th class="mat-header-cell" rowspan="2">PERIODICIDAD MAXIMA</th>
+            </ng-container>
+            <ng-container>
+              <th
+                class="mat-header-cell"
+                colspan="2"
+                *ngFor="let item of data.listaEvolucion"
+              >
+                EVOLUCION
+                {{ item.nroDescEvolucion }}
+              </th>
+            </ng-container>
+          </tr>
+          <tr class="mat-header-row">
+            <ng-container>
+              <ng-container *ngFor="let item of data.listaEvolucion">
+                <th class="mat-header-cell">RESULTADO</th>
+                <th class="mat-header-cell">FECHA</th>
+              </ng-container>
+            </ng-container>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="mat-row" *ngFor="let mar of listaMarcadores">
+            <td class="mat-cell" title="{{ mar.descripcion }}">
+              {{ mar.descripcion }}
+            </td>
+            <td class="mat-cell">{{ mar.descPerMinima }}</td>
+            <td class="mat-cell">{{ mar.descPerMaxima }}</td>
+            <ng-container *ngFor="let evo of data.listaEvolucion">
+              <!--PARA RESPETAR EL ORDEN DE EVOLUCIONES-->
+              <ng-container *ngFor="let mardet of mar.listaEvolucionMarcador">
+                <ng-container *ngIf="mardet.codEvolucion == evo.codEvolucion">
+                  <ng-container *ngIf="mardet.tieneRegHc == '0'">
+                    <ng-container *ngIf="mardet.pTipoIngresoRes == 122">
+                      <td class="mat-cell">
+                        {{ mardet.codResultado }} {{ mardet.unidadMedida }}
+                      </td>
+                      <td class="mat-cell">
+                        {{ mardet.fecResultado | date: "dd/MM/yyyy" }}
+                      </td>
+                    </ng-container>
+                    <ng-container *ngIf="mardet.pTipoIngresoRes != 122">
+                      <td class="mat-cell">{{ mardet.resultado }}</td>
+                      <td class="mat-cell">
+                        {{ mardet.fecResultado | date: "dd/MM/yyyy" }}
+                      </td>
+                    </ng-container>
+                  </ng-container>
+                  <ng-container *ngIf="mardet.tieneRegHc == '1'">
+                    <td class="mat-cell" class="tddisabled">SIN REGISTRO</td>
+                    <td class="mat-cell" class="tddisabled">SIN REGISTRO</td>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="empty" *ngIf="!isLoading && emptyTable">
+        No existe datos de Marcadores para mostrar en la tabla
+      </div>
+
+      <mat-card *ngIf="isLoading" class="spinerTable">
+        <mat-progress-spinner color="primary" mode="indeterminate">
+        </mat-progress-spinner>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<div class="mat-dialog-actions modal-mantenimiento">
+  <button
+    mat-raised-button
+    color="primary"
+    *ngIf="registrar"
+    (click)="registrarEvolucion()"
+  >
+    ACEPTAR
+  </button>
+  <button mat-raised-button (click)="onClose()">CANCELAR</button>
+</div>

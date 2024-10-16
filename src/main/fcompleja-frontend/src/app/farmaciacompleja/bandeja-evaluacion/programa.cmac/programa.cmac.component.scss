@@ -1,0 +1,114 @@
+@import "../../../main";
+
+mat-form-field {
+  font-size: 1em;
+  height: 29px !important;
+}
+
+.btns {
+  text-align: center;
+  padding-top: 2em;
+}
+
+.btns-right {
+  float: right;
+  margin-bottom: 0.5em;
+}
+
+.title-table {
+  float: left;
+  padding-top: 0.5em;
+  color: $color-secundario;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+table {
+  width: 100%;
+}
+
+.table-container {
+  max-height: 200px;
+}
+
+.table-container tr:hover .tableIconButton {
+  color: #ffffff;
+}
+
+.tableIconButton {
+  color: $color-primario !important;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  width: 1.8em;
+  height: 1.8em;
+  line-height: 24px;
+  cursor: pointer;
+  &:hover {
+    color: #ffffff !important;
+  }
+  .mat-icon-button {
+    .mat-icon {
+      color: $color-primario !important;
+      font-weight: bold;
+      height: 23px;
+      width: 23px;
+      line-height: 23px;
+      font-size: 20px;
+    }
+  }
+}
+
+.iconBtn {
+  color: $color-primario !important;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  width: 1.8em;
+  height: 1.8em;
+  line-height: 24px;
+  cursor: pointer;
+  &:hover {
+    color: $color-secundario !important;
+  }
+  .mat-icon-button {
+    .mat-icon {
+      color: $color-primario !important;
+      font-weight: bold;
+      height: 23px;
+      width: 23px;
+      line-height: 23px;
+      font-size: 20px;
+    }
+  }
+}
+
+td,
+th {
+  width: auto;
+}
+
+@include mat-table-columns(
+  (
+    numeroSolEvaluacion: (
+      width: 6rem
+    ),
+    paciente: (
+      width: 15rem
+    ),
+    diagnostico: (
+      width: 15rem
+    ),
+    codMac: (
+      width: 6rem
+    ),
+    descripcionCmac: (
+      width: 10rem
+    ),
+    accion: (
+      width: 5rem
+    )
+  )
+);

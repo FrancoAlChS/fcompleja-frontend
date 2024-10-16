@@ -1,0 +1,47 @@
+[
+    {   
+        "linea_trat": "3", 
+        "med_solicitado": "Lorem Ipsum", 
+        "n_sol_ev": "0215151", 
+        "fecha_aprob": "24/04/2018", 
+        "per_inicio": "24/04/2018", 
+        "per_fin": "24/04/2018", 
+        "n_cursos": "3", 
+        "tipo_tumor": "Lorem Ipsum", 
+        "rpta_alcanzada": "Lorem Ipsum", 
+        "estado": "INACTIVO", 
+        "motivo_inac": "Lorem Ipsum", 
+        "med_tratante": "Lorem Ipsum", 
+        "monto_aut": "500"  
+    },
+    {   
+        "linea_trat": "2", 
+        "med_solicitado": "Lorem Ipsum", 
+        "n_sol_ev": "02402420", 
+        "fecha_aprob": "24/04/2018", 
+        "per_inicio": "24/04/2018", 
+        "per_fin": "24/04/2018", 
+        "n_cursos": "2", 
+        "tipo_tumor": "Lorem Ipsum", 
+        "rpta_alcanzada": "Lorem Ipsum", 
+        "estado": "INACTIVO", 
+        "motivo_inac": "Lorem Ipsum", 
+        "med_tratante": "Lorem Ipsum", 
+        "monto_aut": "800"   
+    },
+    {   
+        "linea_trat": "1", 
+        "med_solicitado": "Lorem Ipsum", 
+        "n_sol_ev": "055460", 
+        "fecha_aprob": "24/04/2018", 
+        "per_inicio": "24/04/2018", 
+        "per_fin": "24/04/2018", 
+        "n_cursos": "5", 
+        "tipo_tumor": "Lorem Ipsum", 
+        "rpta_alcanzada": "Lorem Ipsum", 
+        "estado": "INACTIVO", 
+        "motivo_inac": "Lorem Ipsum", 
+        "med_tratante": "Lorem Ipsum", 
+        "monto_aut": "2200"  
+    }
+]

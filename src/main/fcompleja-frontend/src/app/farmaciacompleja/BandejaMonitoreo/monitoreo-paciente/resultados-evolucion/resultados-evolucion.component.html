@@ -1,0 +1,106 @@
+<!-- <div class="mat-dialog-header">
+  <h1 class="mat-dialog-title" mat-dialog-title>{{data.title}}</h1>
+</div> -->
+
+<div class="mat-dialog-content modalTable" mat-dialog-content>
+  <mat-card class="modalCard">
+    <mat-card-content>
+      <form class="form form-solicitud validateForm" [formGroup]="evolucionFrmGrp" novalidate>
+        <mat-grid-list cols="12" rowHeight="45px">
+          <!-- <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}">
+            <mat-form-field appearance="fill">
+              <mat-label>MEDICAMENTO MAC</mat-label>
+              <input matInput formControlName="descMACFrmCtrl" readonly>
+            </mat-form-field>
+          </mat-grid-tile> -->
+
+          <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}">
+            <mat-form-field appearance="fill">
+              <mat-label>RESULTADO DE LA EVOLUCIÓN</mat-label>
+              <mat-select formControlName="resEvolFrmCtrl" (selectionChange)="cambResultEvolucion($event.value)">
+                <mat-option *ngFor="let row1 of cmbResEvolucion" [value]="row1.codigoParametro">
+                  {{row1.nombreParametro}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="resEvolFrmCtrl.touched && resEvolFrmCtrl.hasError('required')">
+                Resultado de la evolucion es <strong>requerido</strong>
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <!-- <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}">
+            <mat-form-field appearance="fill">
+              <mat-label>LINEA TRATAMIENTO</mat-label>
+              <input matInput formControlName="lineaTrataFrmCtrl" readonly>
+            </mat-form-field>
+          </mat-grid-tile> -->
+
+          <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}">
+            <mat-form-field appearance="fill">
+              <mat-label>FECHA MONITOREO</mat-label>
+              <input matInput formControlName="fecMonitFrmCtrl" readonly>
+            </mat-form-field>
+          </mat-grid-tile>
+<!-- 
+          <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}">
+            <mat-form-field appearance="fill">
+              <mat-label>N° EVOLUCIÓN</mat-label>
+              <input matInput formControlName="nroEvolucionFrmCtrl" readonly>
+            </mat-form-field>
+          </mat-grid-tile> -->
+
+          <mat-grid-tile [responsiveRows]="{xs: 6, sm: 6, md: 6, lg: 6, xl: 6}">
+            <mat-form-field appearance="fill">
+              <mat-label>FECHA DE PRÓXIMO MONITOREO</mat-label>
+              <input matInput [min]="minDate" [matDatepicker]="dpMonitoreo" formControlName="fecProxMonFormControl"
+                [appOnlyDate]="{type: 'date'}">
+              <mat-datepicker-toggle matSuffix [for]="dpMonitoreo"></mat-datepicker-toggle>
+              <mat-datepicker #dpMonitoreo></mat-datepicker>
+              <mat-error *ngIf="fecProxMonFormControl.touched && fecProxMonFormControl.hasError('required')">
+                Fecha Monitoreo es <strong>requerido</strong>
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}">
+            <mat-form-field appearance="fill">
+              <mat-label>MOTIVO DE INACTIVACIÓN</mat-label>
+              <mat-select formControlName="motivoInactFrmCtrl">
+                <mat-option *ngFor="let row2 of cmbMotInactivacion" [value]="row2.codigoParametro">
+                  {{row2.nombreParametro}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="motivoInactFrmCtrl.touched && motivoInactFrmCtrl.hasError('required')">
+                Motivo de inactivacion es <strong>requerido</strong>
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}">
+            <mat-form-field appearance="fill">
+              <mat-label>FECHA DE INACTIVACIÓN</mat-label>
+              <input matInput [matDatepicker]="dpMonitoreo2" formControlName="fecInactFormControl" [appOnlyDate]="{type: 'date'}" readonly>
+              <mat-datepicker-toggle matSuffix [for]="dpMonitoreo2"></mat-datepicker-toggle>
+              <mat-datepicker #dpMonitoreo2 disable></mat-datepicker>
+              <mat-error *ngIf="fecInactFormControl.touched && fecInactFormControl.hasError('required')">
+                Fecha Inactivacion es <strong>requerido</strong>
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 12, lg: 12, xl: 12}">
+            <mat-form-field appearance="fill">
+              <mat-label>COMENTARIOS</mat-label>
+              <textarea matInput [appUpperCase] formControlName="observFormControl"></textarea>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div class="mat-dialog-actions modal-mantenimiento">
+  <button mat-raised-button color="primary" (click)="regResultadoEvolucion()">GRABAR</button>
+  <button mat-raised-button (click)="onClose()">CANCELAR</button>
+</div>

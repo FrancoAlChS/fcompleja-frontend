@@ -1,0 +1,165 @@
+@import "./variables";
+
+.mat-card {
+  font-size: 1em;
+  margin-bottom: 10px;
+  mat-card-header.box-section-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    justify-items: center;
+    padding-top: 0;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px $color-icon solid;
+    .mat-card-title {
+      color: $color-primario;
+      display: inline-flex;
+      justify-content: space-between;
+      font-size: 1.2em;
+      font-weight: 600;
+      margin: 0px;
+    }
+    .mat-card-subtitle {
+      color: $color-subtitle;
+      display: inline-flex;
+      justify-content: space-between;
+      font-size: 1em;
+      font-weight: 600;
+      margin: 0px;
+      padding-left: 20px;
+    }
+    .btn-header {
+      display: flex;
+      justify-content: flex-end;
+      .mat-raised-button {
+        width: 13em;
+        font-size: 0.9em;
+        display: flex;
+        justify-content: center;
+        border-radius: 25px;
+        margin-left: 10px;
+        line-height: 26px;
+        .mat-button-wrapper {
+          display: flex;
+          align-items: center;
+          mat-icon {
+            font-size: 1.4em;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+  }
+
+  
+
+
+  mat-card-actions {
+    &.btnCenter {
+      border-top: 1px $color-icon solid;
+      display: flex;
+      text-align: center;
+      justify-content: space-around;
+      .btn-xl {
+        width: auto;
+        height: 3.5em;
+      }
+      .mat-raised-button {
+        font-size: 0.9em;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        border-radius: 25px;
+        padding: 0 2.5em;
+        .mat-button-wrapper {
+          display: flex;
+          align-items: center;
+          mat-icon {
+            font-size: 1.4em;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+    &.btnRigth {
+      border-top: 1px $color-icon solid;
+      display: flex;
+      text-align: center;
+      justify-content: flex-end;
+      .btn-xl {
+        width: auto;
+        height: 3.5em;
+      }
+      .mat-raised-button {
+        font-size: 0.9em;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        border-radius: 25px;
+        padding: 0 2.5em;
+        .mat-button-wrapper {
+          display: flex;
+          align-items: center;
+          mat-icon {
+            font-size: 1.4em;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+  }
+}
+
+.mat-card > .mat-card-actions:last-child {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.mat-card-actions {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.mat-card-content {
+  margin-bottom: 0 !important;
+}
+
+.modalCard {
+  box-shadow: none !important;
+  width: 100%;
+  margin-bottom: 0 !important;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+.modalForm {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  mat-form-field {
+    height: 43px;
+  }
+  .iconbtn {
+    margin-bottom: 1em !important;
+  }
+}
+
+
+.deleteButton:hover::after {
+  right: -27px;
+  content: "Eliminar episodio";
+  position: absolute;
+  bottom: -34px;
+  background-color: #333333c9;
+  display: flex;
+  z-index: 1000;
+  font-size: 12px;
+  width: 120px;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.mat-grid-tile{
+  overflow: visible!important;
+}

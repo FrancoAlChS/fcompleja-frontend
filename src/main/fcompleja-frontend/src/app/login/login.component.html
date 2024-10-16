@@ -1,0 +1,40 @@
+<div class="login">
+  <mat-grid-list cols="12" rowHeight="100%">
+    <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6,md: 9, lg: 9, xl: 9}">
+      <div class="page-login">
+        <div class="main-div"></div>
+        <h1 class="title">Módulo de Evaluación de Farmacia Compleja</h1>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile class="shadow" [responsiveRows]="{xs: 12, sm: 6, md: 3, lg: 3, xl: 3}">
+      <form class="example-form p-2em" id="loginForm" [formGroup]="valForm" (ngSubmit)="loginSesion($event)">
+        <div class="logo">
+          <img class="example-logo" src="./assets/img/oncosalud01.png">
+        </div>
+        <mat-form-field appearance="fill">
+          <mat-label>Usuario</mat-label>
+          <input class="input-login" matInput [appAlphaNumerico]="{tipo: 'palabra'}" formControlName="usuarioFrm" type="text">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-label>Contraseña</mat-label>
+          <input matInput formControlName="contrasFrm" type="password">
+        </mat-form-field>
+
+        <div *ngIf="showCaptcha" class="ngcaptcha">
+        <form [formGroup]="formCaptcha" >
+          <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" (success)="handleSuccess($event)" [size]="normal" [hl]="es"
+            [theme]="light" [type]="image" formControlName="recaptcha" required>
+          </ngx-recaptcha2>
+        </form>
+        </div>
+
+        <div class="btn-login">
+          <button mat-raised-button color="primary" type="submit" [disabled]="disableLogin">Ingresar</button>
+          <br><br>
+          <p><a routerLink="/forgot-password">¿Olvidaste tu contraseña? </a></p>
+        </div>
+      </form>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <ng4-loading-spinner></ng4-loading-spinner>
+</div>

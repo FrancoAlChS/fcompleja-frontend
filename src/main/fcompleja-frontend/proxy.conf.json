@@ -1,0 +1,18 @@
+{
+  "/api": {
+    "target": "http://localhost:8088/fcompleja-backend/",
+    "secure": true,
+    "pathRewrite": {
+      "^/api": ""
+    },
+    "changeOrigin": true
+  },
+  "/auth": {
+    "target": "https://qasservicios.auna.pe/oauth2-server/",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/auth": ""
+    }
+  }
+}

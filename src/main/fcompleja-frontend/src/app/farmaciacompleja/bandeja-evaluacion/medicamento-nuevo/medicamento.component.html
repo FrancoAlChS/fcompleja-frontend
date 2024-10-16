@@ -1,0 +1,156 @@
+<div class="page-medicamento">
+  <mat-card>
+    <mat-card-header class="box-section-header">
+      <mat-card-title class="box-section-title">
+        EVALUACIÓN DEL AUTORIZADOR
+      </mat-card-title>
+      <mat-card-subtitle class="box-section-subtitle">
+        MEDICAMENTO NUEVO
+      </mat-card-subtitle>
+      <div class="btn-header">
+        <button
+          mat-raised-button
+          color="accent"
+          class="btnFichas"
+          (click)="verComplicaciones()"
+        >
+          COMPLICACIONES MÉDICAS
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          class="btnFichas"
+          (click)="verFichaTecnica()"
+        >
+          FICHA TÉCNICA MAC
+        </button>
+        <button
+          mat-raised-button
+          color="accent"
+          class="btnFichas"
+          (click)="verGuiasFinal()"
+        >
+          GUIAS
+        </button>
+        <!--<ng-container *ngFor="let item of listaGuias">
+          <a mat-raised-button color="accent" class="btnFichas" href="{{ item.valor1Parametro }}" target="_blank" rel="noopener">
+            {{ item.nombreParametro }}
+          </a>
+        </ng-container>-->
+      </div>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-horizontal-stepper
+        [linear]="true"
+        (selectionChange)="cambiarPaso($event)"
+        [selectedIndex]="stepperIndex"
+        #stepper
+      >
+        <mat-step [completed]="prefComponent.grabarPaso === '1'">
+          <ng-template matStepLabel> CONDICIÓN BASAL </ng-template>
+          <app-preferencia-institucionales
+            (btnSiguiente)="evaluarBotones($event)"
+          ></app-preferencia-institucionales>
+        </mat-step>
+        <mat-step [completed]="chkListComponent.grabarPaso === '1'">
+          <ng-template matStepLabel>CHECKLIST REQUISITOS</ng-template>
+          <app-checklist-requisitos
+            (btnSiguiente)="evaluarBotones($event)"
+          ></app-checklist-requisitos>
+        </mat-step>
+        <mat-step [completed]="conBasalComponent.grabarPaso === '1'">
+          <ng-template matStepLabel>PREFERENCIAS INSTITUCIONALES</ng-template>
+          <app-condicion-basal
+            (btnSiguiente)="evaluarBotones($event)"
+          ></app-condicion-basal>
+        </mat-step>
+        <mat-step [completed]="chkPcteComponent.grabarPaso === '1'">
+          <ng-template matStepLabel>CHECKLIST PACIENTE</ng-template>
+          <app-checklist-paciente
+            (btnSiguiente)="evaluarBotones($event)"
+          ></app-checklist-paciente>
+        </mat-step>
+        <mat-step [completed]="anaConComponent.grabarPaso === '1'">
+          <ng-template matStepLabel>ANÁLISIS Y CONCLUSIÓN</ng-template>
+          <app-analisis-conclusion
+            (btnFinalizar)="evaluarBotones($event)"
+          ></app-analisis-conclusion>
+        </mat-step>
+        <mat-step [completed]="obserComponent.grabarPaso === '1'">
+          <ng-template matStepLabel>CANALIZACIÓN</ng-template>
+          <app-observaciones
+            (btnFinalizar)="evaluarBotones($event)"
+          ></app-observaciones>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </mat-card-content>
+    <mat-card-actions class="btnCenter">
+      <button
+        mat-raised-button
+        type="button"
+        color="primary"
+        *ngIf="!showPrimero && flagBtnAtras"
+        (click)="atrasSection()"
+        [disabled]="btnAtras"
+      >
+        <mat-icon inline="true" matTooltip="Atrás"
+          >keyboard_arrow_left</mat-icon
+        >
+        ATRÁS
+      </button>
+      <button
+        mat-raised-button
+        type="button"
+        color="primary"
+        (click)="salirSection()"
+        *ngIf="flagBtnSalir"
+        [disabled]="btnSalir && !btnVisible"
+      >
+        <mat-icon inline="true" matTooltip="Regresar a la Bandeja"
+          >exit_to_app</mat-icon
+        >
+        SALIR
+      </button>
+      <button
+        mat-raised-button
+        type="button"
+        color="primary"
+        (click)="guardarPaso()"
+        [disabled]="btnGrabar && !btnVisible"
+        *ngIf="flagBtnGrabar"
+      >
+        <mat-icon inline="true" matTooltip="Grabar">save</mat-icon> GRABAR
+      </button>
+      <button
+        mat-raised-button
+        type="button"
+        color="primary"
+        *ngIf="!showUltimo && flagBtnSiguiente && !btnVisible"
+        (click)="siguienteSection()"
+        [disabled]="btnSiguiente"
+      >
+        SIGUIENTE
+        <mat-icon
+          inline="true"
+          class="izquierda"
+          inline="true"
+          matTooltip="Siguiente"
+          >keyboard_arrow_right</mat-icon
+        >
+      </button>
+
+      <button
+        mat-raised-button
+        type="button"
+        color="primary"
+        *ngIf="showUltimo && flagBtnFinalizar && !btnVisible"
+        (click)="finalizarMedicamento()"
+        [disabled]="btnFinalizar && !btnVisible"
+      >
+        <mat-icon inline="true" matTooltip="Finalizar">check_box</mat-icon>
+        FINALIZAR
+      </button>
+    </mat-card-actions>
+  </mat-card>
+  <ng4-loading-spinner></ng4-loading-spinner>
+</div>

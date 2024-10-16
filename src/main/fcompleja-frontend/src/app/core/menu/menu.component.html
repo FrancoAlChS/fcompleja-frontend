@@ -1,0 +1,118 @@
+<mat-sidenav-container class="container-sidenav" [style.marginTop.px]="mobileQuery.matches ? 0 : 0" autosize
+  fullScreen>
+  <mat-sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="true" fixedTopGap="0"
+    disableClose="true" opened="true" [ngClass]="[mostrarNombres ? 'no-collapse' : 'collapse']">
+    <div class="cabeceraMnu">
+      <button mat-icon-button class="btnMenu" (click)="verMenuLateral()">
+        <mat-icon *ngIf="!mostrarNombres">menu</mat-icon>
+        <mat-icon *ngIf="mostrarNombres">clear</mat-icon>
+      </button>
+      <img *ngIf="mostrarNombres" src="./assets/img/oncosalud.png" />
+    </div>
+    <mat-nav-list class="menu-lista">
+      <a mat-list-item [routerLink]="['/app/home']" href="home" routerLinkActive="list-item-active" matTooltip="INICIO"
+        matTooltipPosition="right" [matTooltipDisabled]="hideTooltip">
+        <mat-icon mat-list-icon>home</mat-icon>
+        <h4 *ngIf="mostrarNombres" mat-line>INICIO</h4>
+      </a>
+      <div *ngFor="let menuItem of menuItems">
+        <a mat-list-item [routerLink]="menuItem.url" [routerLinkActive]="menuItem.enableLink ? 'list-item-active' : ''"
+          (click)="verificarSubMenu(menuItem)" matTooltipPosition="right" [matTooltip]="menuItem.nombreLargo"
+          [matTooltipDisabled]="hideTooltip">
+          <mat-icon mat-list-icon>{{menuItem.rutaImg}}</mat-icon>
+          <h4 *ngIf="mostrarNombres" mat-line>{{menuItem.nombreLargo}}</h4>
+          <div class="icon-submenu" *ngIf="menuItem.subMenu && menuItem.subMenu.length > 0 && mostrarNombres">
+            <mat-icon mat-list-icon *ngIf="!menuItem.subMenu.opened">chevron_right</mat-icon>
+            <mat-icon mat-list-icon *ngIf="menuItem.subMenu.opened">expand_more</mat-icon>
+          </div>
+        </a>
+        <mat-nav-list class="sidenav-submenu"
+          *ngIf="menuItem.subMenu && menuItem.subMenu.length > 0 && menuItem.subMenu.opened">
+          <div *ngFor="let sub of menuItem.subMenu">
+            <a mat-list-item [routerLink]="sub.url" routerLinkActive="active-submenu"
+              (click)="opcionMenu(sub.codMenu,sub.opcionResponse)" matTooltipPosition="right"
+              [matTooltip]="sub.nombreLargo" [matTooltipDisabled]="hideTooltip">
+              <mat-icon mat-list-icon>{{sub.rutaImg}}</mat-icon>
+              <h4 *ngIf="mostrarNombres" mat-line>{{sub.nombreLargo}}</h4>
+            </a>
+          </div>
+        </mat-nav-list>
+      </div>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content [ngClass]="[mostrarNombres ? 'no-collapse-side' : 'collapse-side']">
+    <mat-toolbar class="cabecera">
+      <app-header [mostrarlogo]="mostrarNombres"></app-header>
+    </mat-toolbar>
+    <div class="page">
+      <div class="content-page" *ngIf="globalService.getVisible()">
+        <router-outlet (activate)="onActivate($event)"></router-outlet>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<!-- <div class="menu-content" [ngClass]="{ 'collapsed': arrMenuToggle.class == 'menu-sm' }">
+  <div class="nav-heading box-mp">
+    <h3 class="box-label-mp"> FARMACIA COMPLEJA </h3>
+  </div>
+  <div class="items">
+    <ul class="nav nav-sidebar pb-n">
+      <li class="item home">
+        <a [routerLink]="['/app/home']" href="home" routerLinkActive="active" matTooltip="INICIO"
+          matTooltipPosition="right">
+          <span class="nav-text">INICIO</span>
+          <mat-icon>home</mat-icon>
+        </a>
+      </li>
+      <li class="item bandeja" *ngFor="let menuItem of menuItems">
+        <a [routerLink]="[menuItem.url]" routerLinkActive="active"
+          (click)="opcionMenu(menuItem.codMenu,menuItem.opcionResponse)" [matTooltip]="menuItem.nombreLargo"
+          matTooltipPosition="right">
+          <span class="nav-text">{{menuItem.nombreLargo}}</span>
+          <mat-icon>{{menuItem.rutaImg}}</mat-icon>
+        </a>
+        <ul>
+          <li class="item bandeja" *ngFor="let sub of menuItem.subMenu">
+            <a [routerLink]="[sub.url]" routerLinkActive="active"
+              (click)="opcionMenu(sub.codMenu,sub.opcionResponse)" [matTooltip]="sub.nombreLargo"
+              matTooltipPosition="right">
+              <span class="nav-text">{{sub.nombreLargo}}</span>
+              <mat-icon>{{sub.rutaImg}}</mat-icon>
+            </a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a [routerLink]="['/app/configuracion-examenes']" href="configuracion-examenes" routerLinkActive="active">
+          <span class="nav-text">CONFIGURACION - EXAMENES MEDICOS</span>
+          <mat-icon>description</mat-icon>
+        </a>
+      </li>
+      <li class="item bandeja">
+        <a [routerLink]="['/app/configuracion-participantes']" href="configuracion-participantes"
+          routerLinkActive="active">
+          <span class="nav-text">CONFIGURACION - PARTICIPANTES</span>
+          <mat-icon>description</mat-icon>
+        </a>
+      </li>
+      <li class="item bandeja">
+        <a [routerLink]="['/app/control-gasto']" href="control-gasto" routerLinkActive="active">
+          <span class="nav-text">CONTROL DE GASTO</span>
+          <mat-icon>monetization_on</mat-icon>
+        </a>
+      </li>
+      <li class="item bandeja">
+        <a [routerLink]="['/app/reportes-consumo']" href="reportes-consumo" routerLinkActive="active">
+          <span class="nav-text">REPORTE - CONSUMO</span>
+          <mat-icon>description</mat-icon>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="post-logo-content">
+  </div>
+</div> -->
+
+
+<!-- <img src="./assets/img/oncosalud.png" /> -->

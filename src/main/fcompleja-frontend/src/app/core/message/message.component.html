@@ -1,0 +1,37 @@
+<div class="mat-dialog-header">
+  <h1 class="mat-dialog-title" mat-dialog-title>{{data.title}}</h1>
+</div>
+<div class="mat-dialog-content modal-body" mat-dialog-content>
+  <div class="mensaje">
+    {{data.message}}
+  </div>
+  <div class="mensaje2" *ngIf="data.message2 !== null">
+    <div *ngIf="menMultiple">
+      {{data.message2}}
+    </div>
+    <div *ngIf="!menMultiple" >
+      <div *ngFor="let mensaje of Mensajes">
+        {{mensaje.mensaje}} <br>
+      </div>
+    </div>
+  </div>
+  <div class="valor" *ngIf="data.valor !== null">
+    {{data.valor}}
+  </div>
+</div>
+<div class="mat-dialog-actions modal-footer">
+  <div class="confirmacion" *ngIf="data.confirmacion">
+    <button mat-icon-button color="primary" (click)="opcionSI()">
+      <strong>SI</strong>
+    </button>
+    <button mat-icon-button (click)="opcionNO()">
+      <strong>NO</strong>
+    </button>
+  </div>
+
+  <div class="alerta" *ngIf="data.alerta">
+    <button mat-icon-button color="primary" (click)="opcionOK()">
+      <strong>OK</strong>
+    </button>
+  </div>
+</div>

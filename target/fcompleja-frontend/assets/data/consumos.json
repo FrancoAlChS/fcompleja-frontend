@@ -1,0 +1,182 @@
+{
+  "audiResponse": {
+    "codigoRespuesta": "2",
+    "fechaTransaccion": "14/06/2019",
+    "idTransaccion": "ECA67BC6067FACCA86BAA96FAE6BE4BEAFF85D691D244ABD9191125841079827",
+    "mensajeRespuesta": "No se logró obtener datos de las Clínicas."
+  },
+  "total": "19",
+  "dataList":[
+    {
+      "fecha": "14/06/2019",
+      "hora": "18:32:45 pm",
+      "responsable": "TANTALEAN GIL GERSON",
+      "estado": "CARGADO",
+      "regTotal": "1200",
+      "regCargados": "330",
+      "regError": "0"
+    },
+    {
+    "fecha": "15/06/2019",
+    "hora": "18:32:45 pm",
+    "responsable": "DEZA LAU ENRIQUE",
+    "estado": "CON ERROR",
+    "regTotal": "0",
+    "regCargados": "0",
+    "regError": "0"
+    },
+    {
+    "fecha": "14/06/2019",
+    "hora": "18:32:45 pm",
+    "responsable": "TANTALEAN GIL GERSON",
+    "estado": "CARGADO",
+    "regTotal": "1200",
+    "regCargados": "330",
+    "regError": "0"
+    },
+    {
+    "fecha": "14/06/2019",
+    "hora": "18:32:45 pm",
+    "responsable": "TANTALEAN GIL GERSON",
+    "estado": "CARGADO",
+    "regTotal": "1200",
+    "regCargados": "330",
+    "regError": "0"
+    },
+    {
+      "fecha": "14/06/2019",
+      "hora": "18:32:45 pm",
+      "responsable": "TANTALEAN GIL GERSON",
+      "estado": "CARGADO",
+      "regTotal": "1200",
+      "regCargados": "330",
+      "regError": "0"
+    },
+    {
+      "fecha": "14/06/2019",
+      "hora": "18:32:45 pm",
+      "responsable": "TANTALEAN GIL GERSON",
+      "estado": "CARGADO",
+      "regTotal": "1200",
+      "regCargados": "330",
+      "regError": "0"
+    },
+    {
+      "fecha": "14/06/2019",
+      "hora": "18:32:45 pm",
+      "responsable": "TANTALEAN GIL GERSON",
+      "estado": "CARGADO",
+      "regTotal": "1200",
+      "regCargados": "330",
+      "regError": "0"
+    },
+    {
+      "fecha": "14/06/2019",
+      "hora": "18:32:45 pm",
+      "responsable": "TANTALEAN GIL GERSON",
+      "estado": "CARGADO",
+      "regTotal": "1200",
+      "regCargados": "330",
+      "regError": "0"
+    },
+    {
+      "fecha": "14/06/2019",
+      "hora": "18:32:45 pm",
+      "responsable": "TANTALEAN GIL GERSON",
+      "estado": "CARGADO",
+      "regTotal": "1200",
+      "regCargados": "330",
+      "regError": "0"
+    },
+    {
+      "fecha": "14/06/2019",
+      "hora": "18:32:45 pm",
+      "responsable": "TANTALEAN GIL GERSON",
+      "estado": "CARGADO",
+      "regTotal": "1200",
+      "regCargados": "330",
+      "regError": "0"
+    },
+    {
+      "fecha": "14/06/2019",
+      "hora": "18:32:45 pm",
+      "responsable": "TANTALEAN GIL GERSON",
+      "estado": "CARGADO",
+      "regTotal": "1200",
+      "regCargados": "330",
+      "regError": "0"
+    },
+    {
+      "fecha": "14/06/2019",
+      "hora": "18:32:45 pm",
+      "responsable": "TANTALEAN GIL GERSON",
+      "estado": "CARGADO",
+      "regTotal": "1200",
+      "regCargados": "330",
+      "regError": "0"
+    },
+    {
+      "fecha": "14/06/2019",
+      "hora": "18:32:45 pm",
+      "responsable": "TANTALEAN GIL GERSON",
+      "estado": "CARGADO",
+      "regTotal": "1200",
+      "regCargados": "330",
+      "regError": "0"
+    },
+    {
+      "fecha": "14/06/2019",
+      "hora": "18:32:45 pm",
+      "responsable": "TANTALEAN GIL GERSON",
+      "estado": "CARGADO",
+      "regTotal": "1200",
+      "regCargados": "330",
+      "regError": "0"
+    },
+    {
+      "fecha": "14/06/2019",
+      "hora": "18:32:45 pm",
+      "responsable": "TANTALEAN GIL GERSON",
+      "estado": "CARGADO",
+      "regTotal": "1200",
+      "regCargados": "330",
+      "regError": "0"
+    },
+    {
+      "fecha": "14/06/2019",
+      "hora": "18:32:45 pm",
+      "responsable": "TANTALEAN GIL GERSON",
+      "estado": "CARGADO",
+      "regTotal": "1200",
+      "regCargados": "330",
+      "regError": "0"
+    },
+    {
+      "fecha": "14/06/2019",
+      "hora": "18:32:45 pm",
+      "responsable": "TANTALEAN GIL GERSON",
+      "estado": "CARGADO",
+      "regTotal": "1200",
+      "regCargados": "330",
+      "regError": "0"
+    },
+    {
+      "fecha": "14/06/2019",
+      "hora": "18:32:45 pm",
+      "responsable": "TANTALEAN GIL GERSON",
+      "estado": "CARGADO",
+      "regTotal": "1200",
+      "regCargados": "330",
+      "regError": "0"
+    },
+    {
+      "fecha": "14/06/2019",
+      "hora": "18:32:45 pm",
+      "responsable": "TANTALEAN GIL GERSON",
+      "estado": "CARGADO",
+      "regTotal": "1200",
+      "regCargados": "330",
+      "regError": "0"
+    }
+  ]
+}

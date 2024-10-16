@@ -1,0 +1,128 @@
+@import "../../../../main";
+
+.label-option {
+  position: absolute;
+  left: 1em;
+  font-size: 0.9em;
+  font-weight: 500;
+  color: $color-titulo;
+}
+
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}
+
+.mat-figure {
+  justify-content: flex-start !important;
+}
+
+.containerRadio {
+  position: absolute;
+  // left: 1em;
+  width: calc(100% - 1.52em);
+  margin-bottom: 5px;
+  .radioGroup {
+    display: flex;
+    align-items: center;
+    // justify-items: space-between;
+    justify-content: space-between;
+    flex-direction: row;
+    flex: 1;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    height: 2.2rem !important;
+    // background-color: transparent;
+    margin-bottom: 0 !important;
+    mat-label {
+      color: $color-label;
+      font-size: 0.9em;
+      padding-left: 0.9em;
+    }
+    .mat-radio-group {
+      font-size: 0.9em;
+      padding-left: 1.2em;
+      max-width: 500px;
+      padding-right: 1.2em;
+      display: flex;
+      justify-self: center;
+      align-self: center;
+      .mat-radio-button {
+        padding-left: 0.6em;
+        font-size: 0.9em;
+      }
+    }
+
+    .mat-radio-container {
+      height: 15px;
+      width: 15px;
+    }
+    .mat-radio-outer-circle {
+      height: 15px;
+      width: 15px;
+    }
+    .mat-radio-inner-circle {
+      height: 15px;
+      width: 15px;
+    }
+    .mat-radio-button .mat-radio-ripple {
+      height: 20px; //double of your required circle radius
+      width: 20px; //double of your required circle radius
+      left: calc(50% - 10px); //'10px'-same as your required circle radius
+      top: calc(50% - 10px); //'10px'-same as your required circle radius
+    }
+  }
+}
+
+.btnInformeAuditor {
+  width: auto;
+  height: 25px;
+  border-radius: 1em;
+  font-size: 0.8em;
+  .mat-icon {
+    font-size: 1.4em;
+  }
+}
+
+.icon-green {
+  color: green;
+  font-size: 1.5em;
+}
+
+.labelDocumento {
+  font-size: 1em;
+  font-weight: 500;
+}
+
+@include mat-table-columns(
+  (
+    codChekListReq: (
+      width: 3rem,
+    ),
+    nombreTipoDocumento: (
+      width: 9rem,
+    ),
+    descripcionDocumento: (
+      width: 10rem,
+    ),
+    fechaCarga: (
+      width: 9rem,
+    ),
+    descargar: (
+      width: 4rem,
+    ),
+  )
+);
+
+.labelEspeComite {
+  color:red !important;
+}
+
+.formPersonal {
+  &.mat-form-field-appearance-fill {
+    .mat-form-field-wrapper {
+      .mat-form-field-flex {
+        background-color: $table-bg-solben !important;
+      }
+    }
+  }
+}

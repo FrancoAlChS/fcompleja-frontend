@@ -1,0 +1,50 @@
+[
+  {
+    "Mes": "ENERO",
+    "IdMes": 1
+  },
+  {
+    "Mes": "FEBRERO",
+    "IdMes": 2
+  },
+  {
+    "Mes": "MARZO",
+    "IdMes": 3
+  },
+  {
+    "Mes": "ABRIL",
+    "IdMes": 4
+  },
+  {
+    "Mes": "MAYO",
+    "IdMes": 5
+  },
+  {
+    "Mes": "JUNIO",
+    "IdMes": 6
+  },
+  {
+    "Mes": "JULIO",
+    "IdMes": 7
+  },
+  {
+    "Mes": "AGOSTO",
+    "IdMes": 8
+  },
+  {
+    "Mes": "SETIEMBRE",
+    "IdMes": 9
+  },
+  {
+    "Mes": "OCTUBRE",
+    "IdMes": 10
+  },
+  {
+    "Mes": "NOVIEMBRE",
+    "IdMes": 11
+  },
+  {
+    "Mes": "DICIEMBRE",
+    "IdMes": 12
+  }
+]

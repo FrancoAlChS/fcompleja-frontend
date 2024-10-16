@@ -1,0 +1,8 @@
+mat-tab-header {
+  display: flex;
+  align-self: center;
+  .mat-tab-label {
+    height: 30px;
+    min-width: 140px;
+  }
+}

@@ -1,0 +1,663 @@
+<div class="page-bandeja">
+  <ng4-loading-spinner [timeout]="300000"></ng4-loading-spinner>
+  <mat-card class="box-filtros">
+    <mat-card-header class="box-section-header">
+      <mat-card-title class="box-section-title">
+        BANDEJA SOLICITUDES DE EVALUACIONES COMITE
+      </mat-card-title>
+    </mat-card-header>
+    <!-- <div class="row"> -->
+    <mat-card-content>
+      <form
+        class="form form-solicitud"
+        [formGroup]="bandejaEvaFrmGrp"
+        novalidate
+      >
+        <mat-grid-list cols="12" rowHeight="35px">
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }"
+            *ngIf="
+              txtSolicitudEvaluacion === valorMostrarOpcion || flagEvaluacion
+            "
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>N° SOLICITUD DE EVALUACIÓN</mat-label>
+              <input
+                matInput
+                [appOnlyNumber]="{ size: 20 }"
+                formControlName="nroSolEvaFrmCtrl"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <!-- <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 4, lg: 4, xl: 4}"
+            *ngIf="( txtCodSolPre === valorMostrarOpcion ) || flagEvaluacion">
+            <mat-form-field appearance="fill">
+              <mat-label>CODIGO SOLICITUD PRELIMINAR</mat-label>
+              <input matInput [appOnlyNumber]='{size: 20}' formControlName="codSolPreFrmCtrl">
+            </mat-form-field>
+          </mat-grid-tile> -->
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }"
+            *ngIf="txtPaciente === valorMostrarOpcion || flagEvaluacion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>PACIENTE</mat-label>
+              <input matInput formControlName="pacienteFrmCtrl" readonly />
+              <button
+                mat-icon-button
+                matTooltip="Buscar Paciente"
+                *ngIf="pacienteFrmCtrl.value === null"
+                type="button"
+                class="btn-action"
+                color="primary"
+                (click)="abrirBuscarPaciente()"
+              >
+                <mat-icon>search</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                matTooltip="Borrar Filtro"
+                *ngIf="pacienteFrmCtrl.value !== null"
+                type="button"
+                class="btn-action"
+                color="primary"
+                (click)="
+                  limpiarControl($event, 'pacienteFrmCtrl', 'codigoAfiliado')
+                "
+              >
+                <mat-icon>delete_sweep</mat-icon>
+              </button>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }"
+            *ngIf="txtNroScgSolben === valorMostrarOpcion || flagEvaluacion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>Nº SCG SOLBEN</mat-label>
+              <input
+                matInput
+                [appAlphaNumerico]="{ size: 20 }"
+                formControlName="nroSCGSolFrmCtrl"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }"
+            *ngIf="cmbTipoScgSolben === valorMostrarOpcion || flagEvaluacion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>TIPO SCG SOLBEN</mat-label>
+              <mat-select formControlName="tipoSCGSolFrmCtrl">
+                <mat-option *ngIf="ListaTipoSCG.length === 0" disabled>
+                  <div class="containerSpinner">
+                    <span>Cargando...</span>
+                    <mat-spinner class="spinner" diameter="20"></mat-spinner>
+                  </div>
+                </mat-option>
+                <mat-option
+                  *ngFor="let row2 of ListaTipoSCG"
+                  [value]="row2.codigoParametro"
+                >
+                  {{ row2.nombreParametro }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }"
+            *ngIf="cmbEstadoScgSolben === valorMostrarOpcion || flagEvaluacion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>ESTADO SCG SOLBEN</mat-label>
+              <mat-select formControlName="estadoSCGSolFrmCtrl">
+                <mat-option
+                  *ngFor="let row2 of ListaEstadoSCG"
+                  [value]="row2.codigoExterno"
+                >
+                  {{ row2.nombreParametro }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }"
+            *ngIf="txtNroCartaGarantia === valorMostrarOpcion || flagEvaluacion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>N° CARTA GARANTIA</mat-label>
+              <input
+                matInput
+                [appAlphaNumerico]="{ size: 20 }"
+                formControlName="nCartaGarantiaFrmCtrl"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }"
+            *ngIf="
+              cmbAutorizadorPertinencia === valorMostrarOpcion || flagEvaluacion
+            "
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>AUTORIZADOR DE PERTENENCIA</mat-label>
+              <mat-select formControlName="autorizadorFrmCtrl">
+                <mat-option *ngIf="userAutorizador.length === 0" disabled>
+                  <div class="containerSpinner">
+                    <span>Cargando...</span>
+                    <mat-spinner class="spinner" diameter="20"></mat-spinner>
+                  </div>
+                </mat-option>
+                <mat-option
+                  *ngFor="let row1 of userAutorizador"
+                  [value]="row1.codUsuario"
+                >
+                  {{ row1.nombre }} {{ row1.apellidoPaterno }}
+                  {{ row1.apellidoMaterno }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }"
+            *ngIf="cmbLiderTumor === valorMostrarOpcion || flagEvaluacion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>LIDER TUMOR</mat-label>
+              <mat-select formControlName="liderTumorFrmCtrl">
+                <mat-option *ngIf="listaLiderTumor.length === 0" disabled>
+                  <div class="containerSpinner">
+                    <span>Cargando...</span>
+                    <mat-spinner class="spinner" diameter="20"></mat-spinner>
+                  </div>
+                </mat-option>
+                <mat-option
+                  *ngFor="let liderTumor of listaLiderTumor"
+                  [value]="liderTumor.codParticipante"
+                >
+                  {{ liderTumor.nombreUsuarioRol }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }"
+            *ngIf="txtClinica === valorMostrarOpcion || flagEvaluacion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>CLINICA</mat-label>
+              <input matInput formControlName="clinicaFrmCtrl" readonly />
+              <button
+                mat-icon-button
+                matTooltip="Buscar Clínica"
+                *ngIf="clinicaFrmCtrl.value === null"
+                class="btn-action"
+                color="primary"
+                (click)="abrirBuscarClinica()"
+              >
+                <mat-icon>search</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                matTooltip="Borrar Filtro"
+                *ngIf="clinicaFrmCtrl.value !== null"
+                type="button"
+                class="btn-action"
+                color="primary"
+                (click)="
+                  limpiarControl($event, 'clinicaFrmCtrl', 'codigoClinica')
+                "
+              >
+                <mat-icon>delete_sweep</mat-icon>
+              </button>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }"
+            *ngIf="txtFecRegEvalIni === valorMostrarOpcion || flagEvaluacion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>FECHA REG. EVALUACION INICIO</mat-label>
+              <input
+                matInput
+                [matDatepicker]="dpDesde"
+                formControlName="f_desdeRegSolEvaFrmCtrl"
+                (dateChange)="validarFechaInicio()"
+                [max]="maxDate"
+                [appOnlyDate]="{ type: 'date' }"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="dpDesde"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #dpDesde></mat-datepicker>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }"
+            *ngIf="txtFecRegEvalFin === valorMostrarOpcion || flagEvaluacion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>FECHA REG. EVALUACION FIN</mat-label>
+              <input
+                matInput
+                [matDatepicker]="dpHasta"
+                formControlName="f_hastaRegSolEvaFrmCtrl"
+                (dateChange)="validarFechaFin()"
+                [max]="maxDate"
+                [appOnlyDate]="{ type: 'date' }"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="dpHasta"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #dpHasta></mat-datepicker>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }"
+            *ngIf="cmbEstadoEvaluacion === valorMostrarOpcion || flagEvaluacion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>ESTADO DE PROCESO</mat-label>
+              <mat-select formControlName="estadoSolEvaProcesoFrmCtrl">
+                <mat-option
+                  *ngFor="let row4 of ListaSolEvaluacionProceso"
+                  [value]="row4.codigoParametro"
+                >
+                  {{ row4.nombreParametro }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }"
+            *ngIf="cmbRolResponsable === valorMostrarOpcion || flagEvaluacion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>ROL RESPONSABLE DE EVALUACION</mat-label>
+              <mat-select formControlName="rolRespEvaFrmCtrl">
+                <mat-option *ngIf="listaRolResp.length === 0" disabled>
+                  <div class="containerSpinner">
+                    <span>Cargando...</span>
+                    <mat-spinner class="spinner" diameter="20"></mat-spinner>
+                  </div>
+                </mat-option>
+                <mat-option
+                  *ngFor="let roles of listaRolResp"
+                  [value]="roles.codRol"
+                >
+                  {{ roles.nombreRol }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }"
+            *ngIf="cmbCorreoLiderTumor === valorMostrarOpcion || flagEvaluacion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>CORREO ENVIADO LIDER TUMOR</mat-label>
+              <mat-select formControlName="correoLiderTumorFrmCtrl">
+                <mat-option
+                  *ngFor="let row4 of ListaCorreoLiderTumor"
+                  [value]="row4.codigoParametro"
+                >
+                  {{ row4.nombreParametro }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }"
+            *ngIf="cmbCorreoMac === valorMostrarOpcion || flagEvaluacion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>CORREO ENVIADO COMITE</mat-label>
+              <mat-select formControlName="correoCMACFrmCtrl">
+                <mat-option
+                  *ngFor="let row5 of ListaCorreoCMAC"
+                  [value]="row5.codigoParametro"
+                >
+                  {{ row5.nombreParametro }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }"
+            *ngIf="cmbTipoEvaluacion === valorMostrarOpcion || flagEvaluacion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>TIPO DE EVALUACION</mat-label>
+              <mat-select formControlName="tipoEvaluacionFrmCtrl">
+                <mat-option
+                  *ngFor="let row6 of ListaEval"
+                  [value]="row6.codigoParametro"
+                >
+                  {{ row6.nombreParametro }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }"
+            *ngIf="txtFecCmac === valorMostrarOpcion || flagEvaluacion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>FECHA REUNION COMITE DEL</mat-label>
+              <input
+                matInput
+                [matDatepicker]="dpfechareunioncmac"
+                [appOnlyDate]="{ type: 'date' }"
+                formControlName="fechaReuCmacFrmCtrl"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="dpfechareunioncmac"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #dpfechareunioncmac></mat-datepicker>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }"
+            *ngIf="txtFecCmac === valorMostrarOpcion || flagEvaluacion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>FECHA REUNION COMITE AL</mat-label>
+              <input
+                matInput
+                [matDatepicker]="dpfechareunioncmac"
+                [appOnlyDate]="{ type: 'date' }"
+                formControlName="fechaReuCmacAlFrmCtrl"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="dpfechareunioncmac"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #dpfechareunioncmac></mat-datepicker>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }"
+            *ngIf="cmbTipoEvaluacion === valorMostrarOpcion || flagEvaluacion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>TIPO COMITE</mat-label>
+              <mat-select formControlName="itemComiteFrmCtrl">
+                <mat-option
+                  *ngFor="let row6 of ListaComite"
+                  [value]="row6.codigoComite"
+                >
+                  {{ row6.descripcionComite }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 4, xl: 4 }"
+            *ngIf="cmbEstadoEvaluacion === valorMostrarOpcion || flagEvaluacion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>ESTADO SOLICITUD EVALUACION</mat-label>
+              <mat-select formControlName="estadoSolEvaFrmCtrl">
+                <mat-option
+                  *ngFor="let row3 of ListaSolEvaluacionCmac"
+                  [value]="row3.codigoParametro"
+                >
+                  {{ row3.nombreParametro }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </form>
+    </mat-card-content>
+    <mat-card-actions class="btnActions" align="end">
+      <div class="btnCMAC">
+        <button
+          mat-raised-button
+          [disabled]="disableBuscar"
+          (click)="openDiaProgramaCMAC($event)"
+          *ngIf="btnProgramarCmac === valorMostrarOpcion || flagEvaluacion"
+        >
+          <mat-icon inline="true">event</mat-icon>
+          <strong>PROGRAMAR COMITE</strong>
+        </button>
+        <button
+          mat-raised-button
+          [disabled]="disableBuscar"
+          (click)="openDiaRegistrarEvalCMAC($event)"
+          *ngIf="btnRegistrarCmac === valorMostrarOpcion || flagEvaluacion"
+        >
+          <mat-icon inline="true">assignment_turned_in</mat-icon>
+          <strong>REGISTRAR RESULTADO EVALUACIÓN COMITE</strong>
+        </button>
+      </div>
+      <div class="btnMnto">
+        <button
+          mat-raised-button
+          [disabled]="disableBuscar"
+          (click)="enviarCorreosPendientes($event)"
+          *ngIf="btnCorreoPendiente === valorMostrarOpcion || flagEvaluacion"
+        >
+          <mat-icon inline="true">mail</mat-icon>
+          <strong>ENVIAR CORREOS PENDIENTES</strong>
+        </button>
+        <button
+          mat-raised-button
+          [disabled]="disableBuscar"
+          color="primary"
+          (click)="BusquedaEvaluacion()"
+          *ngIf="btnBuscar === valorMostrarOpcion || flagEvaluacion"
+        >
+          <mat-icon inline="true">search</mat-icon>
+          <strong>BUSCAR</strong>
+        </button>
+        <button
+          mat-raised-button
+          [disabled]="disableBuscar"
+          (click)="ExportExcelEvaluacion()"
+          *ngIf="btnExportarExcel === valorMostrarOpcion || flagEvaluacion"
+        >
+          <mat-icon svgIcon="excel-icon"></mat-icon>
+          <strong>EXPORTAR A EXCEL</strong>
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+  <mat-card class="box-resultados">
+    <mat-card-header> </mat-card-header>
+    <mat-card-content class="card-container">
+      <div class="table-container clear-both">
+        <table mat-table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="select" sticky>
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+                (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                [disabled]="dataSource === null || dataSource?.data.length === 0"
+              >
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox
+                (click)="$event.stopPropagation()"
+                (click)="
+                  tipoComite != row.codComite && tipoComite != undefined
+                    ? $event.preventDefault()
+                    : null
+                "
+                (change)="$event ? selectRow(row, $event, selection) : null"
+                [checked]="selection.isSelected(row)"
+              >
+              </mat-checkbox>
+            </td>
+          </ng-container>
+
+          <ng-container
+            *ngFor="let column of columnsGrilla"
+            [matColumnDef]="column.columnDef"
+          >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ column.header }}
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ column.cell(row) }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="correoLiderTumor">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              CORREO ENVIADO LIDER TUMOR
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <!-- <ng-container
+                *ngIf="
+                  row.estadoCorreoEnvLiderTumor == 0 &&
+                  row.codigoEnvioEnvLiderTumor != 0
+                "
+              > 
+                <div class="loader" id="loader">...</div>
+              </ng-container>-->
+              <!-- *ngIf="
+                  row.estadoCorreoEnvLiderTumor != 0 &&
+                  row.codigoEnvioEnvLiderTumor != 0
+                " -->
+              <ng-container>
+                <!-- <span
+                  *ngIf="
+                    row.estadoCorreoEnvLiderTumor ==
+                    PARAMETRO.estadoCorreoEnviadoSI
+                  "
+                  >SI</span
+                > -->
+                <!-- *ngIf="
+                    row.estadoCorreoEnvLiderTumor !=
+                    PARAMETRO.estadoCorreoEnviadoSI
+                  " -->
+                <span>{{ row.correoLiderTumor }}</span>
+              </ng-container>
+            </td>
+          </ng-container>
+
+          <ng-container
+            *ngFor="let column of columnsGrilla2"
+            [matColumnDef]="column.columnDef"
+          >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ column.header }}
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ column.cell(row) }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="verDetalle" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button
+                class="tableIconButton"
+                mat-icon-button
+                matTooltip="Ver Detalle"
+                (click)="verDetalleSolicitud(element)"
+              >
+                <mat-icon>find_in_page</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="verSeguimiento" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button
+                class="tableIconButton"
+                mat-icon-button
+                matTooltip="Ver Seguimiento"
+                (click)="verSeguimientoSolicitud(element)"
+              >
+                <mat-icon>near_me {{ codigoEstadoEvaluacion }}</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="vistaPreliminarDelInforme" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let row">
+              <span
+                *ngIf="
+                (row.pTipoEvaluacion == 33 &&
+                (row.codTipEva == 20 ||
+                row.codTipEva == 21 ||
+                row.codTipEva == 22 ||
+                row.codTipEva == 23 ||
+                row.codTipEva == 24 ||
+                row.codTipEva == 25 ||
+                row.codTipEva == 26 ||
+                row.codTipEva == 27 ||
+                row.codTipEva == 511)) ||
+                (row.pTipoEvaluacion == 32 &&
+                (row.codTipEva == 20 ||
+                row.codTipEva == 21))
+                "
+              >
+                <button
+                  class="tableIconButton"
+                  mat-icon-button
+                  matTooltip="Informe"
+                  (click)="generarReporteAutorizador(row)"
+                >
+                  <mat-icon inline="true">picture_as_pdf</mat-icon>
+                </button>
+              </span>
+            </td>
+          </ng-container>
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns"
+            [ngClass]="{ solbenRow: row.alertSCGSolben }"
+          ></tr>
+        </table>
+
+        <div class="empty" *ngIf="!isLoading && dataSource === null">
+          No existe datos para mostrar en la tabla
+        </div>
+
+        <mat-card *ngIf="isLoading" class="spinerTable">
+          <mat-progress-spinner color="primary" mode="indeterminate">
+          </mat-progress-spinner>
+        </mat-card>
+
+        <mat-paginator
+          class="mat-paginator-sticky"
+          [pageSizeOptions]="[10, 20, 50, 100]"
+          showFirstLastButtons
+        >
+        </mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <!-- </div> -->
+</div>

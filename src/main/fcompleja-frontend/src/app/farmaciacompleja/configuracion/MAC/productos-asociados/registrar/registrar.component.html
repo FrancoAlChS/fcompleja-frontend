@@ -1,0 +1,88 @@
+<div class="mat-dialog-header">
+    <h1 class="mat-dialog-title" mat-dialog-title> {{ titulo }} </h1>
+</div>
+<div class="mat-dialog-content" mat-dialog-content>
+    <form [formGroup]="productoForm" (ngSubmit)="accionProducto()" novalidate>
+        <mat-grid-list cols="12" rowHeight="45px">
+            <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}">
+                <mat-form-field class="item" appearance="fill">
+                <mat-label class="text-uppercase">CODIGO</mat-label>
+                <input matInput formControlName="codigo" >
+                <mat-error *ngIf="productoFormMessages.codigo && (fc.codigo.errors || ( productoSubmitted && fc.codigo.errors ))" >
+                    <mat-error *ngFor="let validation of productoFormMessages.codigo">
+                        <mat-error class="error-message" *ngIf="productoForm.get('codigo').hasError(validation.type)">{{validation.message}}</mat-error>
+                    </mat-error>
+                </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}">
+                    <mat-form-field class="item" appearance="fill">
+                      <mat-label class="text-uppercase">ESTADO</mat-label>
+                      <mat-select formControlName="estado" placeholder="ESTADO" >
+                        <mat-option *ngFor="let row of listaEstado" [value]="row.codigoParametro">
+                          {{row.nombreParametro}}
+                        </mat-option>
+                      </mat-select>
+                      <div class="select-placeholder-container inputSpinner" *ngIf="spinnerEstado === true">
+                        <mat-spinner class="spinner" diameter="15"></mat-spinner>
+                      </div>
+                      <mat-error *ngIf="productoFormMessages.estado && (fc.estado.errors || ( productoSubmitted && fc.estado.errors ))" >
+                        <mat-error *ngFor="let validation of productoFormMessages.estado">
+                          <mat-error class="error-message" *ngIf="productoForm.get('estado').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                      </mat-error>
+                    </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="12" rowHeight="45px">
+            <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 12, lg: 12, xl: 12}">
+                <mat-form-field class="item" appearance="fill">
+                <mat-label class="text-uppercase">DESCRIPCIÓN GENÉRICA</mat-label>
+                <input matInput formControlName="descripcionGenerica" >
+                <mat-error *ngIf="productoFormMessages.descripcionGenerica && (fc.descripcionGenerica.errors || ( productoSubmitted && fc.descripcionGenerica.errors ))" >
+                    <mat-error *ngFor="let validation of productoFormMessages.descripcionGenerica">
+                    <mat-error class="error-message" *ngIf="productoForm.get('descripcionGenerica').hasError(validation.type)">{{validation.message}}</mat-error>
+                    </mat-error>
+                </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="12" rowHeight="45px">
+            <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 12, lg: 12, xl: 12}">
+                <mat-form-field class="item" appearance="fill">
+                <mat-label class="text-uppercase">NOMBRE COMERCIAL</mat-label>
+                <input matInput formControlName="nombreComercial" >
+                <mat-error *ngIf="productoFormMessages.nombreComercial && (fc.nombreComercial.errors || ( productoSubmitted && fc.nombreComercial.errors ))" >
+                    <mat-error *ngFor="let validation of productoFormMessages.nombreComercial">
+                    <mat-error class="error-message" *ngIf="productoForm.get('nombreComercial').hasError(validation.type)">{{validation.message}}</mat-error>
+                    </mat-error>
+                </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="12" rowHeight="45px">
+            <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 12, lg: 12, xl: 12}">
+                <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">LABORATORIO</mat-label>
+                    <mat-select formControlName="laboratorio" placeholder="LABORATORIO" >
+                        <mat-option *ngFor="let row of listaLaboratorio" [value]="row.codigoParametro">
+                            {{row.nombreParametro}}
+                        </mat-option>
+                    </mat-select>
+                    <div class="select-placeholder-container inputSpinner" *ngIf="spinnerLaboratorio === true">
+                        <mat-spinner class="spinner" diameter="15"></mat-spinner>
+                    </div>
+                    <mat-error *ngIf="productoFormMessages.laboratorio && (fc.laboratorio.errors || ( productoSubmitted && fc.laboratorio.errors ))" >
+                        <mat-error *ngFor="let validation of productoFormMessages.laboratorio">
+                            <mat-error class="error-message" *ngIf="productoForm.get('laboratorio').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+        <div class="mat-dialog-actions modal-mantenimiento">
+            <mat-spinner-button mat-raised-button color="primary"  [options]="productoBtnOpts" ></mat-spinner-button>
+            <button mat-raised-button type="button" (click)="onDialogClose(false)">CANCELAR</button>
+        </div>
+    </form>
+</div>

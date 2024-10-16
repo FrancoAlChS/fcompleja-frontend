@@ -1,0 +1,22 @@
+[
+    {   
+        "item": "1", 
+        "codigo": "00030", 
+        "medicamento": "LENALIDOMINA"
+    },
+    {   
+        "item": "2", 
+        "codigo": "00031", 
+        "medicamento": "LENALIDOMINA II"
+    },
+    {   
+        "item": "3", 
+        "codigo": "00032", 
+        "medicamento": "LENALIDOMINA III"
+    },
+    {   
+        "item": "4", 
+        "codigo": "00032", 
+        "medicamento": "LENALIDOMINA IV"
+    }
+]

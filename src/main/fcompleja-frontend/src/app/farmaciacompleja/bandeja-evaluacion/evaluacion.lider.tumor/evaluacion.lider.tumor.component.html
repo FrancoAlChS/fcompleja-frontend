@@ -1,0 +1,62 @@
+<ng4-loading-spinner [timeout]="300000"></ng4-loading-spinner>
+<div class="mat-dialog-header">
+  <h1 class="mat-dialog-title" mat-dialog-title> {{data.title}} </h1>
+</div>
+<div class="mat-dialog-content modalLiderTumor" mat-dialog-content>
+  <form [formGroup]="liderTumorFrmGrp" novalidate>
+    <mat-grid-list cols="12" rowHeight="50px">
+      <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}">
+        <mat-form-field class="item" appearance="fill">
+          <mat-label>LIDER TUMOR ASIGNADO </mat-label>
+          <input readonly matInput formControlName="liderTumorFrmCtrl" name="nombreLiderTumor">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}">
+        <mat-form-field appearance="fill">
+          <mat-label>FECHA EVALUACIÓN</mat-label>
+          <input matInput [max]="maxDate" [appOnlyDate]="{type: 'date'}" [matDatepicker]="dpInicio"
+            formControlName="fechaEvaFrmCtrl">
+          <mat-datepicker-toggle matSuffix [for]="dpInicio"></mat-datepicker-toggle>
+          <mat-datepicker #dpInicio></mat-datepicker>
+          <mat-error *ngIf="this.fechaEvaFrmCtrl.touched && this.fechaEvaFrmCtrl.hasError('required')">
+            Fecha evaluación es <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <mat-grid-list cols="12" rowHeight="50px">
+      <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}">
+        <mat-form-field class="item" appearance="fill">
+          <mat-label>RESULTADO DE LA EVALUACIÓN</mat-label>
+          <mat-select formControlName="resLiderTumorFrmCtrl">
+            <mat-option *ngIf="listaResultado.length === 0" [value]="null">
+              <div class="containerSpinner">
+                <span>Cargando...</span>
+                <mat-spinner class="spinner" diameter="20"></mat-spinner>
+              </div>
+            </mat-option>
+            <mat-option *ngFor="let row of listaResultado" [value]="row.codigoParametro"
+              [disabled]="row.codigoParametro === null">
+              {{row.nombreParametro}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <mat-grid-list cols="12" rowHeight="70px">
+      <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 12, lg: 12, xl: 12}">
+        <mat-form-field appearance="fill" style="height: 65px;">
+          <mat-label> COMENTARIOS </mat-label>
+          <textarea [appUpperCase] class="taCondicionBasal" matInput
+            formControlName="cometarioFrmCtrl"></textarea>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+
+</div>
+
+<div class="mat-dialog-actions divBtnAgregar">
+  <button mat-raised-button (click)="onNoClick()">SALIR</button>
+  <button mat-raised-button color="primary" (click)="insertarEvaluacion()">GRABAR</button>
+</div>

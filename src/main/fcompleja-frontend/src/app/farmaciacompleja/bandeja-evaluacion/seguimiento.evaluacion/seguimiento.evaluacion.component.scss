@@ -1,0 +1,56 @@
+@import "./../../../main";
+
+.page-seguimiento-evaluacion {
+  mat-card {
+    :not([class*="mat-elevation-z"]) {
+      box-shadow: none;
+    }
+    &.table-resultados {
+      mat-card-header {
+        mat-card-title {
+          font-size: 1.1em;
+          color: $color-secundario;
+        }
+      }
+    }
+  }
+}
+
+@include mat-table-columns(
+  (
+    descEstadoEvaluacion: (
+      width: 15rem
+    ),
+    fechaEvaluacion: (
+      width: 8rem
+    ),
+    descRolRespEstado: (
+      width: 15rem
+    ),
+    descUsrRespEstado: (
+      width: 15rem
+    ),
+    descRolRespRegistroEstado: (
+      width: 15rem
+    ),
+    descUsrRespRegistroEstado: (
+      width: 15rem
+    )
+  )
+);
+
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-flow: row;
+  align-items: center;
+}
+
+.flex-item {
+  text-align: center;
+  padding: 1rem;
+  flex-grow: 0.01;
+  flex-shrink: 3;
+  flex-basis: 49%;
+}

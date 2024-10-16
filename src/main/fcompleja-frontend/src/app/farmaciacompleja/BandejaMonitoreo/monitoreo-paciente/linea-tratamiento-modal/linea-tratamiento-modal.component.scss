@@ -1,0 +1,48 @@
+@import "../../../../main";
+
+@include mat-table-columns(
+  (
+    lineaTratamiento: (
+      width: 5rem
+    ),
+    codEvaluacion: (
+      width: 8rem
+    ),
+    fecAprobacion: (
+      width: 7rem
+    ),
+    nroScgSolben: (
+      width: 7rem
+    ),
+    fecScgSolben: (
+      width: 7rem
+    ),
+    nroInforme: (
+      width: 5rem
+    ),
+    fecEmision: (
+      width: 10rem
+    ),
+    nomAuditorEvaluacion: (
+      width: 10rem
+    ),
+    nroCgSolben: (
+      width: 7rem
+    ),
+    fecCgSolben: (
+      width: 7rem
+    ),
+    macSolicitado: (
+      width: 15rem
+    ),
+    medicoTratantePrescriptor: (
+      width: 20rem
+    ),
+    montoAutorizado: (
+      width: 8rem
+    ),
+    verInforme: (
+      width: 2rem
+    )
+  )
+);

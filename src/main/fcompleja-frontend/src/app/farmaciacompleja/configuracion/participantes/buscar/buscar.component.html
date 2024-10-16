@@ -1,0 +1,89 @@
+<div class="mat-dialog-header">
+    <h1 class="mat-dialog-title" mat-dialog-title> {{ titulo }} </h1>
+</div>
+<div class="mat-dialog-content" mat-dialog-content>
+    <form [formGroup]="usuarioForm" (ngSubmit)="accionUsuario()" novalidate>
+        <mat-grid-list cols="12" rowHeight="46px">
+            <mat-grid-tile [responsiveRows]="{xs: 12, sm: 4, md: 4, lg: 4, xl: 4}">
+                <mat-form-field class="item" appearance="fill">
+                <mat-label class="text-uppercase">CODIGO</mat-label>
+                <input matInput formControlName="codigo" >
+                <mat-error *ngIf="usuarioFormMessages.codigo && (fc.codigo.errors || ( produccionSubmitted && fc.codigo.errors ))" >
+                    <mat-error *ngFor="let validation of usuarioFormMessages.codigo">
+                    <mat-error class="error-message" *ngIf="usuarioForm.get('codigo').hasError(validation.type)">{{validation.message}}</mat-error>
+                    </mat-error>
+                </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile [responsiveRows]="{xs: 12, sm: 4, md: 4, lg: 4, xl: 4}">
+                <mat-form-field class="item" appearance="fill">
+                <mat-label class="text-uppercase">APELLIDO PATERNO</mat-label>
+                <input matInput [appUpperCase] formControlName="paterno" >
+                <mat-error *ngIf="usuarioFormMessages.paterno && (fc.paterno.errors || ( produccionSubmitted && fc.paterno.errors ))" >
+                    <mat-error *ngFor="let validation of usuarioFormMessages.paterno">
+                    <mat-error class="error-message" *ngIf="usuarioForm.get('paterno').hasError(validation.type)">{{validation.message}}</mat-error>
+                    </mat-error>
+                </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile [responsiveRows]="{xs: 12, sm: 4, md: 4, lg: 4, xl: 4}">
+                <mat-form-field class="item" appearance="fill">
+                <mat-label class="text-uppercase">APELLIDO MATERNO</mat-label>
+                <input matInput [appUpperCase] formControlName="materno" >
+                <mat-error *ngIf="usuarioFormMessages.materno && (fc.materno.errors || ( produccionSubmitted && fc.materno.errors ))" >
+                    <mat-error *ngFor="let validation of usuarioFormMessages.materno">
+                    <mat-error class="error-message" *ngIf="usuarioForm.get('materno').hasError(validation.type)">{{validation.message}}</mat-error>
+                    </mat-error>
+                </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="12" rowHeight="46px">
+            <mat-grid-tile [responsiveRows]="{xs: 12, sm: 8, md: 8, lg: 8, xl: 8}">
+                <mat-form-field class="item" appearance="fill">
+                <mat-label class="text-uppercase">NOMBRE</mat-label>
+                <input matInput [appUpperCase] formControlName="nombre" >
+                <mat-error *ngIf="usuarioFormMessages.nombre && (fc.nombre.errors || ( produccionSubmitted && fc.nombre.errors ))" >
+                    <mat-error *ngFor="let validation of usuarioFormMessages.nombre">
+                    <mat-error class="error-message" *ngIf="usuarioForm.get('nombre').hasError(validation.type)">{{validation.message}}</mat-error>
+                    </mat-error>
+                </mat-error>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile [responsiveRows]="{xs: 12, sm: 4, md: 4, lg: 4, xl: 4}">
+                <button mat-raised-button color="primary" type="button" (click)="accionUsuario()">BUSCAR</button>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </form>
+    <div class="table-container">
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <ng-container matColumnDef="codigo">
+              <th mat-header-cell *matHeaderCellDef >CODIGO</th>
+              <td mat-cell *matCellDef="let row">{{row.usuario}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="nombre">
+              <th mat-header-cell *matHeaderCellDef >APELLIDOS Y NOMBRES</th>
+              <td mat-cell *matCellDef="let row">{{row.apePate + ' ' + row.apeMate + ' ' + row.nombres}}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="seleccionarDiagnostico(row)"></tr>
+
+        </table>
+
+        <div class="empty" *ngIf="!isLoadingResults && ( resultsLength == 0 || resultsLength == null)">
+          No existe datos para mostrar en la tabla
+        </div>
+
+        <mat-card *ngIf="isLoadingResults" class="spinerTable">
+          <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+        </mat-card>
+
+        <mat-paginator [length]="resultsLength" [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize"></mat-paginator>
+    </div>
+</div>
+<div class="mat-dialog-actions">
+    <button mat-raised-button type="button" (click)="onDialogClose(false)">CANCELAR</button>
+</div>

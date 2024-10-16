@@ -1,0 +1,289 @@
+<div class="page-monitoreo">
+  <ng4-loading-spinner [timeout]="300000"></ng4-loading-spinner>
+  <mat-card class="box-filtros">
+    <mat-card-header class="box-section-header">
+      <mat-card-title class="box-section-title">
+        BANDEJA MONITOREO DE PACIENTES
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form
+        class="form form-solicitud"
+        [formGroup]="banMonitoreoFrmGrp"
+        novalidate
+      >
+        <mat-grid-list cols="12" rowHeight="35px">
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 6, lg: 4, xl: 4 }"
+            *ngIf="txtPaciente === valorMostrarOpcion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>PACIENTE</mat-label>
+              <input matInput formControlName="pacienteFrmCtrl" readonly />
+              <!--<button class="tableIconButton btn-action" mat-icon-button matTooltip="Buscar Paciente">-->
+              <button
+                mat-icon-button
+                type="button"
+                class="btn-action"
+                color="primary"
+                *ngIf="pacienteFrmCtrl.value === null"
+                (click)="abrirBuscarPaciente()"
+              >
+                <mat-icon>search</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                matTooltip="Borrar Filtro"
+                *ngIf="pacienteFrmCtrl.value !== null"
+                type="button"
+                class="btn-action"
+                color="primary"
+                (click)="limpiarControl($event, 'pacienteFrmCtrl')"
+              >
+                <mat-icon>delete_sweep</mat-icon>
+              </button>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 6, lg: 4, xl: 4 }"
+            *ngIf="txtClinica === valorMostrarOpcion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>CLINICA</mat-label>
+              <input matInput formControlName="clinicaFrmCtrl" readonly />
+              <!--<button class="tableIconButton btn-action" mat-icon-button matTooltip="Buscar Clínica">-->
+              <button
+                mat-icon-button
+                type="button"
+                class="btn-action"
+                color="primary"
+                *ngIf="clinicaFrmCtrl.value === null"
+                (click)="abrirBuscarClinica()"
+              >
+                <mat-icon>search</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                matTooltip="Borrar Filtro"
+                *ngIf="clinicaFrmCtrl.value !== null"
+                type="button"
+                class="btn-action"
+                color="primary"
+                (click)="limpiarControl($event, 'clinicaFrmCtrl')"
+              >
+                <mat-icon>delete_sweep</mat-icon>
+              </button>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 6, lg: 4, xl: 4 }"
+            *ngIf="cmbEstado === valorMostrarOpcion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>ESTADO DE MONITOREO</mat-label>
+              <mat-select formControlName="estadoMonitoreoFrmCtrl">
+                <mat-option
+                  *ngFor="let row5 of listaEstadosMonitoreo"
+                  [value]="row5.codigoParametro"
+                >
+                  {{ row5.nombreParametro }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 6, lg: 4, xl: 4 }"
+            *ngIf="cmbResponsable === valorMostrarOpcion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>RESPONSABLE MONITOREO</mat-label>
+              <mat-select formControlName="responsableFrmCtrl">
+                <mat-option
+                  *ngFor="let row1 of listaResponsableMonitoreo"
+                  [value]="row1.codUsuario"
+                >
+                  {{ row1.nombrecompleto }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 6, lg: 4, xl: 4 }"
+            *ngIf="txtFecha === valorMostrarOpcion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>{{ labelUsuarioSeg }}</mat-label>
+              <input
+                matInput
+                [matDatepicker]="dpMonitoreoDesde"
+                [appOnlyDate]="{ type: 'date' }"
+                formControlName="fechaMonitoreoDesdeFrmCtrl"
+                (dateChange)="validarFechaMonitoreoDesde()"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="dpMonitoreoDesde"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #dpMonitoreoDesde></mat-datepicker>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 6, lg: 4, xl: 4 }"
+            *ngIf="txtFecha === valorMostrarOpcion && usuarioSeguimiento"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>FECHA DE PRÓXIMO MONITOREO HASTA</mat-label>
+              <input
+                matInput
+                [matDatepicker]="dpMonitoreoHasta"
+                [appOnlyDate]="{ type: 'date' }"
+                formControlName="fechaMonitoreoHastaFrmCtrl"
+                (dateChange)="validarFechaMonitoreoHasta()"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="dpMonitoreoHasta"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #dpMonitoreoHasta></mat-datepicker>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 6, lg: 4, xl: 4 }"
+            *ngIf="txtFecha === valorMostrarOpcion && usuarioSeguimiento"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>FECHA DE APROBACIÓN DESDE</mat-label>
+              <input
+                matInput
+                [matDatepicker]="dpAprobacionHasta"
+                [appOnlyDate]="{ type: 'date' }"
+                formControlName="fechaAprobacionDesdeFrmCtrl"
+                (dateChange)="validarFechaAprobacionDesde()"
+                [max]="maxDate"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="dpAprobacionHasta"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #dpAprobacionHasta></mat-datepicker>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 6, lg: 4, xl: 4 }"
+            *ngIf="txtFecha === valorMostrarOpcion && usuarioSeguimiento"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>FECHA DE APROBACIÓN HASTA</mat-label>
+              <input
+                matInput
+                [matDatepicker]="dpAprobacionHasta"
+                [appOnlyDate]="{ type: 'date' }"
+                formControlName="fechaAprobacionHastaFrmCtrl"
+                (dateChange)="validarFechaAprobacionHasta()"
+                [max]="maxDate"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="dpAprobacionHasta"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #dpAprobacionHasta></mat-datepicker>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 6, lg: 4, xl: 4 }"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>ESTADO DE SEGUIMIENTO</mat-label>
+              <mat-select formControlName="pEstSeguimientoFrmCtrl">
+                <mat-option
+                  *ngFor="let estado of cmbEstadoSeguimiento"
+                  [value]="estado.codigoParametro"
+                  [disabled]="estado.codigoParametro === null"
+                >
+                  {{ estado.nombreParametro }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </form>
+    </mat-card-content>
+    <mat-card-actions class="btnRigth" align="end">
+      <button
+        mat-raised-button
+        *ngIf="btnBuscar === valorMostrarOpcion"
+        color="primary"
+        (click)="busquedaMonitoreo()"
+        [disabled]="btnBuscarMoni"
+      >
+        <mat-icon inline="true">search</mat-icon>
+        <strong>BUSCAR</strong>
+      </button>
+      <button
+        mat-raised-button
+        *ngIf="btnExportar === valorMostrarOpcion"
+        (click)="exportExcelMonitoreo()"
+      >
+        <mat-icon svgIcon="excel-icon"></mat-icon>
+        <strong>EXPORTAR A EXCEL</strong>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card class="table-resultados" *ngIf="totalDisplayedColumns > 0">
+    <mat-card-header>
+      <mat-card-title> TAREAS DE MONITOREO: </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="card-container">
+      <div class="table-container clear-both">
+        <table mat-table [dataSource]="dataSource" matSort>
+          <ng-container
+            *ngFor="let column of columnsGrilla"
+            [matColumnDef]="column.columnDef"
+          >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ column.header }}
+            </th>
+            <td mat-cell *matCellDef="let row">{{ column.cell(row) }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="verDetalle" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button
+                class="tableIconButton"
+                mat-icon-button
+                matTooltip="Ver Detalle Monitoreo"
+                (click)="verDetalleMonitoreo(element)"
+              >
+                <mat-icon>find_in_page</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <div class="empty" *ngIf="!isLoading && dataSource === null">
+          No existe datos para mostrar en la tabla
+        </div>
+
+        <mat-card *ngIf="isLoading" class="spinerTable">
+          <mat-progress-spinner color="primary" mode="indeterminate">
+          </mat-progress-spinner>
+        </mat-card>
+
+        <mat-paginator
+          class="mat-paginator-sticky"
+          [pageSizeOptions]="[5, 10, 25, 100]"
+          showFirstLastButtons
+        >
+        </mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

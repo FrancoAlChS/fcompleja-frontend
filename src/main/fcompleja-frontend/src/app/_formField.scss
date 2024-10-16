@@ -1,0 +1,208 @@
+mat-form-field {
+  width: 100%;
+  height: 34px;
+  font-size: 0.85em;
+  padding-right: 0.9em !important;
+  padding-left: 0.9em !important;
+  &.mat-form-field-appearance-fill {
+    .mat-form-field-wrapper {
+      padding-top: 0;
+      .mat-form-field-flex {
+        border-radius: 0 !important;
+        padding: 0.4em 0.6em 0.2em 0.6em !important;
+        background-color: $frm-bg;
+        .mat-form-field-infix {
+          padding: 0;
+          .mat-form-field-label {
+            color: $color-label;
+            mat-label {
+              font-size: 1em;
+            }
+          }
+          .mat-input-element {
+            font-size: 0.9em;
+            padding-bottom: 0.05em;
+          }
+          textarea {
+            &.mat-input-element {
+              margin: 2px 0;
+              overflow: auto !important;
+              height: auto;
+              min-height: 30px !important;
+            }
+          }
+          .mat-select {
+            font-size: 0.9em;
+            .mat-select-arrow {
+              color: $color-label;
+            }
+            .mat-select-value {
+              padding-bottom: 0.05em;
+            }
+          }
+        }
+      }
+    }
+    .mat-form-field-underline::before {
+      background-color: $color-primario;
+    }
+
+    .mat-form-field-ripple {
+      border-bottom: 2px solid $frm-color !important;
+      background-color: $frm-color !important;
+    }
+  }
+  .mat-form-field-subscript-wrapper {
+    margin: 0;
+    padding: 0;
+    mat-error {
+      font-size: 1em;
+    }
+  }
+  &.mat-form-field-invalid {
+    .mat-form-field-ripple {
+      border-bottom: 2px solid $color-error-form !important;
+      background-color: $color-error-form !important;
+    }
+    .mat-form-field-label {
+      mat-label {
+        color: $color-error-form !important;
+      }
+      .mat-input-element {
+        color: $color-error-form !important;
+      }
+      mat-select {
+        color: $color-error-form !important;
+        .mat-select-arrow {
+          color: $color-error-form !important;
+        }
+      }
+    }
+    .mat-icon-button {
+      color: $color-error-form !important;
+      .mat-icon {
+        color: $color-error-form !important;
+      }
+    }
+  }
+}
+
+.validateForm {
+  mat-form-field {
+    height: 3.2rem !important;
+  }
+}
+
+button {
+  height: 3em;
+  &.mat-raised-button {
+    line-height: normal !important;
+  }
+}
+
+.mat-icon {
+  margin-right: 5px;
+  &.izquierda {
+    margin-right: 0;
+    margin-left: 5px;
+  }
+}
+
+.labelDerecha {
+  padding-right: 0.9em !important;
+  padding-left: 0.9em !important;
+  color: $color-label;
+  font-size: 0.9em;
+}
+
+.containerRadio {
+  position: absolute;
+  left: 0.7em;
+  .radioGroup {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    flex-direction: row;
+    flex: 1;
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+    height: 2.2rem !important;
+    background-color: $frm-bg;
+    margin-bottom: 0 !important;
+    mat-label {
+      color: $color-label;
+      font-size: .9em;
+      padding-left: 0.6em;
+    }
+    .mat-radio-group {
+      font-size: .9em;
+      padding-left: 1.2em;
+      padding-right: 1.2em;
+      display: flex;
+      justify-self: center;
+      align-self: center;
+      .mat-radio-button {
+        padding-left: 0.6em;
+        font-size: 0.9em;
+      }
+    }
+
+    .mat-radio-container {
+      height: 15px;
+      width: 15px;
+    }
+    .mat-radio-outer-circle {
+      height: 15px;
+      width: 15px;
+    }
+    .mat-radio-inner-circle {
+      height: 15px;
+      width: 15px;
+    }
+    .mat-radio-button .mat-radio-ripple {
+      height: 20px; //double of your required circle radius
+      width: 20px; //double of your required circle radius
+      left: calc(50% - 10px); //'10px'-same as your required circle radius
+      top: calc(50% - 10px); //'10px'-same as your required circle radius
+    }
+  }
+}
+
+button:disabled {
+  color: $btn-disable;
+  .mat-icon {
+    color: $btn-disable;
+  }
+}
+
+.divBtnAgregar {
+  button {
+    &.mat-raised-button {
+      border-radius: 25px;
+      width: auto;
+      font-size: 0.8em;
+      font-weight: 500;
+      margin-bottom: 0.3em;
+    }
+  }
+}
+
+.mat-spinner {
+  background: transparent !important;
+}
+
+.mat-select-panel {
+  max-height: 120px !important;
+}
+
+.dividir {
+  color: $color-primario;
+}
+
+.mat-form-field .mat-select.mat-select-invalid .mat-select-arrow {
+  color: $color-error-form !important;
+}
+
+mat-progress-bar {
+  margin-bottom: 1em;
+}

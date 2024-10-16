@@ -1,0 +1,188 @@
+@import "../../../../main";
+
+mat-card {
+  :not([class*="mat-elevation-z"]) {
+    box-shadow: none;
+  }
+}
+
+mat-card {
+  :not([class*="mat-elevation-z"]) {
+    box-shadow: none;
+  }
+
+  .cardPasos {
+    margin-bottom: 0;
+    mat-card-header {
+      display: flex;
+      justify-content: center;
+      mat-card-title {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: $color-primario;
+        margin-bottom: 0;
+        &.margin0 {
+          margin: 0 !important;
+        }
+      }
+    }
+    mat-card-content {
+      .cardDoc {
+        height: 135px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        mat-card-header {
+          display: flex;
+          flex-direction: row-reverse;
+          align-items: center;
+          mat-icon {
+            &.check {
+              color: green;
+              font-size: 1.5em;
+            }
+          }
+          mat-card-title {
+            text-align: center;
+            font-size: 0.95em;
+            font-weight: 500;
+            margin-bottom: 0;
+            color: $color-titulo;
+            .pdg5 {
+              margin-bottom: 5px;
+            }
+            .error {
+              color: $color-error-form;
+            }
+          }
+          mat-card-subtitle {
+            margin-top: 0;
+            color: $color-icon;
+            font-size: 0.85em;
+            font-weight: 300;
+            margin-bottom: 0;
+            .error {
+              color: $color-error-form;
+            }
+          }
+        }
+        mat-card-content {
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          mat-form-field {
+            padding-top: 0.5em;
+            padding-bottom: 0.5em;
+          }
+          .textoCargado {
+            font-size: 0.9em;
+            font-weight: 500;
+            padding-top: 0.8em;
+            color: #000000;
+          }
+        }
+        mat-card-actions {
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+
+    .cardTratamiento {
+      padding: 0.8em 0 0.4em 0 !important;
+      margin: 0;
+      mat-card-header {
+        display: flex;
+        justify-content: flex-start;
+        mat-card-title {
+          font-size: 1em;
+          font-weight: bold;
+          color: $color-titulo;
+          margin-bottom: 0 !important;
+          padding-bottom: 0.9em;
+        }
+      }
+    }
+
+    .cardPreferencia {
+      padding: 0.4em 0 0.8em 0 !important;
+      margin: 0 !important;
+      mat-card-header {
+        display: flex;
+        justify-content: flex-start;
+        mat-card-title {
+          font-size: 1em;
+          font-weight: bold;
+          color: $color-titulo;
+          margin-bottom: 0 !important;
+          padding-bottom: 0.9em;
+        }
+      }
+    }
+  }
+}
+
+mat-icon {
+  display: flex;
+  align-items: center;
+}
+
+.labelDocumento {
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.labelSubDocumento {
+  font-size: 0.85em;
+  font-weight: 400;
+}
+
+.labelCargado {
+  font-size: 0.9em;
+  color: $color-secundario;
+}
+
+.icon-red {
+  color: red;
+}
+
+.icon-green {
+  color: green;
+  font-size: 1.5em;
+}
+
+@include mat-table-columns(
+  (
+    indice: (
+      width: 4rem
+    ),
+    lineaTratamiento: (
+      width: 7rem
+    ),
+    descripcionMac: (
+      width: 10rem
+    ),
+    nombreTipoDocumento: (
+      width: 9rem
+    ),
+    descripcionDocumento: (
+      width: 10rem
+    ),
+    fechaCarga: (
+      width: 9rem
+    ),
+    descargar: (
+      width: 4rem
+    ),
+  )
+);
+
+.formPersonal {
+  &.mat-form-field-appearance-fill {
+    .mat-form-field-wrapper {
+      .mat-form-field-flex {
+        background-color: $table-bg-solben !important;
+      }
+    }
+  }
+}

@@ -1,0 +1,450 @@
+<div class="page-monitoreo-paciente">
+  <ng4-loading-spinner [timeout]="300000"></ng4-loading-spinner>
+  <mat-card>
+    <mat-card-header class="box-section-header">
+      <mat-card-title class="box-section-title">
+        MONITOREO DEL PACIENTE
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-accordion>
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
+          <mat-expansion-panel-header
+            [collapsedHeight]="'36px'"
+            [expandedHeight]="'36px'"
+            [collapsedHeight]="'36px'"
+            [expandedHeight]="'36px'"
+          >
+            <mat-panel-title> DATOS DEL MONITOREO </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-card>
+            <mat-card-content>
+              <form novalidate [formGroup]="datMoniFrmGrp">
+                <mat-grid-list cols="12" rowHeight="40px">
+                  <mat-grid-tile
+                    [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  >
+                    <mat-form-field appearance="fill">
+                      <mat-label>COD. TAREA MONITOREO</mat-label>
+                      <input
+                        matInput
+                        readonly
+                        formControlName="codTareaFrmCtrl"
+                      />
+                    </mat-form-field>
+                  </mat-grid-tile>
+                  <mat-grid-tile
+                    [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  >
+                    <mat-form-field appearance="fill">
+                      <mat-label>ESTADO TAREA MONITOREO</mat-label>
+                      <input
+                        matInput
+                        readonly
+                        formControlName="estadoTareaFrmCtrl"
+                      />
+                    </mat-form-field>
+                  </mat-grid-tile>
+                  <mat-grid-tile
+                    [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  >
+                    <mat-form-field appearance="fill">
+                      <mat-label>CÓDIGO CIE10</mat-label>
+                      <input
+                        matInput
+                        readonly
+                        formControlName="codCie10FrmCtrl"
+                      />
+                    </mat-form-field>
+                  </mat-grid-tile>
+                  <mat-grid-tile
+                    [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  >
+                    <mat-form-field appearance="fill">
+                      <mat-label>MEDICAMENTO MAC</mat-label>
+                      <input
+                        matInput
+                        readonly
+                        formControlName="descMACFrmCtrl"
+                        [matTooltip]="descMACFrmCtrl.value"
+                      />
+                    </mat-form-field>
+                  </mat-grid-tile>
+                  <mat-grid-tile
+                    [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  >
+                    <mat-form-field appearance="fill">
+                      <mat-label>PACIENTE</mat-label>
+                      <input
+                        matInput
+                        readonly
+                        formControlName="pacienteFrmCtrl"
+                        [matTooltip]="pacienteFrmCtrl.value"
+                      />
+                    </mat-form-field>
+                  </mat-grid-tile>
+                  <mat-grid-tile
+                    [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  >
+                    <mat-form-field appearance="fill">
+                      <mat-label>DIAGNÓSTICO</mat-label>
+                      <input
+                        matInput
+                        readonly
+                        formControlName="diagnosticoFrmCtrl"
+                        [matTooltip]="diagnosticoFrmCtrl.value"
+                      />
+                    </mat-form-field>
+                  </mat-grid-tile>
+                  <!-- <mat-grid-tile
+                    [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  >
+                    <mat-form-field appearance="fill">
+                      <mat-label>LINEA TRATAMIENTO</mat-label>
+                      <input
+                        matInput
+                        readonly
+                        formControlName="lineaTrataFrmCtrl"
+                      />
+                    </mat-form-field>
+                  </mat-grid-tile> -->
+                  <mat-grid-tile
+                    [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  >
+                    <mat-form-field appearance="fill">
+                      <mat-label>CÓDIGO AFILIADO</mat-label>
+                      <input
+                        matInput
+                        readonly
+                        formControlName="codAfiliadoFrmCtrl"
+                      />
+                    </mat-form-field>
+                  </mat-grid-tile>
+                  <mat-grid-tile
+                    [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  >
+                    <mat-form-field appearance="fill">
+                      <mat-label>GRUPO DIAGNÓSTICO</mat-label>
+                      <input
+                        matInput
+                        readonly
+                        formControlName="grpDiagnosticoFrmCtrl"
+                      />
+                    </mat-form-field>
+                  </mat-grid-tile>
+                  <mat-grid-tile
+                    [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  >
+                    <mat-form-field appearance="fill" *ngIf="existe">
+                      <mat-label>FECHA PROGRAMADA</mat-label>
+                      <input
+                        matInput
+                        readonly
+                        formControlName="fechaProFrmCtrlDate"
+                        type="date"
+                      />
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" *ngIf="!existe">
+                      <mat-label>FECHA PROGRAMADA</mat-label>
+                      <input
+                        matInput
+                        readonly
+                        formControlName="fechaProFrmCtrlText"
+                      />
+                    </mat-form-field>
+                  </mat-grid-tile>
+
+
+
+
+
+
+
+                  <mat-grid-tile
+                    [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  >
+                    <mat-form-field appearance="fill">
+                      <mat-label>EDAD</mat-label>
+                      <input matInput readonly formControlName="edadFrmCtrl" />
+                    </mat-form-field>
+                  </mat-grid-tile>
+                  <mat-grid-tile
+                    [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  >
+                    <mat-form-field appearance="fill">
+                      <mat-label>MEDICO TRATANTE</mat-label>
+                      <input
+                        matInput
+                        readonly
+                        formControlName="medicoTratanteFrmCtrl"
+                      />
+                    </mat-form-field>
+                  </mat-grid-tile>
+                  <mat-grid-tile
+                    [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  >
+                    <mat-form-field appearance="fill">
+                      <mat-label>FECHA INICIO TRATAMIENTO</mat-label>
+                      <input
+                        matInput
+                        readonly
+                        formControlName="fInicioTratFrmCtrl"
+                        type="date"
+                      />
+                    </mat-form-field>
+                  </mat-grid-tile>
+                  <mat-grid-tile
+                    [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  >
+                    <mat-form-field appearance="fill">
+                      <mat-label>SEXO</mat-label>
+                      <input matInput readonly formControlName="sexoFrmCtrl" />
+                    </mat-form-field>
+                  </mat-grid-tile>
+                </mat-grid-list>
+              </form>
+            </mat-card-content>
+            <mat-card-actions class="btnRigth" align="end">
+              <button
+                mat-raised-button
+                class="btn-xl"
+                color="primary"
+                matTooltip="Ver historial del paciente"
+                (click)="verHistorialLineasTratamiento()"
+              >
+                <mat-icon inline="true">table_chart</mat-icon>
+                HISTORIAL DEL PACIENTE
+              </button>
+              <button
+                mat-raised-button
+                class="btn-xl"
+                (click)="verEvaluacionMAC(monitoreo.codigoEvaluacion, monitoreo.codigoAfiliado)"
+                matTooltip="Ver Informe Evaluación MAC"
+              >
+                <mat-icon inline="true">assignment</mat-icon>
+                EVALUACIÓN MAC
+              </button>
+              <button
+                mat-raised-button
+                class="btn-xl"
+                color="primary"
+                matTooltip="Descargar Informe"
+                (click)="descargarReporteMonitoreo(true)"
+              >
+                <mat-icon inline="true">table_chart</mat-icon>
+                DESCARGAR REPORTE
+              </button>
+            </mat-card-actions>
+          </mat-card>
+        </mat-expansion-panel>
+        <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)">
+          <mat-expansion-panel-header
+            [collapsedHeight]="'36px'"
+            [expandedHeight]="'36px'"
+          >
+            <mat-panel-title> SEGUIMIENTO DEL MEDICAMENTO </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-card class="table-resultados">
+            <mat-card-header> </mat-card-header>
+            <mat-card-content class="card-container">
+              <div class="table-container clear-both">
+                <table mat-table [dataSource]="dataSource" matSort>
+                  <ng-container
+                    *ngFor="let column of columnsGrilla"
+                    [matColumnDef]="column.columnDef"
+                  >
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      {{ column.header }}
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      {{ column.cell(row) }}
+                    </td>
+                  </ng-container>
+                  <!-- *ngIf="user.codRol == 5" -->
+                  <div *ngIf="user.getCodRol == 5">
+                    <ng-container matColumnDef="verDetalle" stickyEnd>
+                      <th mat-header-cell *matHeaderCellDef></th>
+                      <td mat-cell *matCellDef="let element">
+                        <button
+                          class="tableIconButton"
+                          mat-icon-button
+                          matTooltip="Editar"
+                          (click)="editarEvolucion(element)"
+                          *ngIf="disabEdit"
+                        >
+                          <!-- (element.pEstadoMonitoreo === 120 ||
+                            element.pEstadoMonitoreo === 119) &&  -->
+                          <!-- <button
+                          class="tableIconButton"
+                          mat-icon-button
+                          matTooltip="Editar"
+                          (click)="editarEvolucion(element)"
+                          *ngIf="btnEditarTabla === valorMostrarOpcion"
+                        > -->
+                          <mat-icon>border_color</mat-icon>
+                        </button>
+                        <!-- <button
+                          class="tableIconButton"
+                          mat-icon-button
+                          matTooltip="Ver Comentario"
+                          (click)="verDetalleEvolucion(element)"
+                          *ngIf="
+                            element.pEstadoMonitoreo == 119 &&
+                            btnVerComentarioTabla === valorMostrarOpcion
+                          "
+                        >
+                          <mat-icon>search</mat-icon>
+                        </button> -->
+                      </td>
+                    </ng-container>
+                  </div>
+
+                  <ng-container matColumnDef="descargarReporte" stickyEnd>
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element">
+                      <button
+                        class="tableIconButton"
+                        mat-icon-button
+                        matTooltip="Informe"
+                        (click)="descargarReporteEvolucion(element, true)"
+                      >
+                        <mat-icon inline="true">picture_as_pdf</mat-icon>
+                      </button>
+                    </td>
+                  </ng-container>
+
+                  <tr
+                    mat-header-row
+                    *matHeaderRowDef="displayedColumns; sticky: true"
+                  ></tr>
+                  <tr
+                    mat-row
+                    *matRowDef="let row; columns: displayedColumns"
+                  ></tr>
+                </table>
+
+                <div class="empty" *ngIf="!isLoading && dataSource === null">
+                  No existe datos para mostrar en la tabla
+                </div>
+
+                <mat-card *ngIf="isLoading" class="spinerTable">
+                  <mat-progress-spinner color="primary" mode="indeterminate">
+                  </mat-progress-spinner>
+                </mat-card>
+
+                <mat-paginator
+                  class="mat-paginator-sticky"
+                  [pageSizeOptions]="[5, 10, 25, 100]"
+                  showFirstLastButtons
+                >
+                </mat-paginator>
+              </div>
+            </mat-card-content>
+            <mat-card-actions class="btnRigth">
+              <button
+                mat-raised-button
+                color="primary"
+                class="btn-xl"
+                matTooltip="Ver Seguimiento del ejecutivo"
+                (click)="verSeguimientoEjecutivo()"
+                *ngIf="
+                  (cantSeguimiento > 0 ||
+                    monitoreo.codEstadoMonitoreo == 121) &&
+                  btnVerSeguimiento === valorMostrarOpcion
+                "
+              >
+                <span
+                  [ngClass]="{ 'mat-badge-seg-ejec': true }"
+                  matBadge="{{ pendSeguimiento }}"
+                  matBadgeColor="warn"
+                  *ngIf="pendSeguimiento > 0 && user.getCodRol == 5"
+                >
+                </span>
+                <mat-icon inline="true">tv</mat-icon>
+                VER SEGUIMIENTO<br />
+                EJECUTIVO
+              </button>
+              <button
+                mat-raised-button
+                color="primary"
+                class="btn-xl"
+                matTooltip="Reg. Seguimiento del ejecutivo"
+                (click)="regSeguimientoEjecutivo()"
+                *ngIf="
+                  monitoreo.codEstadoMonitoreo == 121 && user.getCodRol == 6
+                "
+              >
+                <mat-icon inline="true">supervised_user_circle</mat-icon>
+                REG. SEGUIMIENTO<br />
+                EJECUTIVO
+              </button>
+              <button
+                mat-raised-button
+                color="primary"
+                class="btn-xl"
+                matTooltip="Ver Marcadores"
+                (click)="verMarcadores()"
+              >
+                <mat-icon inline="true">bookmarks</mat-icon>
+                VER MARCADORES
+              </button>
+
+              <!-- pegar luego en datos evolucion -->
+              <!-- [disabled]="marcadorHabilitado" -->
+              <button
+                mat-raised-button
+                color="primary"
+                class="btn-xl"
+                (click)="registrarDatosEvolucion()"
+                matTooltip="Registrar datos de la evolución"
+                *ngIf="user.getCodRol == 5"
+              >
+                <mat-icon inline="true">note_add</mat-icon>
+                DATOS EVOLUCIÓN
+              </button>
+              <!-- <button
+                mat-raised-button
+                color="primary"
+                class="btn-xl"
+                (click)="tablaToxicidad()"
+                matTooltip="Registrar datos de la evolución"
+              >
+                <mat-icon inline="true">note_add</mat-icon>
+                PRUEBA TOXICIDAD
+              </button> -->
+              <!-- <button
+                mat-raised-button
+                color="primary"
+                class="btn-xl"
+                (click)="registrarResultadoEvolucion()"
+                matTooltip="Registrar resultados de la evolución"
+                *ngIf="
+                  monitoreo.codEstadoMonitoreo == 120 &&
+                  user.getCodRol == 5 &&
+                  grabarHabilitado &&
+                  btnRegistrarRasultado === valorMostrarOpcion
+                "
+              >
+                <mat-icon inline="true">description</mat-icon>
+                RESULTADOS EVOLUCIÓN
+              </button> -->
+            </mat-card-actions>
+          </mat-card>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-card-content>
+    <mat-card-actions class="btnRigth">
+      <button
+        mat-raised-button
+        color="primary"
+        class="btn-xl"
+        style="height: 42px; font-size: 13px"
+        matTooltip="Ir Medicamento Continuador"
+        (click)="irEvaluacionContinuador()"
+        *ngIf="visibleBotonCont"
+      >
+        EVALUACIÓN CONTINUADOR
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

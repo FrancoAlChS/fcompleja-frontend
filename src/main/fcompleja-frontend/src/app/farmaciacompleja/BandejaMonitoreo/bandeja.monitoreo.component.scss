@@ -1,0 +1,89 @@
+@import "../../main";
+
+.page-monitoreo {
+  .table-resultados {
+    margin-bottom: 0px;
+    .table-container {
+      max-height: 338px;
+    }
+  }
+}
+
+.btnActions {
+  margin: 0;
+  padding: 0;
+  border-top: 1px $color-secundario solid;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .mat-raised-button {
+    font-size: 0.9em;
+    margin-top: 10px;
+    display: flex;
+    border-radius: 25px;
+    white-space: pre-wrap;
+    justify-content: center;
+    line-height: 1.4;
+    .mat-icon {
+      font-size: 20px;
+      margin-right: 5px;
+    }
+    span.mat-button-wrapper {
+      display: flex;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+  }
+  .btnMnto {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}
+
+@include mat-table-columns(
+  (
+    codigoDescripcionMonitoreo: (
+      width: 7rem
+    ),
+    codigoEvaluacion: (
+      width: 7rem
+    ),
+    fechAprobacion: (
+      width: 8rem
+    ),
+    codigoScgSolben: (
+      width: 9rem
+    ),
+    nroCartaGarantia: (
+      width: 7rem
+    ),
+    nomMedicamento: (
+      width: 17rem
+    ),
+    numeroLineaTratamiento: (
+      width: 8rem
+    ),
+    nombrePaciente: (
+      width: 15rem
+    ),
+    nomEstadoMonitoreo: (
+      width: 15rem
+    ),
+    fechaProximoMonitoreo: (
+      width: 9rem
+    ),
+    nomResponsableMonitoreo: (
+      width: 15rem
+    ),
+    verDetalle: (
+      width: 2rem
+    ),
+    nomResultMonitoreo: (
+      width: 8rem
+    ),
+    nomEstSeguimiento: (
+      width: 10rem
+    )
+  )
+);

@@ -1,0 +1,211 @@
+<div class="mat-dialog-header">
+        <h1 class="mat-dialog-title" mat-dialog-title> {{ titulo }} </h1>
+    </div>
+    <div class="mat-dialog-content" mat-dialog-content>
+        <form [formGroup]="marcadorForm" (ngSubmit)="accionMarcador()" novalidate>
+            <h4>DATOS PERSONALES</h4>
+            <mat-grid-list cols="12" rowHeight="46px">
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 3, lg: 3, xl: 3}">
+                    <mat-form-field class="item" appearance="fill">
+                        <mat-label class="text-uppercase">APELLIDO PATERNO</mat-label>
+                        <input matInput [appUpperCase] formControlName="paterno" >
+                        <mat-error *ngIf="marcadorFormMessages.paterno && (fc.paterno.errors || ( produccionSubmitted && fc.paterno.errors ))" >
+                            <mat-error *ngFor="let validation of marcadorFormMessages.paterno">
+                                <mat-error class="error-message" *ngIf="marcadorForm.get('paterno').hasError(validation.type)">{{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 3, lg: 3, xl: 3}">
+                    <mat-form-field class="item" appearance="fill">
+                        <mat-label class="text-uppercase">APELLIDO MATERNO</mat-label>
+                        <input matInput [appUpperCase] formControlName="materno" >
+                        <mat-error *ngIf="marcadorFormMessages.materno && (fc.materno.errors || ( produccionSubmitted && fc.materno.errors ))" >
+                            <mat-error *ngFor="let validation of marcadorFormMessages.materno">
+                                <mat-error class="error-message" *ngIf="marcadorForm.get('materno').hasError(validation.type)">{{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}">
+                    <mat-form-field class="item" appearance="fill">
+                        <mat-label class="text-uppercase">NOMBRES</mat-label>
+                        <input matInput [appUpperCase] formControlName="nombre" >
+                        <mat-error *ngIf="marcadorFormMessages.nombre && (fc.nombre.errors || ( produccionSubmitted && fc.nombre.errors ))" >
+                            <mat-error *ngFor="let validation of marcadorFormMessages.nombre">
+                                <mat-error class="error-message" *ngIf="marcadorForm.get('nombre').hasError(validation.type)">{{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="12" rowHeight="46px">
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}">
+                    <mat-form-field class="item" appearance="fill">
+                        <mat-label class="text-uppercase">CORREO AUNA</mat-label>
+                        <input matInput formControlName="correo" >
+                        <mat-error *ngIf="marcadorFormMessages.correo && (fc.correo.errors || ( produccionSubmitted && fc.correo.errors ))" >
+                            <mat-error *ngFor="let validation of marcadorFormMessages.correo">
+                                <mat-error class="error-message" *ngIf="marcadorForm.get('correo').hasError(validation.type)">{{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 3, lg: 3, xl: 3}">
+                    <mat-form-field class="item" appearance="fill">
+                        <mat-label class="text-uppercase">TIPO DE DOCUMENTO</mat-label>
+                        <mat-select formControlName="tipoDocumento" placeholder="ESTADO" (selectionChange)="cambioTipDoc()" >
+                            <mat-option *ngFor="let row of listaTipoDocumento" [value]="row.codParametro">
+                                {{row.denominacion}}
+                            </mat-option>
+                        </mat-select>
+                        <div class="select-placeholder-container inputSpinner" *ngIf="spinnerTipoDocumento === true">
+                            <mat-spinner class="spinner" diameter="15"></mat-spinner>
+                        </div>
+                        <mat-error *ngIf="marcadorFormMessages.tipoDocumento && (fc.tipoDocumento.errors || ( marcadorSubmitted && fc.tipoDocumento.errors ))" >
+                            <mat-error *ngFor="let validation of marcadorFormMessages.tipoDocumento">
+                                <mat-error class="error-message" *ngIf="marcadorForm.get('tipoDocumento').hasError(validation.type)">{{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 3, lg: 3, xl: 3}">
+                    <mat-form-field class="item" appearance="fill">
+                        <mat-label class="text-uppercase">NÚMERO DE DOCUMENTO</mat-label>
+                        <input matInput formControlName="numeroDocumento" >
+                        <mat-error *ngIf="marcadorFormMessages.numeroDocumento && (fc.numeroDocumento.errors || ( produccionSubmitted && fc.numeroDocumento.errors ))" >
+                            <mat-error *ngFor="let validation of marcadorFormMessages.numeroDocumento">
+                                <mat-error class="error-message" *ngIf="marcadorForm.get('numeroDocumento').hasError(validation.type)">{{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="12" rowHeight="46px">
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}">
+                    <mat-form-field class="item" appearance="fill">
+                        <mat-label class="text-uppercase">NÚMERO DE TELÉFONO</mat-label>
+                        <input matInput formControlName="telefono" >
+                        <mat-error *ngIf="marcadorFormMessages.telefono && (fc.telefono.errors || ( produccionSubmitted && fc.telefono.errors ))" >
+                            <mat-error *ngFor="let validation of marcadorFormMessages.telefono">
+                                <mat-error class="error-message" *ngIf="marcadorForm.get('telefono').hasError(validation.type)">{{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}">
+                    <mat-form-field class="item" appearance="fill">
+                        <mat-label class="text-uppercase">NÚMERO DE CELULAR</mat-label>
+                        <input matInput formControlName="celular" >
+                        <mat-error *ngIf="marcadorFormMessages.celular && (fc.celular.errors || ( produccionSubmitted && fc.celular.errors ))" >
+                            <mat-error *ngFor="let validation of marcadorFormMessages.celular">
+                                <mat-error class="error-message" *ngIf="marcadorForm.get('celular').hasError(validation.type)">{{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <br>
+            <h4>DATOS DE USUARIO</h4>
+            <mat-grid-list cols="12" rowHeight="40px">
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}">
+                    <mat-form-field class="item" appearance="fill">
+                        <mat-label class="text-uppercase">APLICACIÓN</mat-label>
+                        <mat-select formControlName="aplicacion" placeholder="Aplicación" (selectionChange)="cambioTipoAplicacion()">
+                            <mat-option *ngFor="let row of listaAplicacion" [value]="row.codAplicacion">
+                                {{row.nomLargo}}
+                            </mat-option>
+                        </mat-select>
+                        <div class="select-placeholder-container inputSpinner" *ngIf="spinnerAplicacion === true">
+                            <mat-spinner class="spinner" diameter="15"></mat-spinner>
+                        </div>
+                        <mat-error *ngIf="marcadorFormMessages.aplicacion && (fc.aplicacion.errors || ( marcadorSubmitted && fc.aplicacion.errors ))" >
+                            <mat-error *ngFor="let validation of marcadorFormMessages.aplicacion">
+                                <mat-error class="error-message" *ngIf="marcadorForm.get('aplicacion').hasError(validation.type)">{{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}">
+                    <mat-form-field class="item" appearance="fill">
+                        <mat-label class="text-uppercase">PERFIL</mat-label>
+                        <mat-select formControlName="perfil" placeholder="Perfil" >
+                            <mat-option *ngFor="let row of listaPerfil" [value]="row.codRol">
+                                {{row.nombreRol}}
+                            </mat-option>
+                        </mat-select>
+                        <div class="select-placeholder-container inputSpinner" *ngIf="spinnerPerfil === true">
+                            <mat-spinner class="spinner" diameter="15"></mat-spinner>
+                        </div>
+                        <mat-error *ngIf="marcadorFormMessages.perfil && (fc.perfil.errors || ( marcadorSubmitted && fc.perfil.errors ))" >
+                            <mat-error *ngFor="let validation of marcadorFormMessages.perfil">
+                                <mat-error class="error-message" *ngIf="marcadorForm.get('perfil').hasError(validation.type)">{{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list cols="12" rowHeight="70px">
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 2, lg: 2, xl: 2}">
+                    <mat-form-field class="item" appearance="fill">
+                        <mat-label class="text-uppercase">USUARIO</mat-label>
+                        <input matInput [appUpperCase] formControlName="usuario" >
+                        <mat-error *ngIf="marcadorFormMessages.usuario && (fc.usuario.errors || ( produccionSubmitted && fc.usuario.errors ))" >
+                            <mat-error *ngFor="let validation of marcadorFormMessages.usuario">
+                                <mat-error class="error-message" *ngIf="marcadorForm.get('usuario').hasError(validation.type)">{{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 5, lg: 5, xl: 5}">
+                    <mat-form-field class="item" appearance="fill">
+                        <mat-label class="text-uppercase">CONTRASEÑA</mat-label>
+                        <input matInput type="password" formControlName="clave" >
+                        <mat-error *ngIf="marcadorFormMessages.clave && (fc.clave.errors || ( produccionSubmitted && fc.clave.errors ))" >
+                            <mat-error *ngFor="let validation of marcadorFormMessages.clave">
+                                <mat-error class="error-message" *ngIf="marcadorForm.get('clave').hasError(validation.type)">{{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 5, lg: 5, xl: 5}">
+                    <mat-form-field class="item" appearance="fill">
+                        <mat-label class="text-uppercase">REPITA CONTRASEÑA</mat-label>
+                        <input matInput type="password" formControlName="claveRepetida" >
+                        <mat-error *ngIf="marcadorFormMessages.claveRepetida && (fc.claveRepetida.errors || ( produccionSubmitted && fc.claveRepetida.errors ))" >
+                            <mat-error *ngFor="let validation of marcadorFormMessages.claveRepetida">
+                                <mat-error class="error-message" *ngIf="marcadorForm.get('claveRepetida').hasError(validation.type)">{{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+            
+            <mat-grid-list cols="12" rowHeight="40px">
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 12, lg: 12, xl: 12}">
+                    <mat-form-field class="item" appearance="fill">
+                        <mat-label class="text-uppercase">ESTADO</mat-label>
+                        <mat-select formControlName="estado" placeholder="Estado">
+                            <mat-option *ngFor="let row of listaEstadoUsuario" [value]="row.abreviatura">
+                                {{row.denominacion}}
+                            </mat-option>
+                        </mat-select>
+                        <div class="select-placeholder-container inputSpinner" *ngIf="spinnerEstadoUsuario === true">
+                            <mat-spinner class="spinner" diameter="15"></mat-spinner>
+                        </div>
+                        <mat-error *ngIf="marcadorFormMessages.estado && (fc.estado.errors || ( marcadorSubmitted && fc.estado.errors ))" >
+                            <mat-error *ngFor="let validation of marcadorFormMessages.estado">
+                                <mat-error class="error-message" *ngIf="marcadorForm.get('estado').hasError(validation.type)">{{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <div class="mat-dialog-actions modal-mantenimiento">
+                <mat-spinner-button mat-raised-button color="primary" [options]="marcadorBtnOpts" ></mat-spinner-button>
+                <button mat-raised-button type="button" (click)="onDialogClose(false)">CANCELAR</button>
+            </div>
+        </form>
+        
+    </div>
+    

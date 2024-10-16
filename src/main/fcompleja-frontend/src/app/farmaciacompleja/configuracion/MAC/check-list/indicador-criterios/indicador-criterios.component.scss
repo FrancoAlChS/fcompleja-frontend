@@ -1,0 +1,43 @@
+@import "../../../../../main";
+
+.macModal {
+  width: 100%;
+}
+
+.table-resultados {
+  box-shadow: none !important;
+}
+
+@include mat-table-columns(
+  (
+    codCriterioLargo: (
+      width: 4rem
+    ),
+    descripcion: (
+      width: 30rem
+    ),
+    estado: (
+      width: 5rem
+    ),
+    editarIN: (
+      width: 4rem
+    )
+  )
+);
+
+@include mat-table-columns(
+  (
+    codCriterioLargo: (
+      width: 4rem
+    ),
+    descripcion: (
+      width: 30rem
+    ),
+    estado: (
+      width: 5rem
+    ),
+    editarEX: (
+      width: 4rem
+    )
+  )
+);

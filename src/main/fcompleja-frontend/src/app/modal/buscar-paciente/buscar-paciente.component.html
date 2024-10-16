@@ -1,0 +1,129 @@
+<div class="mat-dialog-header">
+  <h1 class="mat-dialog-title" mat-dialog-title> BUSCAR PACIENTES </h1>
+</div>
+<div class="mat-dialog-content modalTable" mat-dialog-content>
+  <mat-card class="modalCard modalForm">
+    <form class="form form-solicitud pacienteCtrl" novalidate [formGroup]="nroPcteFrmGrp">
+      <mat-grid-list cols="12" rowHeight="40px">
+        <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 4, lg: 4, xl: 4}">
+            <mat-form-field class="item" appearance="fill">
+                <mat-label class="text-uppercase">TIPO DE DOCUMENTO</mat-label>
+                <mat-select formControlName="tipoDocFrmCtrl" (selectionChange)="cambioTipDoc()" >
+                    <mat-option *ngFor="let row of listaTipoDocumento" [value]="row.abreviatura">
+                        {{row.denominacion}}
+                    </mat-option>
+                </mat-select>
+                <div class="select-placeholder-container inputSpinner" *ngIf="spinnerTipoDocumento === true">
+                    <mat-spinner class="spinner" diameter="15"></mat-spinner>
+                </div>
+                <!--<mat-error *ngIf="marcadorFormMessages.tipoDocumento && (fc.tipoDocumento.errors || ( marcadorSubmitted && fc.tipoDocumento.errors ))" >
+                    <mat-error *ngFor="let validation of marcadorFormMessages.tipoDocumento">
+                        <mat-error class="error-message" *ngIf="marcadorForm.get('tipoDocumento').hasError(validation.type)">{{validation.message}}</mat-error>
+                    </mat-error>
+                </mat-error>-->
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 4, lg: 4, xl: 4}">
+          <mat-form-field appearance="fill">
+            <mat-label>NUMERO DOCUMENTO</mat-label>
+            <input matInput formControlName="nroDocuFrmCtrl">
+            <mat-error *ngIf="pacienteFormMessages.numeroDocumento && (fc.nroDocuFrmCtrl.errors || ( produccionSubmitted && fc.nroDocuFrmCtrl.errors ))" >
+                <mat-error *ngFor="let validation of pacienteFormMessages.numeroDocumento">
+                    <mat-error class="error-message" *ngIf="nroPcteFrmGrp.get('nroDocuFrmCtrl').hasError(validation.type)">{{validation.message}}</mat-error>
+                </mat-error>
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </form>
+    <!-- [appAlphaNumerico]  -->
+    <form class="form form-solicitud pacienteCtrl" novalidate [formGroup]="datosPcteFrmGrp">
+      <mat-grid-list cols="12" rowHeight="45px">
+        <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 4, xl: 4}">
+          <mat-form-field appearance="fill">
+            <mat-label>APELLIDO PATERNO</mat-label>
+            <input matInput formControlName="apelPateFrmCtrl" (ngModelChange)="cambioInputApelPate()"
+              oninput="this.value = this.value.toUpperCase()">
+              <mat-error *ngIf="pacienteFormMessages.apellidoPaterno && (fc2.apelPateFrmCtrl.errors || ( produccionSubmitted && fc2.apelPateFrmCtrl.errors ))">
+                <mat-error *ngFor="let validation of pacienteFormMessages.apellidoPaterno">
+                  <mat-error *ngIf="datosPcteFrmGrp.get('apelPateFrmCtrl').hasError(validation.type)" class="error-message">{{validation.message}}</mat-error>
+                </mat-error>
+              </mat-error>
+              
+              <!-- <div *ngIf="this.datosPcteFrmGrp.get('apelPateFrmCtrl').errors.minlength">
+                Name must be at least 4 characters long.
+              </div> -->
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 4, xl: 4}">
+          <mat-form-field appearance="fill">
+            <mat-label>APELLIDO MATERNO</mat-label>
+            <input matInput formControlName="apelMateFrmCtrl" (ngModelChange)="cambioInputApelMate()"
+              oninput="this.value = this.value.toUpperCase()">
+              <mat-error *ngIf="pacienteFormMessages.apellidoMaterno && (fc2.apelMateFrmCtrl.errors || ( produccionSubmitted && fc2.apelMateFrmCtrl.errors ))">
+                <mat-error *ngFor="let validation of pacienteFormMessages.apellidoMaterno">
+                  <mat-error *ngIf="datosPcteFrmGrp.get('apelMateFrmCtrl').hasError(validation.type)" class="error-message">{{validation.message}}</mat-error>
+                </mat-error>
+              </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [responsiveRows]="{xs: 11, sm: 11, md: 5, lg: 3, xl: 3}">
+          <mat-form-field appearance="fill">
+            <mat-label>NOMBRES</mat-label>
+            <input matInput formControlName="nombresFrmCtrl" (ngModelChange)="cambioInputNombres()"
+              oninput="this.value = this.value.toUpperCase()">
+              <mat-error *ngIf="pacienteFormMessages.nombres && (fc2.nombresFrmCtrl.errors || ( produccionSubmitted && fc2.nombresFrmCtrl.errors ))">
+                <mat-error *ngFor="let validation of pacienteFormMessages.nombres">
+                  <mat-error *ngIf="datosPcteFrmGrp.get('nombresFrmCtrl').hasError(validation.type)" class="error-message">{{validation.message}}</mat-error>
+                </mat-error>
+              </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [responsiveRows]="{xs: 1, sm: 1, md: 1, lg: 1, xl: 1}">
+          <button class="iconbtn" mat-icon-button matTooltip="Buscar Paciente" (click)="buscarPaciente($event)" [disabled]="btnBuscarPaciente">
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </form>
+  </mat-card>
+
+  <mat-card class="table-resultados">
+    <mat-card-header>
+      <mat-card-title> RESULTADOS DE LA BÚSQUEDA </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="card-container">
+      <div class="table-container clear-both">
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <ng-container *ngFor="let column of columnsGrilla" [matColumnDef]="column.columnDef">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ column.header }} </th>
+            <td mat-cell *matCellDef="let row"> {{ column.cell(row) }} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{solbenRow: row.alertSCGSolben}"
+            (click)="seleccionarFila(row)"></tr>
+        </table>
+
+        <div class="empty" *ngIf="!isLoading && dataSource === null">
+          No existe datos para mostrar en la tabla
+        </div>
+
+        <mat-card *ngIf="isLoading" class="spinerTable">
+          <mat-progress-spinner color="primary" mode="indeterminate">
+          </mat-progress-spinner>
+        </mat-card>
+
+        <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons>
+        </mat-paginator>
+
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="mat-dialog-actions modal-footer">
+  <button mat-raised-button (click)="opcionSalir()">
+    <strong>SALIR</strong>
+  </button>
+</div>

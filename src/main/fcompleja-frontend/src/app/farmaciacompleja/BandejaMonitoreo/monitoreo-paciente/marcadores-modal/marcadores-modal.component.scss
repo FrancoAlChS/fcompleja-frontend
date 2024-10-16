@@ -1,0 +1,26 @@
+@import "../../../../variables";
+@import "../../../../matcard";
+@import "../../../../bodyStyle";
+@import "../../../../matTabs";
+@import "../../../../accordeon";
+@import "../../../../alert";
+@import "../../../../formField";
+@import "../../../../scroll";
+
+.tddisabled {
+  background-color: rgb(224, 224, 224);
+}
+.mat-table {
+  overflow: auto;
+  width: auto;
+  min-width: 100%;
+  table-layout: fixed;
+}
+.mat-header-cell, .mat-cell {
+  min-width: 5rem;
+  max-width: 10rem;
+}
+
+.table-container td {
+  white-space: normal;
+}

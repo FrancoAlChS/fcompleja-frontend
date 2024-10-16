@@ -1,0 +1,67 @@
+<div class="mat-dialog-header">
+        <h1 class="mat-dialog-title" mat-dialog-title> {{ titulo }} </h1>
+    </div>
+    <div class="mat-dialog-content" mat-dialog-content>
+        <form [formGroup]="complicacionForm" (ngSubmit)="accionComplicacion()" novalidate>
+            <mat-grid-list cols="12" rowHeight="45px">
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 12, lg: 12, xl: 12}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">CÓDIGO - VERSIÓN</mat-label>
+                    <input matInput formControlName="codigo" >
+                    <mat-error *ngIf="complicacionFormMessages.codigo && (fc.codigo.errors || ( complicacionSubmitted && fc.codigo.errors ))" >
+                        <mat-error *ngFor="let validation of complicacionFormMessages.codigo">
+                            <mat-error class="error-message" *ngIf="complicacionForm.get('codigo').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <!--<mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}">
+                    <mat-form-field class="item" appearance="fill">
+                    <mat-label class="text-uppercase">ESTADO</mat-label>
+                    <mat-select formControlName="estado" placeholder="ESTADO" >
+                        <mat-option *ngFor="let row of listaEstado" [value]="row.codigoParametro">
+                        {{row.nombreParametro}}
+                        </mat-option>
+                    </mat-select>
+                    <div class="select-placeholder-container inputSpinner" *ngIf="spinnerEstado === true">
+                        <mat-spinner class="spinner" diameter="15"></mat-spinner>
+                    </div>
+                    <mat-error *ngIf="complicacionFormMessages.estado && (fc.estado.errors || ( complicacionSubmitted && fc.estado.errors ))" >
+                        <mat-error *ngFor="let validation of complicacionFormMessages.estado">
+                        <mat-error class="error-message" *ngIf="complicacionForm.get('estado').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>-->
+                <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 12, lg: 12, xl: 12}">
+                    <mat-form-field class="item" appearance="fill">
+                        <mat-label class="text-uppercase">NOMBRE ARCHIVO</mat-label>
+                        <input matInput formControlName="nombre" >
+                        <mat-error *ngIf="complicacionFormMessages.nombre && (fc.nombre.errors || ( complicacionSubmitted && fc.nombre.errors ))" >
+                        <mat-error *ngFor="let validation of complicacionFormMessages.nombre">
+                            <mat-error class="error-message" *ngIf="complicacionForm.get('nombre').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 7, sm: 7, md: 7, lg: 7, xl: 7}">
+                    <mat-label class="text-uppercase">ARCHIVO A CARGAR (Formato PDF)</mat-label>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 5, sm: 5, md: 5, lg: 5, xl: 5}">
+                    <button type="button" class="tableIconButton" mat-icon-button matTooltip="Cargar Archivo" (click)="fileInput.click()">
+                        <mat-icon>attach_file</mat-icon>
+                        <input #fileInput type="file" (change)="openFileRequerido($event)" style="display:none;"
+                        accept="application/pdf" />
+                    </button>
+                    <div class="select-placeholder-container inputSpinner" *ngIf="spinnerCargarArchivo === true">
+                        <mat-spinner class="spinner" diameter="15"></mat-spinner>
+                    </div>
+                </mat-grid-tile>
+            </mat-grid-list>
+            <div class="mat-dialog-actions modal-mantenimiento">
+                <mat-spinner-button mat-raised-button color="primary"  [options]="complicacionBtnOpts" ></mat-spinner-button>
+                <button mat-raised-button type="button" (click)="onDialogClose(false)">CANCELAR</button>
+            </div>
+        </form>
+    </div>
+        

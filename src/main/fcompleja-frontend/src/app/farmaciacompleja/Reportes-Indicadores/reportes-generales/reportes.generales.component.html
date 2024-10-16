@@ -1,0 +1,279 @@
+<div class="page-reporte-generales">
+  <ng4-loading-spinner [timeout]="400000" [zIndex]="9999"></ng4-loading-spinner>
+  <mat-card class="box-filtros">
+    <mat-card-header class="box-section-header">
+      <mat-card-title class="box-section-title">
+        REPORTE DE SOLICITUDES DE AUTORIZACIONES
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="reporteAutorizFrmGrp">
+        <mat-grid-list cols="12" rowHeight="60px">
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 4, sm: 3, md: 3, lg: 2, xl: 2 }"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>FECHA INICIO</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                formControlName="fechaInicioAutoriz"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 4, sm: 3, md: 3, lg: 2, xl: 2 }"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>FECHA FIN</mat-label>
+              <!--<mat-select formControlName="mesesPreFrmCtrl" (selectionChange)="mostrarFechaTabla()">
+                <mat-option *ngFor="let mes of cmbMeses" [value]="mes.IdMes">
+                  {{mes.Mes}}
+                </mat-option>
+              </mat-select>-->
+              <input
+                matInput
+                [matDatepicker]="picker1"
+                formControlName="fechaFinAutoriz"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker1"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 4, sm: 3, md: 3, lg: 2, xl: 2 }"
+          >
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="generarReportesGeneralesAut()"
+            >
+              <mat-icon>build</mat-icon>
+              <strong>GENERAR REPORTES</strong>
+            </button>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="table-resultados">
+    <mat-card-content>
+      <div class="table-container clear-both">
+        <table mat-table [dataSource]="dataSourceReporteAutorizador" matSort>
+          <ng-container matColumnDef="reportes">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              REPORTE DE SOLICITUDES DE AUTORIZACIONES
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <b>Rango:</b> {{row.fechaIni}} - {{row.fechaFin}}   <b>Fecha Creación:</b> {{ row.fechaCreacion }}    <b>Estado:</b> {{row.status}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="verExcel">
+            <th mat-header-cell *matHeaderCellDef>
+              <button
+                class="tableIconButton"
+                mat-icon-button
+                matTooltip="Recargar"
+                (click)="reloadAuthorizationsReport()"
+              >
+                <mat-icon svgIcon="reload-icon"></mat-icon>
+              </button>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <button
+                class="tableIconButton"
+                mat-icon-button
+                matTooltip="VER REPORTE"
+                [disabled]="verReportesAut"
+                (click)="verReporteGeneral(row)"
+              >
+                <mat-icon svgIcon="excel-icon"></mat-icon>
+              </button>
+              <button
+                class="tableIconButton"
+                mat-icon-button
+                matTooltip="Descargar Actividades"
+                [disabled]="verReportesAut"
+                (click)="downloadLogAuthorizationActivities()"
+              >
+                <mat-icon svgIcon="activity-log"></mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayColumnsReporteG; sticky: true"
+          ></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayColumnsReporteG"
+            [ngClass]="{ solbenRow: row.alertSCGSolben }"
+          ></tr>
+        </table>
+
+        <mat-paginator
+          class="mat-paginator-sticky"
+          [pageSizeOptions]="[10, 25, 100, 200]"
+          showFirstLastButtons
+        >
+        </mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="box-filtros">
+    <mat-card-header class="box-section-header">
+      <mat-card-title class="box-section-title">
+        REPORTE GENERAL DE MONITOREO
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="reporteMonitFrmGrp">
+        <mat-grid-list cols="12" rowHeight="60px">
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 4, sm: 3, md: 3, lg: 2, xl: 2 }"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>FECHA INICIO</mat-label>
+              <!--<mat-select formControlName="anhosPreFrmCtrl" (selectionChange)="mostrarFechaTabla()">
+                <mat-option *ngFor="let year of cmbAnhos" [value]="year.Anho">
+                  {{year.Anho}}
+                </mat-option>
+              </mat-select>-->
+              <input
+                matInput
+                [matDatepicker]="meetDate"
+                [appOnlyDate]="{ type: 'date' }"
+                formControlName="fechaInicioMonit"
+                (keyup.enter)="inputFecha($event)"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="meetDate"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #meetDate></mat-datepicker>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 4, sm: 3, md: 3, lg: 2, xl: 2 }"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>FECHA FIN</mat-label>
+              <!--<mat-select formControlName="mesesPreFrmCtrl" (selectionChange)="mostrarFechaTabla()">
+                <mat-option *ngFor="let mes of cmbMeses" [value]="mes.IdMes">
+                  {{mes.Mes}}
+                </mat-option>
+              </mat-select>-->
+              <input
+                matInput
+                [matDatepicker]="meetDate1"
+                [appOnlyDate]="{ type: 'date' }"
+                formControlName="fechaFinMonit"
+                (keyup.enter)="inputFecha($event)"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="meetDate1"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #meetDate1></mat-datepicker>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 4, sm: 3, md: 3, lg: 2, xl: 2 }"
+          >
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="visualizarReportesPreCargados()"
+            >
+              <mat-icon>build</mat-icon>
+              <strong>GENERAR REPORTES</strong>
+            </button>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="table-resultados">
+    <mat-card-content>
+      <div class="table-container clear-both">
+        <table mat-table [dataSource]="dataSourceReporteG" matSort>
+          <ng-container matColumnDef="reportes">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              REPORTE GENERAL DE MONITOREO
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <b>Rango:</b> {{row.fechaIni}} - {{row.fechaFin}}   <b>Fecha Creación:</b> {{ row.fechaCreacion }}    <b>Estado:</b> {{row.status}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="verExcel">
+            <th mat-header-cell *matHeaderCellDef>
+              <button
+                class="tableIconButton"
+                mat-icon-button
+                matTooltip="Recargar"
+                (click)="reloadMonitoringReport()"
+              >
+              <mat-icon svgIcon="reload-icon"></mat-icon>
+              </button>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <button
+                class="tableIconButton"
+                mat-icon-button
+                matTooltip="VER REPORTE"
+                [disabled]="verReportes"
+                (click)="verReporteGeneral(row)"
+              >
+                <mat-icon svgIcon="excel-icon"></mat-icon>
+              </button>
+              <button
+                class="tableIconButton"
+                mat-icon-button
+                matTooltip="Descargar Actividades"
+                [disabled]="verReportes"
+                (click)="downloadLogMonitoringActivities()"
+              >
+                <mat-icon svgIcon="activity-log"></mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayColumnsReporteG; sticky: true"
+          ></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayColumnsReporteG"
+            [ngClass]="{ solbenRow: row.alertSCGSolben }"
+          ></tr>
+        </table>
+
+        <mat-paginator
+          class="mat-paginator-sticky"
+          [pageSizeOptions]="[10, 25, 100, 200]"
+          showFirstLastButtons
+        >
+        </mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

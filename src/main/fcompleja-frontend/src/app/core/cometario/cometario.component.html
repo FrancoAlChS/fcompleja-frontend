@@ -1,0 +1,21 @@
+<div class="mat-dialog-header">
+  <h1 class="mat-dialog-title" mat-dialog-title>{{data.title}}</h1>
+</div>
+<div class="mat-dialog-content modal-body" mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>INGRESAR COMENTARIOS </mat-label>
+    <textarea [appUpperCase] class="taCondicionBasal" matInput
+      [(formControl)]="comentarioFrmCtrl"></textarea>
+    <mat-error *ngIf="comentarioFrmCtrl.touched && comentarioFrmCtrl.hasError('required')">
+      <strong>Debe ingresar un comentario</strong>
+    </mat-error>
+  </mat-form-field>
+</div>
+<div class="mat-dialog-actions modal-footer">
+  <button mat-icon-button color="primary" (click)="registrarComentario()" matTooltip="Registrar Comentario">
+    <strong>Grabar</strong>
+  </button>
+  <button mat-icon-button (click)="cerrarVentana()" matTooltip="Cerrar Ventana">
+    <strong>Salir</strong>
+  </button>
+</div>

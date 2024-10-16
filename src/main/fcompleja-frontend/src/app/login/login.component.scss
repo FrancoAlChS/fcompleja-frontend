@@ -1,0 +1,119 @@
+@import "../main";
+
+@media screen and (max-height: 768px){
+  #rc-imageselect, .g-recaptcha {transform:scale(0.77);-webkit-transform:scale(0.77);transform-origin:0 0;-webkit-transform-origin:0 0;}
+  .ngcaptcha {
+    margin-left: 13%;
+  }
+
+  }
+
+  .ngcaptcha {
+    margin-left: 6%;
+  }
+
+.page-login {
+  background-image: url(./../../assets/img/home_medico.png) !important;
+  //width: 1400px;
+  background-position: center;
+  background-position-x: center;
+  background-position-y: 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  .main-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 94, 130, 0.5);
+  }
+  .title {
+    position: absolute;
+    top: 40%;
+    left: 2em;
+    font-size: 4em;
+    font-weight: bold;
+    color: white;
+    width: 80%;
+  }
+}
+
+.login {
+  height: 100vh;
+}
+
+.mat-card {
+  background: none;
+  color: white;
+}
+
+.mat-form-field {
+  width: 96% !important;  //Valida
+  margin-left: 2% !important; //Valida
+  font-size: 1.2em;
+  height: 50px;
+}
+
+.mat-input-element {
+  caret-color: $color-secundario;
+  font-size: 1.3em;
+}
+/*.mat-card {
+    background: white;
+    color: rgba(0, 0, 0, 0.87);
+}*/
+.example-card {
+  width: 400px;
+  margin: 0 auto;
+  display: inline-block;
+  //background-color: green;
+}
+
+.example-full-width {
+  max-width: 350px;
+}
+
+.mat-card-actions .mat-button,
+.mat-card-actions .mat-raised-button {
+  width: 350px;
+}
+.mat-card > .mat-card-actions:last-child {
+  padding-bottom: 16px;
+}
+.mat-card-actions .mat-button:first-child,
+.mat-card-actions .mat-raised-button:first-child {
+  margin-left: 16px;
+}
+
+.logo {
+  margin-bottom: 5em;
+  text-align: center;
+  max-width: 350px;
+  .example-logo {
+    //background-image: url('./../../assets/img/auna.jpg');
+    width: 80%;
+    margin: 0 auto;
+    align-content: center;
+    object-fit: cover;
+  }
+}
+
+.btn-login {
+  text-align: center;
+  max-width: 350px;
+  margin-top: 2em;
+  button {
+    width: 60%;
+    margin: 0 auto;
+    text-align: center;
+  }
+}
+
+.shadow {
+  -webkit-box-shadow: -13px 0px 15px 0px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: -13px 0px 15px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: -13px 0px 15px 0px rgba(0, 0, 0, 0.3);
+}

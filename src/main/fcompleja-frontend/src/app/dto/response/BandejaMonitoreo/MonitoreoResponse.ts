@@ -1,0 +1,34 @@
+export class MonitoreoResponse{
+	codigoMonitoreo: number;
+	codigoDescripcionMonitoreo:string;
+	codigoEvaluacion:string;
+	fechAprobacion:Date;
+	codigoScgSolben:string;
+	nroCartaGarantia:string;
+	codigoAfiliado: string;
+	codDiagnostico:string;
+	nomDiagnostico:string;
+	codGrupoDiagnostico:string;
+	nomGrupoDiagnostico:string;
+	medicoTratante:string;
+	edadPaciente:number;
+	sexoPaciente:string;
+	codMedicamento:number;
+	nomMedicamento:string;
+	numeroLineaTratamiento:string;
+	fecIniLineaTratamiento:Date;
+	codigoPaciente:string;
+	nombrePaciente:string;
+	codigoClinica:string;
+	nombreClinica:string;
+	codEstadoMonitoreo:number; 
+	nomEstadoMonitoreo:string;
+	fechaProximoMonitoreo:Date;
+	codResponsableMonitoreo:number;
+	nomResponsableMonitoreo:string;
+	codSolEvaluacion: number;
+	codEvolucion: number;
+	codInformeAuto: number;
+	nomResultMonitoreo:string;
+	nomEstSeguimiento:string;
+}

@@ -1,0 +1,23 @@
+@import "../../main";
+
+.clinicaCtrl {
+  width: 100%;
+}
+
+.table-resultados{
+  box-shadow: none !important;
+}
+
+@include mat-table-columns(
+  (
+    rn: (
+      width: 3rem
+    ),
+    codcli: (
+      width: 4rem
+    ),
+    nomcli: (
+      width: 15rem
+    )
+  )
+);

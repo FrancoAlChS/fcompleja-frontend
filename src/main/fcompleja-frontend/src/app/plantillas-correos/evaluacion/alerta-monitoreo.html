@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!--[if !mso]>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <![endif]-->
+  <title></title>
+  <style type="text/css">
+    body {
+      width: 100%;
+      background-color: #ffffff;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      font-family: 'Roboto', Arial, Helvetica, sans-serif;
+      font-size: 12px;
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      list-style: none;
+    }
+
+    .cuerpo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .cuerpo div {
+      width: 500px;
+      height: auto;
+      text-align: justify;
+    }
+
+    .lista {
+      padding-left: 3em;
+      margin-top: 1em;
+      margin-bottom: 1em;
+    }
+
+    .firma {
+      font-size: 1em;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="cuerpo">
+    <div>
+      <h4>Estimado Responsable de Monitoreo MAC,</h4>
+    </div>
+    <div>
+      <p>Se solicita su apoyo con registrar en el m&oacute;dulo el resultado de la evoluci&oacute;n 
+         ya que tenemos una Solicitud de Carta de Garantía Solben de paciente continuador 
+            de MAC pendiente de evaluaci&oacute;n:</p>
+    </div>
+    <div class="lista">
+      <ul>
+        <li><b>Paciente: {{paciente}}</b><li>
+        <li><b>Medicamento solicitado: {{descripcionMac}}</b><li>
+        <li><b>N&deg; Solicitud de Carta Solben: {{nroScgSolben}}</b><li>
+        <li><b>N&deg; Solicitud de Evaluaci&oacute;n: {{descripCodSolEva}}</b><li>
+      </ul>
+    </div>
+    <div>
+      <p>A la espera de su confirmaci&oacute;n para seguir con el proceso de evaluaci&oacute;n de la 
+					Solicitud de Carta de Garant&iacute;a Solben.</p>
+    </div>
+    <div class="firma">
+      <ul>
+        <li><b>Saludos,</b></li>
+        <li><b>M&eacute;dico Autorizador {{medicoAutorizador}}</b></li>
+				<li><b>Accesibilidad y Beneficios</b></li>
+				<li><hr></li>
+      </ul>
+    </div>
+  </div>
+</body>
+
+</html>

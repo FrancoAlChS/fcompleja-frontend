@@ -1,0 +1,141 @@
+<div class="page-configuracion">
+    <mat-card class="box-filtros">
+      <mat-card-header class="box-section-header">
+        <mat-card-title class="box-section-title">MANTENIMIENTO USUARIO</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form class="form form-solicitud" [formGroup]="marcadorForm">
+            <mat-grid-list cols="12" rowHeight="35px">
+                <mat-grid-tile [responsiveRows]="{xs: 4, sm: 4, md: 4, lg: 4, xl: 4}">
+                    <mat-form-field class="item" appearance="fill">
+                        <mat-label class="text-uppercase">APLICACIÓN</mat-label>
+                        <mat-select formControlName="aplicacion" placeholder="Aplicación" (selectionChange)="cambioTipoAplicacion()">
+                            <mat-option *ngFor="let row of listaAplicacion" [value]="row.codAplicacion">
+                                {{row.nomLargo}}
+                            </mat-option>
+                        </mat-select>
+                        <div class="select-placeholder-container inputSpinner" *ngIf="spinnerAplicacion === true">
+                            <mat-spinner class="spinner" diameter="15"></mat-spinner>
+                        </div>
+                        <mat-error *ngIf="marcadorFormMessages.aplicacion && (fc.aplicacion.errors || ( marcadorSubmitted && fc.aplicacion.errors ))" >
+                            <mat-error *ngFor="let validation of marcadorFormMessages.aplicacion">
+                                <mat-error class="error-message" *ngIf="marcadorForm.get('aplicacion').hasError(validation.type)">{{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 4, sm: 4, md: 4, lg: 4, xl: 4}">
+                    <mat-form-field class="item" appearance="fill">
+                        <mat-label class="text-uppercase">PERFIL</mat-label>
+                        <mat-select formControlName="perfil" placeholder="Perfil" >
+                            <mat-option *ngFor="let row of listaPerfil" [value]="row.codRol">
+                                {{row.nombreRol}}
+                            </mat-option>
+                        </mat-select>
+                        <div class="select-placeholder-container inputSpinner" *ngIf="spinnerPerfil === true">
+                            <mat-spinner class="spinner" diameter="15"></mat-spinner>
+                        </div>
+                        <mat-error *ngIf="marcadorFormMessages.perfil && (fc.perfil.errors || ( marcadorSubmitted && fc.perfil.errors ))" >
+                            <mat-error *ngFor="let validation of marcadorFormMessages.perfil">
+                                <mat-error class="error-message" *ngIf="marcadorForm.get('perfil').hasError(validation.type)">{{validation.message}}</mat-error>
+                            </mat-error>
+                        </mat-error>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 3, sm: 3, md: 3, lg: 3, xl: 3}">
+                    <mat-form-field appearance="fill">
+                        <mat-label>USUARIO</mat-label>
+                        <input matInput [appAlphaNumerico]="{size: 100}" [appUpperCase] formControlName="usuario">
+                    </mat-form-field>
+                    <mat-error *ngIf="marcadorFormMessages.usuario && (fc.usuario.errors || ( marcadorSubmitted && fc.usuario.errors ))" >
+                        <mat-error *ngFor="let validation of marcadorFormMessages.usuario">
+                            <mat-error class="error-message" *ngIf="marcadorForm.get('usuario').hasError(validation.type)">{{validation.message}}</mat-error>
+                        </mat-error>
+                    </mat-error>
+                </mat-grid-tile>
+                <mat-grid-tile [responsiveRows]="{xs: 1, sm: 1, md: 1, lg: 1, xl: 1}">
+                    <button mat-icon-button type="button" class="btn-action-search" color="primary" (click)="accionMarcador()" [disabled]="btnBuscar">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </form>
+      </mat-card-content>
+  
+      <mat-card class="box-resultados">
+        <mat-card-content class="card-container">
+          <div class="table-container">
+            <table mat-table [dataSource]="dataSource" matSort>
+  
+              <ng-container matColumnDef="aplicacion">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header >APLICACION</th>
+                  <td mat-cell *matCellDef="let row">{{row.aplicacion}}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="rol">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header >PERFIL</th>
+                  <td mat-cell *matCellDef="let row">{{row.rol}}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="usuario">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header >USUARIO</th>
+                  <td mat-cell *matCellDef="let row">{{row.usuario}}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="apePate">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header >APELLIDO</th>
+                  <td mat-cell *matCellDef="let row">{{row.apePate + ' ' + row.apeMate}}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="nombres">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header >NOMBRE</th>
+                  <td mat-cell *matCellDef="let row">{{row.nombres}}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="correo">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header >CORREO</th>
+                  <td mat-cell *matCellDef="let row">{{row.correo}}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="estado">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header >ESTADO</th>
+                  <td mat-cell *matCellDef="let row">{{ row.estado | estadoUsuario }}</td>
+              </ng-container>
+  
+              <ng-container matColumnDef="opciones">
+                  <th mat-header-cell *matHeaderCellDef> ACCIÓN </th>
+                  <td mat-cell *matCellDef="let element">
+                    <button class="tableIconButton" mat-icon-button matTooltip="Editar Usuario" (click)="openEditarMarcador(element)">
+                      <mat-icon>create</mat-icon>
+                    </button>
+                  </td>
+              </ng-container>
+  
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+            </table>
+  
+            <div class="empty" *ngIf="!isLoadingResults && ( resultsLength == 0 || resultsLength == null)">
+              No existe datos para mostrar en la tabla
+            </div>
+    
+            <mat-card *ngIf="isLoadingResults" class="spinerTable">
+              <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+            </mat-card>
+    
+            <mat-paginator [length]="resultsLength" [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize"></mat-paginator>
+          </div>
+        </mat-card-content>
+      </mat-card>
+  
+      <mat-card-actions class="btnActions" align="end">
+        <div class="btnAdd">
+          <button mat-raised-button color="primary" (click)="openRegistrarMarcador()">
+              <mat-icon inline=true>add_box</mat-icon>
+              <strong>NUEVO USUARIO</strong>
+          </button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>

@@ -1,0 +1,80 @@
+@import "../../../../main";
+
+.page-seguimiento-ejecutivo {
+  margin-bottom: 0px;
+  .table-container-size {
+    max-height: 145px;
+  }
+}
+
+.validateForm {
+  margin-bottom: 15px;
+}
+
+@include mat-table-columns(
+  (
+    no: (
+      width: 2rem
+    ),
+    nomEjecutivoMonitoreo: (
+      width: 11rem
+    ),
+    detalleEvento: (
+      width: 15rem
+    ),
+    fechaRegistro: (
+      width: 5rem
+    ),
+    horaRegistro: (
+      width: 5rem
+    ),
+    descEstadoSeguimiento: (
+      width: 7rem
+    ),
+    gradoToxicidad:(
+      width: 14rem
+    ),
+    tipoToxicidad:(
+      width: 14rem
+    ),
+    item: (
+      width: 2rem
+    ),
+    marcador: (
+      width: 7rem
+    ),
+    resultado: (
+      width: 11rem
+    ),
+    sinRegistro: (
+      width: 7rem
+    ),
+    perioMin: (
+      width: 10rem
+    ),
+    perioMax: (
+      width: 10rem
+    ),
+    fecResultado: (
+      width: 7rem
+    ),
+    vistaPreliminarDelInforme: (
+      width: 2rem
+    ),
+  )
+);
+
+.mat-dialog-content {
+  overflow: hidden !important;
+}
+
+.containerRadio {
+  .radioGroup {
+    margin-bottom: 0em;
+  }
+}
+
+.labelDocumento {
+  font-size: 13px;
+  font-weight: 300;
+}

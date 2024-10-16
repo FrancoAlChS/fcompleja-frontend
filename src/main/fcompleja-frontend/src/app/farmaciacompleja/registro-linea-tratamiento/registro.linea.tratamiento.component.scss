@@ -1,0 +1,38 @@
+@import "./../../main";
+
+// .btn-xl {
+//   width: auto !important;
+//   font-size: 1em;
+//   font-weight: 600;
+// }
+
+// mat-form-field {
+//   font-size: .9em;
+//   height: 65px;
+// }
+
+.mat-icon {
+  font-size: 23px !important;
+}
+
+.mat-figure {
+  margin-right: 160px;
+  justify-content: flex-start!important;
+}
+
+.mat-raised-button {
+  font-size: 0.9em;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  border-radius: 25px;
+  padding: 0 2.5em;
+  .mat-button-wrapper {
+    display: flex;
+    align-items: center;
+    mat-icon {
+      font-size: 1.4em;
+      vertical-align: middle;
+    }
+  }
+}

@@ -1,0 +1,139 @@
+@import "../../../../main";
+
+.taPerfilpcte {
+  resize: none;
+  max-height: 200px;
+}
+
+.matgrit25 {
+  height: 25px;
+}
+
+.matgrit40 {
+  height: 40px;
+}
+
+.matgrit55 {
+  height: 55px;
+}
+
+.sinResultado {
+  display: flex;
+  justify-content: center;
+  h3 {
+    font-size: 1em;
+    font-weight: 500;
+  }
+}
+
+mat-expansion-panel mat-expansion-panel-header mat-panel-title {
+  font-size: 0.75em !important;
+  font-weight: 500 !important;
+}
+
+.cardObservacion {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  box-shadow: none;
+}
+
+.cardCumplePefil {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  box-shadow: none;
+}
+
+.cardCriterio {
+  box-shadow: none;
+  padding: 0.5em 0.9em 0.9em 0.25em;
+  margin-bottom: 0;
+  mat-card-header {
+    margin-bottom: 0.1em;
+    border: 1px solid #ececec;
+    mat-card-title {
+      margin-top: 0.55em;
+    }
+  }
+  mat-card-content {
+    mat-grid-list {
+      margin-bottom: 0.1em;
+      mat-grid-tile {
+        border: 1px solid #ececec;
+        .textLeft {
+          position: absolute;
+          left: 2em;
+        }
+        mat-label {
+          font-size: 0.8em;
+        }
+        .containerRadio {
+          position: inherit;
+          left: initial;
+          .radioGroup {
+            display: flex;
+            align-items: center;
+            justify-items: center;
+            flex-direction: row;
+            flex: 1;
+            margin-right: 0 !important;
+            margin-left: 0 !important;
+            height: 2.2rem !important;
+            margin-bottom: 0 !important;
+            background-color: transparent;
+            .mat-radio-group {
+              font-size: 0.8em;
+              padding-left: 0;
+              padding-right: 0;
+              display: flex;
+              justify-self: center;
+              align-self: center;
+              .mat-radio-button {
+                padding-left: 0.5em;
+                padding-right: 0.5em;
+                font-size: 0.8em;
+              }
+            }
+
+            .mat-radio-container {
+              height: 13px;
+              width: 13px;
+            }
+            .mat-radio-outer-circle {
+              height: 13px;
+              width: 13px;
+            }
+            .mat-radio-inner-circle {
+              height: 13px;
+              width: 13px;
+            }
+            .mat-radio-button .mat-radio-ripple {
+              height: 20px; //double of your required circle radius
+              width: 20px; //double of your required circle radius
+              left: calc(50% - 10px); //'10px'-same as your required circle radius
+              top: calc(50% - 10px); //'10px'-same as your required circle radius
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.mat-radio-label .mat-radio-label-content {
+  padding-left: 0.5em !important;
+  padding-right: 0.5em !important;
+}
+
+.todisable {
+  pointer-events: none
+}
+
+.formPersonal {
+  &.mat-form-field-appearance-fill {
+    .mat-form-field-wrapper {
+      .mat-form-field-flex {
+        background-color: $table-bg-solben !important;
+      }
+    }
+  }
+}

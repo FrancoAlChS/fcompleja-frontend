@@ -1,0 +1,76 @@
+mat-dialog-container {
+  padding: 20px !important;
+  .mat-dialog-header {
+    padding-bottom: 0;
+    margin: 0;
+    border-bottom: 1px $color-icon solid;
+    .mat-dialog-title {
+      font-size: 1.2em;
+      color: $color-primario;
+    }
+  }
+  .mat-dialog-content {
+    padding: 0.8em 0 0.8em 0;
+    margin: 0;
+    &.modal-body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .mensaje {
+        font-size: 1em;
+        font-weight: 500;
+        padding: 0.4em 0;
+        color: $color-secundario;
+      }
+      .mensaje2 {
+        font-size: 0.9em;
+        padding: 0.4em 0;
+        font-weight: 500;
+        color: $color-texto;
+      }
+      .valor {
+        font-size: 0.8em;
+        padding: 0.4em 0;
+        font-weight: 500;
+        color: $color-error-form;
+      }
+    }
+  }
+  .mat-dialog-actions {
+    border-top: 1px $color-icon solid;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    .mat-raised-button {
+      border-radius: 25px;
+      width: 80px;
+      font-size: 1em;
+      font-weight: 500;
+      line-height: 3;
+      margin-top: 5px;
+    }
+    &.modal-footer {
+      width: 100%;
+      display: inline-flex;
+      .mat-icon-button {
+        font-size: 1em;
+        margin: 0.5em 1em 0 1em;
+        font-weight: 500;
+      }
+    }
+    &.modal-mantenimiento {
+      width: 100%;
+      display: inline-flex;
+      justify-content: space-around;
+      .mat-raised-button {
+        width:auto;
+        font-size: .8em;
+        font-weight: 600;
+        margin-top: .8em;
+        border-radius: 25px;
+      }
+    }
+  }
+}

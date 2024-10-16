@@ -1,0 +1,18 @@
+@import "../../../main";
+
+.btnCorreo {
+  font-size: 0.9em;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  border-radius: 35px;
+  padding: 0 2em;
+  width: auto;
+  height: 3em;
+}
+
+.cambiarFondo {
+  .mat-form-field-flex {
+    background-color: $table-bg-solben !important;
+  }
+}

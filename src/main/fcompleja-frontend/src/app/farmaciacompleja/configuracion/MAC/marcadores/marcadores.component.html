@@ -1,0 +1,143 @@
+ <div class="mat-dialog-header">
+    <h1 class="mat-dialog-title" mat-dialog-title>{{data.title}}</h1>
+  </div>
+  
+  <div class="mat-dialog-content modal-body" mat-dialog-content>
+    <mat-card class="modalCard">
+      <mat-card-content>
+        <form [formGroup]="marcadorForm" (ngSubmit)="accionMarcador()" novalidate>
+          <mat-grid-list cols="12" rowHeight="56px">
+            <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}">
+              <mat-form-field class="item" appearance="fill">
+                <mat-label class="text-uppercase">CODIGO MAC</mat-label>
+                <input matInput formControlName="codigoMac" >
+                <mat-error *ngIf="marcadorFormMessages.codigoMac && (fc.codigoMac.errors || ( marcadorSubmitted && fc.codigoMac.errors ))" >
+                  <mat-error *ngFor="let validation of marcadorFormMessages.codigoMac">
+                    <mat-error class="error-message" *ngIf="marcadorForm.get('codigoMac').hasError(validation.type)">{{validation.message}}</mat-error>
+                  </mat-error>
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 6, lg: 6, xl: 6}">
+              <mat-form-field class="item" appearance="fill">
+                <mat-label class="text-uppercase">DESCRIPCION MAC</mat-label>
+                <input matInput formControlName="descripcionMac" >
+                <mat-error *ngIf="marcadorFormMessages.descripcionMac && (fc.descripcionMac.errors || ( marcadorSubmitted && fc.descripcionMac.errors ))" >
+                  <mat-error *ngFor="let validation of marcadorFormMessages.descripcionMac">
+                    <mat-error class="error-message" *ngIf="marcadorForm.get('descripcionMac').hasError(validation.type)">{{validation.message}}</mat-error>
+                  </mat-error>
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>
+            <!--<mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 6, lg: 6, xl: 6}">
+              <mat-form-field class="item" appearance="fill">
+                <mat-label class="text-uppercase">GRUPO DIAGNOSTICO</mat-label>
+                <mat-select formControlName="codigoGrupoDiagnostico" placeholder="Grupo Diagnostico" >
+                  <mat-option *ngFor="let row of listaGrupo" [value]="row.codigo">
+                    {{row.descripcion}}
+                  </mat-option>
+                </mat-select>
+                <div class="select-placeholder-container inputSpinner" *ngIf="spinnerGrupo === true">
+                  <mat-spinner class="spinner" diameter="15"></mat-spinner>
+                </div>
+                <mat-error *ngIf="marcadorFormMessages.codigoGrupoDiagnostico && (fc.codigoGrupoDiagnostico.errors || ( marcadorSubmitted && fc.codigoGrupoDiagnostico.errors ))" >
+                  <mat-error *ngFor="let validation of marcadorFormMessages.codigoGrupoDiagnostico">
+                    <mat-error class="error-message" *ngIf="marcadorForm.get('codigoGrupoDiagnostico').hasError(validation.type)">{{validation.message}}</mat-error>
+                  </mat-error>
+                </mat-error>
+              </mat-form-field>
+            </mat-grid-tile>-->
+            <mat-grid-tile [responsiveRows]="{xs: 12, sm: 5, md: 5, lg: 5, xl: 5}">
+              <mat-form-field class="item" appearance="fill">
+              <mat-label class="text-uppercase">GRUPO DIAGNOSTICO</mat-label>
+              <input matInput formControlName="codigoGrupoDiagnostico" >
+              <mat-error *ngIf="marcadorFormMessages.codigoGrupoDiagnostico && (fc.codigoGrupoDiagnostico.errors || ( produccionSubmitted && fc.codigoGrupoDiagnostico.errors ))" >
+                  <mat-error *ngFor="let validation of marcadorFormMessages.codigoGrupoDiagnostico">
+                  <mat-error class="error-message" *ngIf="marcadorForm.get('codigoGrupoDiagnostico').hasError(validation.type)">{{validation.message}}</mat-error>
+                  </mat-error>
+              </mat-error>
+              </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile [responsiveRows]="{xs: 12, sm: 3, md: 3, lg: 3, xl: 3}">
+              <button mat-raised-button color="primary" type="button" (click)="openBuscarGrupoDiagnostico()">BUSCAR GRUPO</button>
+          </mat-grid-tile>
+            <div class="actions-reg-cita">
+              <mat-grid-tile [responsiveRows]="{xs: 12, sm: 4, md: 4, lg: 4, xl: 4}">
+                <mat-spinner-button mat-raised-button color="primary" [options]="marcadorBtnOpts" ></mat-spinner-button>
+              </mat-grid-tile>
+            </div>
+          </mat-grid-list>
+        </form>
+
+        <h3 class="h3Table">LISTADO DE CONFIGURACIONES POR MARCADORES</h3>
+  
+        <div class="table-container">
+            <table mat-table [dataSource]="dataSource" class="example-table">
+
+              <ng-container matColumnDef="codigoconfigmarca">
+                  <th mat-header-cell *matHeaderCellDef >CODIGO</th>
+                  <td mat-cell *matCellDef="let row">{{row.codigoConfigMarcaLargo}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="descripciongrupodiag">
+                  <th mat-header-cell *matHeaderCellDef >GRUPO DIAGNOSTICO</th>
+                  <td mat-cell *matCellDef="let row">{{row.descripcionGrupoDiag}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="descripcionmarcador">
+                  <th mat-header-cell *matHeaderCellDef >TIPO MARCADOR</th>
+                  <td mat-cell *matCellDef="let row">{{row.descripcionMarcador}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="descripcionmarcador2">
+                  <th mat-header-cell *matHeaderCellDef >MARCADOR</th>
+                  <td mat-cell *matCellDef="let row">{{row.descripcionExamenMed}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="descripcionPerMinima">
+                  <th mat-header-cell *matHeaderCellDef >PERIODICIDAD MINIMA</th>
+                  <td mat-cell *matCellDef="let row">{{row.descripcionPerMinima}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="descripcionPerMaxima">
+                  <th mat-header-cell *matHeaderCellDef >PERIODICIDAD MAXIMA</th>
+                  <td mat-cell *matCellDef="let row">{{row.descripcionPerMaxima}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="descripcionEstado">
+                  <th mat-header-cell *matHeaderCellDef >ESTADO</th>
+                  <td mat-cell *matCellDef="let row">{{row.descripcionEstado}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="opciones">
+                  <th mat-header-cell *matHeaderCellDef> EDITAR </th>
+                  <td mat-cell *matCellDef="let element">
+                    <button class="tableIconButton" mat-icon-button matTooltip="Editar Marcador" (click)="openEditarMarcador(element)">
+                      <mat-icon>create</mat-icon>
+                    </button>
+                  </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>     
+          
+          <div class="empty" *ngIf="!isLoadingResults && ( resultsLength == 0 || resultsLength == null)">
+            No existe datos para mostrar en la tabla
+          </div>
+  
+          <mat-card *ngIf="isLoadingResults" class="spinerTable">
+            <mat-progress-spinner color="primary" mode="indeterminate"></mat-progress-spinner>
+          </mat-card>
+  
+          <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="pageSize"></mat-paginator>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
+  <div class="mat-dialog-actions modal-mantenimiento">
+    <button mat-raised-button color="primary" (click)="openRegistrarMarcador()">AGREGAR MARCADOR</button>
+    <button mat-raised-button (click)="onClose()">SALIR</button>
+  </div>
+  

@@ -1,0 +1,22 @@
+[
+  {
+    "reportes": "INDICADORES POR MEDICAMENTO MAC",
+    "id": 1,
+    "nombreFile": "ReporteConsumo_MAC"
+  },
+  {
+    "reportes": "INDICADORES POR GRUPO DIAGNOSTICO Y MAC",
+    "id": 2,
+    "nombreFile": "ReporteConsumo_GrpDiag_MAC"
+  },
+  {
+    "reportes": "INDICADORES POR GRUPO DIAGNOSTICO, MAC Y LINEA DE TRATAMIENTO",
+    "id": 3,
+    "nombreFile": "ReporteConsumo_GrpDiag_MAC_LT"
+  },
+  {
+    "reportes": "INDICADORES POR GRUPO DIAGNOSTICO, MAC, LINEA DE TRATAMIENTO Y TIEMPO ESPERADO DE USO",
+    "id": 4,
+    "nombreFile": "ReporteConsumo_GrpDiag_MAC_LT_Tuso"
+  }
+]

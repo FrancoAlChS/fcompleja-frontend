@@ -1,0 +1,53 @@
+$color-primario: #00b4cc;
+$color-secundario: #005e82;
+$color-error-form: #f44336;
+$color-texto: #000000;
+$color-icon: #6e7683;
+$color-cabecera: #7fd9e5;
+
+$size-cabecera: 50px;
+
+$color-subtitle: #005e82;
+$fontsize-body: 12px;
+$fontsize-primary: 1em;
+$fontsize-secundary: 0.917em;
+$fontsize-error: 0.833em;
+
+$btn-bg-primario: #00acc1;
+$btn-bg-secundario: #005e82;
+$btn-color-primario: #ffffff;
+$btn-color-secundario: #000000;
+$btn-trans-secundario: #ffffff;
+$btn-disable: #9c9c9c;
+
+$table-header-bg: #7fd9e5;
+$table_header-color: $color-secundario;
+$table-row-hover-bg: rgba(0, 94, 130, 0.5);
+$table-row-hover-tx: #ffffff;
+$table-bg-solben: #ea8484;
+
+$color-titulo: #790808;
+$color-hover-acordeon: #ffffff;
+
+$frm-label-only: rgba(0, 0, 0, 0.6);
+$frm-bg: rgba(127, 217, 229, 0.2);
+$frm-color: rgba(0, 172, 193, 0.4);
+$color-label: #005e82;
+$color-input: #6e7683;
+$frm-disable-bg: rgba(0, 0, 0, 0.02);
+$frm-disable-color: rgba(0, 0, 0, 0.42);
+$frm-disable-border: rgba(0, 0, 0, 0.4);
+
+@mixin transition($transition...) {
+  -moz-transition: $transition;
+  -o-transition: $transition;
+  -webkit-transition: $transition;
+  transition: $transition;
+}
+
+@mixin transform($transform...) {
+  -moz-transform: $transform;
+  -o-transform: $transform;
+  -webkit-transform: $transform;
+  transform: transform;
+}

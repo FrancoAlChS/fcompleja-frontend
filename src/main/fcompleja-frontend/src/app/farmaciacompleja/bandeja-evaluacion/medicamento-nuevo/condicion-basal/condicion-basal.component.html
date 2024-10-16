@@ -1,0 +1,778 @@
+<mat-card class="cardPasos">
+  <mat-card-header class="box-section-header">
+    <mat-card-title class="box-section-title">
+      DETALLE SOLICITUD DE EVALUACIÓN
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-divider class="dividir"></mat-divider>
+
+    <form novalidate [formGroup]="detEvaluacionFrmGrp">
+      <mat-grid-list cols="12" rowHeight="40px">
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 4, lg: 3, xl: 3 }"
+          *ngIf="txtCodigoSolicitud === valorMostrarOpcion || flagEvaluacion"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>N° SOLICITUD</mat-label>
+            <input
+              matInput
+              readonly
+              formControlName="codSolEvaluacionFrmCtrl"
+            />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 4, lg: 3, xl: 3 }"
+          *ngIf="txtEstadoSolicitud === valorMostrarOpcion || flagEvaluacion"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>ESTADO SOLICITUD EVALUACION</mat-label>
+            <input matInput readonly formControlName="estadoDescripFrmCtrl" />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 2, lg: 3, xl: 3 }"
+        >
+          <div>
+            <button
+              class="tableIconButton"
+              mat-icon-button
+              matTooltip="Imprimir Pdf"
+              (click)="generarReportePaso3(true)"
+            >
+              <mat-icon inline="true">picture_as_pdf</mat-icon>
+              <span>IMPRIMIR PDF</span>
+            </button>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 2, lg: 3, xl: 3 }"
+          *ngIf="
+            mostrarCampoDetalle === flagVerInforme &&
+            (btnInforme === valorMostrarOpcion || flagEvaluacion)
+          "
+        >
+          <div class="resultado-autorizador">
+            <button
+              class="tableIconButton"
+              mat-icon-button
+              matTooltip="Descargar Informe del Autorizador"
+              (click)="visualizarInformeAutorizador()"
+            >
+              <mat-icon>picture_as_pdf</mat-icon>
+              INFORME AUTORIZADOR
+            </button>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-grid-list cols="12" rowHeight="40px">
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 4, lg: 3, xl: 3 }"
+          *ngIf="txtCodigoMac === valorMostrarOpcion || flagEvaluacion"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>CÓDIGO MAC</mat-label>
+            <input matInput readonly formControlName="descripCodMacFrmCtrl" />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 4, lg: 3, xl: 3 }"
+          *ngIf="txtDescripcionMac === valorMostrarOpcion || flagEvaluacion"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>DESCRIPCIÓN MAC</mat-label>
+            <input
+              matInput
+              readonly
+              formControlName="descripMacFrmCtrl"
+              [matTooltip]="descripMacFrmCtrl.value"
+            />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 2, lg: 3, xl: 3 }"
+          *ngIf="
+            mostrarCampoDetalle === flagVerActaCmac &&
+            (btnActaMac === valorMostrarOpcion || flagEvaluacion)
+          "
+        >
+          <button
+            class="tableIconButton"
+            mat-icon-button
+            matTooltip="Descargar Acta MAC"
+            (click)="visualizarActaPDF()"
+          >
+            <mat-icon>picture_as_pdf</mat-icon>ACTA CMAC
+          </button>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+      <mat-card class="cardBar" *ngIf="proBarTabla">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </mat-card>
+
+      <mat-accordion>
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)">
+          <mat-expansion-panel-header
+            [collapsedHeight]="'36px'"
+            [expandedHeight]="'36px'"
+          >
+            <mat-panel-title> INFORMACIÓN SCG SOLBEN </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-card>
+            <mat-card-content>
+              <mat-grid-list cols="12" rowHeight="35px">
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="txtNroSCG === valorMostrarOpcion || flagEvaluacion"
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>N° SCG</mat-label>
+                    <input
+                      matInput
+                      placeholder="N° SCG SOLBEN"
+                      formControlName="codScgSolbenFrmCtrl"
+                      readonly
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="txtEstadoSCG === valorMostrarOpcion || flagEvaluacion"
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>ESTADO SCG</mat-label>
+                    <input
+                      matInput
+                      placeholder="ESTADO SCG SOLBEN"
+                      formControlName="estadoScgSolbenFrmCtrl"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="txtFechaSCG === valorMostrarOpcion || flagEvaluacion"
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>FECHA SCG</mat-label>
+                    <input
+                      matInput
+                      placeholder="FECHA SCG SOLBEN"
+                      readonly
+                      formControlName="fechaScgSolbenFrmCtrl"
+                      [appOnlyDate]="{ type: 'date' }"
+                    />
+                    <mat-datepicker-toggle
+                      disabled
+                      matSuffix
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker></mat-datepicker>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="txtTipoSCG === valorMostrarOpcion || flagEvaluacion"
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>TIPO SCG</mat-label>
+                    <input
+                      matInput
+                      placeholder="TIPO SCG SOLBEN"
+                      readonly
+                      formControlName="tipoScgSolbenFrmCtrl"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="
+                    txtNroCartaGarantiaDet === valorMostrarOpcion ||
+                    flagEvaluacion
+                  "
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>N° CARTA DE GARANTÍA</mat-label>
+                    <input
+                      matInput
+                      placeholder="N° DE CARTA DE GARANTÍA"
+                      readonly
+                      formControlName="nroCartaGarantiaFrmCtrl"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="txtClinicaDet === valorMostrarOpcion || flagEvaluacion"
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>CLÍNICA</mat-label>
+                    <input
+                      matInput
+                      placeholder="CLÍNICA"
+                      readonly
+                      formControlName="clinicaFrmCtrl"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="
+                    txtMedicoTratante === valorMostrarOpcion || flagEvaluacion
+                  "
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>MÉDICO TRATANTE/PRESCRIPTOR</mat-label>
+                    <input
+                      matInput
+                      placeholder="MÉDICO TRATANTE/PRESCRIPTOR"
+                      readonly
+                      formControlName="medicoTrataPrescripFrmCtrl"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="txtCMP === valorMostrarOpcion || flagEvaluacion"
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>CMP</mat-label>
+                    <input
+                      matInput
+                      placeholder="CMP"
+                      readonly
+                      formControlName="cmpMedicoFrmCtrl"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="
+                    mostrarCampoDetalle === mostrarFechaReceta &&
+                    (txtFechaReceta === valorMostrarOpcion || flagEvaluacion)
+                  "
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>FECHA RECETA</mat-label>
+                    <input
+                      matInput
+                      placeholder="FECHA RECETA"
+                      readonly
+                      [matDatepicker]="fechaRecetaFrmCtrl"
+                      formControlName="fechaRecetaFrmCtrl"
+                      [appOnlyDate]="{ type: 'date' }"
+                    />
+                    <mat-datepicker-toggle
+                      disabled
+                      matSuffix
+                      [for]="fechaRecetaFrmCtrl"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #fechaRecetaFrmCtrl></mat-datepicker>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="
+                    mostrarCampoDetalle === mostrarFechaQuimio &&
+                    (txtFechaQuimioterapia === valorMostrarOpcion ||
+                      flagEvaluacion_)
+                  "
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>FECHA QUIMIOTERAPIA</mat-label>
+                    <input
+                      matInput
+                      placeholder="FECHA QUIMIOTERAPIA"
+                      readonly
+                      [matDatepicker]="fechaQuimioterapiaFrmCtrl"
+                      formControlName="fechaQuimioterapiaFrmCtrl"
+                      [appOnlyDate]="{ type: 'date' }"
+                    />
+                    <mat-datepicker-toggle
+                      disabled
+                      matSuffix
+                      [for]="fechaQuimioterapiaFrmCtrl"
+                    >
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #fechaQuimioterapiaFrmCtrl></mat-datepicker>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="
+                    mostrarCampoDetalle === mostrarFechaHospital &&
+                    (txtFechaHospitalizacion === valorMostrarOpcion ||
+                      flagEvaluacion)
+                  "
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>HOSPITALIZACIÓN DESDE</mat-label>
+                    <input
+                      matInput
+                      placeholder="HOSPITALIZACIÓN DESDE"
+                      readonly
+                      [matDatepicker]="fechaHospitalInicioFrmCtrl"
+                      formControlName="fechaHospitalInicioFrmCtrl"
+                      [appOnlyDate]="{ type: 'date' }"
+                    />
+                    <mat-datepicker-toggle
+                      disabled
+                      matSuffix
+                      [for]="fechaHospitalInicioFrmCtrl"
+                    >
+                    </mat-datepicker-toggle>
+                    <mat-datepicker
+                      #fechaHospitalInicioFrmCtrl
+                    ></mat-datepicker>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="
+                    mostrarCampoDetalle === mostrarFechaHospital &&
+                    (txtFechaHospitalizacion === valorMostrarOpcion ||
+                      flagEvaluacion)
+                  "
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>HOSPITALIZACIÓN HASTA</mat-label>
+                    <input
+                      matInput
+                      placeholder="HOSPITALIZACIÓN HASTA"
+                      readonly
+                      [matDatepicker]="fechaHospitalFinFrmCtrl"
+                      formControlName="fechaHospitalFinFrmCtrl"
+                      [appOnlyDate]="{ type: 'date' }"
+                    />
+                    <mat-datepicker-toggle
+                      disabled
+                      matSuffix
+                      [for]="fechaHospitalFinFrmCtrl"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #fechaHospitalFinFrmCtrl></mat-datepicker>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="
+                    txtMedicamentos === valorMostrarOpcion || flagEvaluacion
+                  "
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>MEDICAMENTOS</mat-label>
+                    <input
+                      matInput
+                      placeholder="MEDICAMENTOS"
+                      readonly
+                      formControlName="descripMedicamentoFrmCtrl"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="
+                    txtEsquemaQuimioterapia === valorMostrarOpcion ||
+                    flagEvaluacion
+                  "
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>ESQUEMA DE QUIMIOTERAPIA</mat-label>
+                    <input
+                      matInput
+                      placeholder="ESQUEMA DE QUIMIOTERAPIA"
+                      readonly
+                      formControlName="esquemaFrmCtrl"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="
+                    txtPersonaContacto === valorMostrarOpcion || flagEvaluacion
+                  "
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>PERSONA DE CONTACTO</mat-label>
+                    <input
+                      matInput
+                      placeholder="PERSONA DE CONTACTO"
+                      readonly
+                      formControlName="personaContactoFrmCtrl"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="
+                    txtTotalPresupuesto === valorMostrarOpcion || flagEvaluacion
+                  "
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>TOTAL PRESUPUESTO</mat-label>
+                    <input
+                      matInput
+                      placeholder="TOTAL PRESUPUESTO"
+                      readonly
+                      formControlName="totalPresupuestoFrmCtrl"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="
+                    txtPacienteDet === valorMostrarOpcion || flagEvaluacion
+                  "
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>PACIENTE</mat-label>
+                    <input
+                      matInput
+                      placeholder="PACIENTE"
+                      readonly
+                      formControlName="pacienteFrmCtrl"
+                      [matTooltip]="pacienteFrmCtrl.value"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="txtEdad === valorMostrarOpcion || flagEvaluacion"
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>EDAD</mat-label>
+                    <input
+                      matInput
+                      placeholder="EDAD"
+                      readonly
+                      formControlName="edadFrmCtrl"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="
+                    txtDiagnostico === valorMostrarOpcion || flagEvaluacion
+                  "
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>DIAGNÓSTICO</mat-label>
+                    <input
+                      matInput
+                      placeholder="DIAGNÓSTICO"
+                      readonly
+                      formControlName="descripDiagFrmCtrl"
+                      [matTooltip]="descripDiagFrmCtrl.value"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="txtCie10 === valorMostrarOpcion || flagEvaluacion"
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>CIE 10</mat-label>
+                    <input
+                      matInput
+                      placeholder="CIE 10"
+                      readonly
+                      formControlName="codDiagFrmCtrl"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="
+                    txtGrupoDiagnostico === valorMostrarOpcion || flagEvaluacion
+                  "
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>GRUPO DIAGNÓSTICO</mat-label>
+                    <input
+                      matInput
+                      placeholder="GRUPO DIAGNÓSTICO"
+                      readonly
+                      formControlName="descripGrupoDiagFrmCtrl"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="
+                    txtContratante === valorMostrarOpcion || flagEvaluacion
+                  "
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>CONTRATANTE</mat-label>
+                    <input
+                      matInput
+                      placeholder="CONTRATANTE"
+                      readonly
+                      formControlName="contratanteFrmCtrl"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="txtPlan === valorMostrarOpcion || flagEvaluacion"
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>PLAN</mat-label>
+                    <input
+                      matInput
+                      placeholder="PLAN"
+                      readonly
+                      formControlName="planFrmCtrl"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="
+                    txtCodigoAfiliado === valorMostrarOpcion || flagEvaluacion
+                  "
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>CÓDIGO DE AFILIADO</mat-label>
+                    <input
+                      matInput
+                      placeholder="CÓDIGO DE AFILIADO"
+                      readonly
+                      formControlName="codAfiliadoFrmCtrl"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="
+                    txtFechaAfiliacion === valorMostrarOpcion || flagEvaluacion
+                  "
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>FECHA AFILIACIÓN</mat-label>
+                    <input
+                      matInput
+                      placeholder="FECHA AFILIACIÓN"
+                      readonly
+                      [matDatepicker]="fechaAfiliacionFrmCtrl"
+                      formControlName="fechaAfiliacionFrmCtrl"
+                      [appOnlyDate]="{ type: 'date' }"
+                    />
+                    <mat-datepicker-toggle
+                      disabled
+                      matSuffix
+                      [for]="fechaAfiliacionFrmCtrl"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #fechaAfiliacionFrmCtrl></mat-datepicker>
+                  </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="
+                    txtEstadioClinico === valorMostrarOpcion || flagEvaluacion
+                  "
+                >
+                  <mat-form-field id="idEstadioClinico" appearance="fill">
+                    <mat-label>ESTADIO CLÍNICO</mat-label>
+                    <input
+                      matInput
+                      placeholder="ESTADO CLÍNICO"
+                      readonly
+                      formControlName="estadioClinicoFrmCtrl"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile
+                  [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  *ngIf="txtTNM === valorMostrarOpcion || flagEvaluacion"
+                >
+                  <mat-form-field id="idTnm" appearance="fill">
+                    <mat-label>TNM</mat-label>
+                    <input
+                      matInput
+                      placeholder="TNM"
+                      readonly
+                      formControlName="tnmFrmCtrl"
+                    />
+                  </mat-form-field>
+                </mat-grid-tile>
+
+                <span *ngIf="infoSolben.codTipoSolben === 2">
+                  <mat-grid-tile
+                    [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  >
+                    <mat-form-field appearance="fill">
+                      <mat-label>CODIGO HIS</mat-label>
+                      <input
+                        matInput
+                        readonly
+                        formControlName="codHisFrmCtrl"
+                      />
+                    </mat-form-field>
+                  </mat-grid-tile>
+                  <mat-grid-tile
+                    [responsiveRows]="{ xs: 12, sm: 6, md: 4, lg: 3, xl: 3 }"
+                  >
+                    <mat-form-field appearance="fill">
+                      <mat-label>DESCRIPCIÓN HIS</mat-label>
+                      <input
+                        matInput
+                        readonly
+                        formControlName="descHisFrmCtrl"
+                      />
+                    </mat-form-field>
+                  </mat-grid-tile>
+                  <mat-grid-tile
+                    [responsiveRows]="{ xs: 12, sm: 12, md: 3, lg: 3, xl: 3 }"
+                  >
+                  </mat-grid-tile>
+                </span>
+              </mat-grid-list>
+              <mat-grid-list cols="12" rowHeight="120px">
+                <mat-grid-tile
+                  [responsiveRows]="{
+                    xs: 12,
+                    sm: 12,
+                    md: 12,
+                    lg: 12,
+                    xl: 12
+                  }"
+                  *ngIf="
+                    txtObservacion === valorMostrarOpcion || flagEvaluacion
+                  "
+                >
+                  <mat-form-field appearance="fill">
+                    <mat-label>OBSERVACIONES</mat-label>
+
+                    <textarea
+                      matInput
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      readonly
+                      cdkAutosizeMinRows="1"
+                      cdkAutosizeMaxRows="5"
+                      formControlName="observacionFrmCtrl2"
+                    ></textarea>
+                  </mat-form-field>
+                </mat-grid-tile>
+              </mat-grid-list>
+            </mat-card-content>
+          </mat-card>
+          <div class="box-section-body"></div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </form>
+    <mat-divider class="dividir"></mat-divider>
+    <form [formGroup]="prefInstituFrmGrp" novalidate>
+      <mat-grid-list cols="12" rowHeight="43px">
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12 }"
+          class="centrarMensajesError"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>GRUPO DIAGNOSTICO</mat-label>
+            <input matInput readonly formControlName="grpDiagFrmCtrl" />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12 }"
+          class="centrarMensajesError"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>CONDICIÓN</mat-label>
+            <input matInput readonly formControlName="condiFrmCtrl" />
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+      <mat-grid-list cols="12" rowHeight="43px">
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12 }"
+          class="centrarMensajesError"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>TRATAMIENTO SEGÚN GUÍA</mat-label>
+            <input matInput readonly formControlName="tratSegGuiaFrmCtrl" />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12 }"
+          class="centrarMensajesError"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>PRESENTACIÓN NO PERMITIDA</mat-label>
+            <input matInput readonly formControlName="presNoPermiFrmCtrl" />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12 }"
+          class="centrarMensajesError"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>TIPO DE TRATAMIENTO SEGÚN GUIA</mat-label>
+            <input matInput readonly formControlName="tipTratSegGuiaFrmCtrl" />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12 }"
+        >
+          <div class="containerRadio">
+            <div class="radioGroup">
+              <mat-label>CUMPLE</mat-label>
+              <mat-radio-group formControlName="cumpleFrmCtrl">
+                <mat-radio-button
+                  *ngFor="let row of cumplePrefInst"
+                  [value]="row.codigo"
+                >
+                  {{ row.titulo }}
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+        </mat-grid-tile>
+        <!-- <mat-grid-tile [responsiveRows]="{xs: 12, sm: 12, md: 2, lg: 2, xl: 2}">
+          <div>
+          </div>
+        </mat-grid-tile> -->
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12 }"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>SOBREVIDA MEDIA (N° MESES)</mat-label>
+            <input matInput readonly formControlName="sobMedFrmCtrl" />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12 }"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>SOBREVIDA GLOBAL (N° MESES)</mat-label>
+            <input matInput readonly formControlName="sobGloFrmCtrl" />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12 }"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>SOBREVIDA LIBRE DE PROGRESIÓN (N° MESES)</mat-label>
+            <input matInput readonly formControlName="sobLibProgFrmCtrl" />
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-form-field appearance="fill">
+        <mat-label>OBSERVACIONES</mat-label>
+        <textarea
+          matInput
+          [appUpperCase]
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          formControlName="observacionFrmCtrl"
+          maxlength="500"
+        ></textarea>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+  <ng4-loading-spinner></ng4-loading-spinner>
+</mat-card>

@@ -1,0 +1,52 @@
+@import "../../../../main";
+
+@include mat-table-columns(
+  (
+    item: (
+      width: 2rem
+    ),
+    marcador: (
+      width: 8rem
+    ),
+    perioMin: (
+      width: 7rem
+    ),
+    perioMax: (
+      width: 7rem
+    ),
+    sinRegistro: (
+      width: 7rem
+    ),
+    resultado: (
+      width: 14rem
+    ),
+    fecResultado: (
+      width: 7rem
+    ),
+    grado_toxicidad:(
+      width: 14rem
+    ),
+    tipo_toxicidad:(
+      width: 14rem
+
+    )
+  )
+);
+
+.containerRadio {
+  .radioGroup {
+    margin-bottom: 0em;
+  }
+  .mat-error {
+    font-size: 75%;
+    text-align: center;
+  }
+}
+/*
+.mat-table { 
+  table-layout: fixed;
+}
+
+.table-container td {
+  white-space: normal;
+}*/

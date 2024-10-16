@@ -1,0 +1,21 @@
+[
+    {   
+        "nro_solicitud": "000000125", 
+        "nro_scg": "1805002577", 
+        "tipo_scg": "Farmacia compleja", 
+        "estado_scg": "PPTO APROB E.C", 
+        "carta_garantia": "000534534", 
+        "clinica": "Oncocenter ", 
+        "paciente": "Lucas Moleros Esther Hayde", 
+        "diagnostico": "Tumor maligno de mama ", 
+        "fhsolicitud": "25/08/2018 07:52:58 pm", 
+        "tipo_eval": "Nuevo Medicamento ", 
+        "estado_solicitud": "Pendiente de evaluacion ", 
+        "rol_responsable": "Autorizador de pertenencia", 
+        "correo_lider": "", 
+        "correo_cmac": "", 
+        "freunion_cmac": "", 
+        "autorizador_pertinencia": "Juan Lopez Perez", 
+        "lider_tumor": "Perez Lopez, Juan Manuel" 
+    }
+]

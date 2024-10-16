@@ -1,0 +1,28 @@
+<div class="box-logo">
+  <img *ngIf="!mostrarlogo" src="./assets/img/oncosalud.png" />
+  <h2 class="titulo">{{nombreAplicacion | uppercase}}</h2>
+</div>
+<div class="box-perfil">
+  <div class="box-perfil-content">
+    <div class="logout">
+
+      <button mat-button [matMenuTriggerFor]="usuario">
+        <mat-icon class="user-icon">person</mat-icon>
+        <mat-icon mat-list-icon>expand_more</mat-icon>
+      </button>
+
+      <mat-menu #usuario="matMenu" xPosition="after">
+        <div mat-menu-item class="box-info-rol">
+          <h5 class="rolUser">{{personaRol}}</h5>
+          <h6 class="user-name">{{persona}}</h6>
+        </div>
+        <button mat-menu-item (click)="CerrarSesion()">
+          <strong class="h6logout">
+            Cerrar Sesión
+          </strong>
+          <mat-icon>input</mat-icon>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+</div>

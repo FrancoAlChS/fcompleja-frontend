@@ -1,0 +1,51 @@
+@import "../../main";
+
+.page-preliminar {
+  .table-resultados {
+    margin-bottom: 0px;
+    .table-container {
+      max-height: 300px;
+    }
+  }
+}
+
+@include mat-table-columns(
+  (
+    codPre: (
+      width: 6rem
+    ),
+    fechaPre: (
+      width: 7rem
+    ),
+    horaPre: (
+      width: 6rem
+    ),
+    descClinica: (
+      width: 15rem
+    ),
+    nombrePaciente: (
+      width: 15rem
+    ),
+    codScgSolben: (
+      width: 9rem
+    ),
+    fechaScgSolben: (
+      width: 6rem
+    ),
+    horaScgSolben: (
+      width: 6rem
+    ),
+    tipoScgSolben: (
+      width: 8rem
+    ),
+    estadoSol: (
+      width: 12rem
+    ),
+    medicoTratante: (
+      width: 15rem
+    ),
+    verDetalle: (
+      width: 3rem
+    )
+  )
+);

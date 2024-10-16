@@ -1,0 +1,538 @@
+<div class="mat-dialog-header">
+  <h1 class="mat-dialog-title" mat-dialog-title>{{ data.title }}</h1>
+</div>
+
+<div class="mat-dialog-content pb-12px" mat-dialog-content>
+  <form class="form clear-both" [formGroup]="evaluacionCmacFrmGrp" novalidate>
+    <mat-card class="cardActa">
+      <mat-card-content>
+        <mat-grid-list cols="8" rowHeight="45px">
+          <mat-grid-tile [colspan]="4" [rowspan]="1">
+            <div class="codigo">
+              <h3>CODIGO DE ACTA</h3>
+              <span> {{ codigoActa }} </span>
+            </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile [colspan]="4" [rowspan]="3">
+            <div class="contenido">
+              <h3>PARTICIPANTES DEL COMITE</h3>
+              <div class="table-container participantes clear-both">
+                <table mat-table [dataSource]="dataSourceParticipantes" matSort>
+                  <ng-container matColumnDef="select" sticky>
+                    <th mat-header-cell *matHeaderCellDef>
+                      <mat-checkbox
+                        (change)="$event ? masterToggle() : null"
+                        [checked]="
+                          selectionParticipante.hasValue() && isAllSelected()
+                        "
+                        [indeterminate]="
+                          selectionParticipante.hasValue() && !isAllSelected()
+                        "
+                        [disabled]="
+                          dataSourceParticipantes === null ||
+                          dataSourceParticipantes?.data.length === 0 ||
+                          registroGrabado
+                        "
+                      >
+                      </mat-checkbox>
+                    </th>
+                    <td mat-cell *matCellDef="let row">
+                      <mat-checkbox
+                        (click)="$event.stopPropagation()"
+                        (change)="
+                          $event ? selectionParticipante.toggle(row) : null
+                        "
+                        [checked]="selectionParticipante.isSelected(row)"
+                        [disabled]="registroGrabado"
+                      >
+                      </mat-checkbox>
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="nombreUsuarioRol">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Nombres y Apellidos
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                      {{ element.nombreApellido }}
+                      {{ element.apellidoPaterno }}
+                      {{ element.apellidoMaterno }}
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="eliminarParti">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let row">
+                      <button
+                        type="button"
+                        class="tableIconButton"
+                        [disabled]="disableBtn"
+                        mat-icon-button
+                        matTooltip="ELIMINAR"
+                        (click)="eliminarParticipantes(row)"
+                      >
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </td>
+                  </ng-container>
+
+                  <tr
+                    mat-header-row
+                    *matHeaderRowDef="
+                      displayedColumnsParticipantes;
+                      sticky: true
+                    "
+                  ></tr>
+                  <tr
+                    mat-row
+                    *matRowDef="let row; columns: displayedColumnsParticipantes"
+                  ></tr>
+                </table>
+
+                <div
+                  class="empty"
+                  *ngIf="
+                    !isLoadingParticipantes && dataSourceParticipantes === null
+                  "
+                >
+                  No existe datos para mostrar en la tabla
+                </div>
+
+                <mat-card *ngIf="isLoadingParticipantes" class="spinerTable">
+                  <mat-progress-spinner color="primary" mode="indeterminate">
+                  </mat-progress-spinner>
+                </mat-card>
+              </div>
+            </div>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [colspan]="2"
+            [rowspan]="1"
+            *ngIf="txtFechaReunion === valorMostrarOpcion || flagEvaluacion"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>FECHA DE REUNION</mat-label>
+              <input
+                matInput
+                [matDatepicker]="meetDate"
+                [appOnlyDate]="{ type: 'date' }"
+                formControlName="fechaReunionCMAC"
+                (keyup.enter)="inputFecha($event)"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="meetDate"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #meetDate></mat-datepicker>
+              <mat-error
+                *ngIf="
+                  fechaReunionCMAC.touched &&
+                  fechaReunionCMAC.hasError('required')
+                "
+              >
+                Fecha es <strong>requerido</strong>
+              </mat-error>
+              <mat-error
+                *ngIf="
+                  fechaReunionCMAC.touched &&
+                  fechaReunionCMAC.hasError('dateValid')
+                "
+              >
+                Formato de fecha no válido <strong>(dd/MM/yyyy)</strong>
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <mat-form-field appearance="fill">
+              <mat-label>ESPECIFICAR COMITE </mat-label>
+              <mat-select [formControl]="espCmtFrmCtrl">
+                <mat-option
+                  *ngFor="let comite of listaComites"
+                  [value]="comite.codigoComite"
+                >
+                  {{ comite.descripcionComite }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile
+            [colspan]="2"
+            [rowspan]="1"
+            *ngIf="txtHoraReunion === valorMostrarOpcion || flagEvaluacion"
+          >
+            <mat-form-field
+              class="p-06em"
+              appearance="fill"
+            >
+              <mat-label>HORA DE REUNION</mat-label>
+              <input
+                [disabled]="horaReunionFrmCtrl"
+                matInput
+                [appOnlyDate]="{ type: 'hour' }"
+                formControlName="horaReunionFrmCtrl"
+                type="time"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile
+            [colspan]="2"
+            [rowspan]="1"
+            *ngIf="mostrarCasosEvaluados"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>FECHA REAL DE REUNION</mat-label>
+              <input
+                [disabled]="fechaRealdis"
+                matInput
+                [matDatepicker]="dpDesde"
+                formControlName="fechaRealFrmCtrl"
+                (dateChange)="validarFechaInicio()"
+                [max]="maxDate"
+                [appOnlyDate]="{ type: 'date' }"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="dpDesde"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #dpDesde></mat-datepicker>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card-content>
+    </mat-card>
+  </form>
+
+  <mat-card class="cardBar">
+    <mat-progress-bar
+      *ngIf="proBarTabla"
+      mode="indeterminate"
+    ></mat-progress-bar>
+  </mat-card>
+
+  <form class="form" novalidate *ngIf="abrirPanel">
+    <mat-divider></mat-divider>
+    <mat-card class="cardAdd">
+      <mat-card-content>
+        <mat-grid-list cols="12" rowHeight="45px">
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }"
+          >
+            <mat-form-field class="p-06em item" appearance="fill">
+              <mat-label>CÓDIGO SOLICITUD</mat-label>
+              <input
+                matInput
+                [appOnlyNumber]="{ size: 10 }"
+                [formControl]="codSolicitudFrmCtrl"
+              />
+              <mat-error
+                *ngIf="
+                  codSolicitudFrmCtrl.touched &&
+                  codSolicitudFrmCtrl.hasError('required')
+                "
+              >
+                Digitar el código de la solicitud
+              </mat-error>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 1, sm: 1, md: 1, lg: 1, xl: 1 }"
+          >
+            <div class="btns-right">
+              <button
+                type="button"
+                mat-icon-button
+                color="primary"
+                [disabled]="agregarSolicitudBtn"
+                (click)="addSolicitud($event)"
+                [disabled]="isAddSolicitud"
+                matTooltip="Agregar solicitud"
+              >
+                <mat-icon>add_circle_outline</mat-icon>
+              </button>
+              <button
+                type="button"
+                [disabled]="isAddSolicitud"
+                mat-icon-button
+                matTooltip="Cancelar"
+                (click)="cancelar()"
+              >
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card-content>
+    </mat-card>
+    <mat-divider></mat-divider>
+  </form>
+
+  <mat-card class="cardTablaCasos" *ngIf="mostrarCasosEvaluados">
+    <mat-card-content>
+      <div class="p-06em">
+        <h3 class="title-table">CASOS EVALUADOS</h3>
+        <div class="btns-right">
+          <button
+            type="button"
+            mat-icon-button
+            color="primary"
+            (click)="agregarSolicitud()"
+            *ngIf="
+              !registroGrabado &&
+              (btnAgregarSolicitud === valorMostrarOpcion || flagEvaluacion)
+            "
+            [disabled]="disableBtn"
+            matTooltip="AGREGAR SOLICITUD A EVALUACIÓN"
+          >
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+          <button
+            type="button"
+            mat-icon-button
+            (click)="ImprimirListaActasMAC()"
+            *ngIf="
+              registroGrabado &&
+              (btnImprimirActa === valorMostrarOpcion || flagEvaluacion)
+            "
+            matTooltip="IMPRIMIR ACTA COMITE"
+          >
+            <mat-icon class="gray">print</mat-icon>
+          </button>
+          <div class="file ml-20px" *ngIf="showFile">
+            <span>File01.pdf</span>
+          </div>
+          <button
+            type="button"
+            *ngIf="
+              btnCargarActaEscaneada === valorMostrarOpcion ||
+              flagEvaluacion ||
+              registroGrabado
+            "
+            mat-icon-button
+            color="primary"
+            matTooltip="Cargar Archivo"
+            [disabled]="disableOpenFile"
+            (click)="fileUpload.click()"
+          >
+            <mat-icon>attach_file</mat-icon>
+            <input
+              #fileUpload
+              type="file"
+              type="file"
+              (click)="fileUpload.value = null"
+              (change)="openFileRecarga($event)"
+              style="display: none"
+            />
+          </button>
+          <button
+            type="button"
+            mat-icon-button
+            color="primary"
+            matTooltip="Descargar Docuemnto"
+            [disabled]="disableDownloadFile"
+            (click)="descArchivoSust()"
+          >
+            <mat-icon>picture_as_pdf</mat-icon>
+          </button>
+        </div>
+        <div class="table-container clear-both">
+          <form [formGroup]="evaFrmGrp" novalidate>
+            <table mat-table [dataSource]="dataSource" matSort>
+              <!-- <ng-container matColumnDef="fechaEvaluacion">
+                <th class="text-center" mat-header-cell *matHeaderCellDef>
+                  FECHA EVALUACIÓN
+                </th>
+                <td mat-cell class="p-05" *matCellDef="let row">
+                  <mat-form-field appearance="fill">
+                    <mat-label>FECHA DE REUNION</mat-label>
+                    <input
+                      matInput
+                      [matDatepicker]="meetDate"
+                      [appOnlyDate]="{ type: 'date' }"
+                      formControlName="'r' + row.fechaEvaluacion"
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="meetDate"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #meetDate></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </ng-container> -->
+              <ng-container matColumnDef="numeroSolEvaluacion">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  N° SOLICITUD EVALUACIÓN
+                </th>
+                <td class="text-center" mat-cell *matCellDef="let row">
+                  {{ row.numeroSolEvaluacion | uppercase }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="paciente">
+                <th
+                  class="text-center"
+                  mat-header-cell
+                  *matHeaderCellDef
+                  mat-sort-header
+                >
+                  PACIENTE
+                </th>
+                <td mat-cell class="p-05" *matCellDef="let row">
+                  {{ row.paciente | uppercase }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="diagnostico">
+                <th
+                  class="text-center"
+                  mat-header-cell
+                  *matHeaderCellDef
+                  mat-sort-header
+                >
+                  DIAGNÓSTICO
+                </th>
+                <td mat-cell class="p-05" *matCellDef="let row">
+                  {{ row.diagnostico | uppercase }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="codMac">
+                <th
+                  class="text-center"
+                  mat-header-cell
+                  *matHeaderCellDef
+                  mat-sort-header
+                >
+                  CÓDIGO MAC
+                </th>
+                <td class="text-center p-05" mat-cell *matCellDef="let row">
+                  {{ row.codMac | uppercase }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="descripcionCmac">
+                <th
+                  class="text-center"
+                  mat-header-cell
+                  *matHeaderCellDef
+                  mat-sort-header
+                >
+                  MEDICAMENTO SOLICITADO
+                </th>
+                <td mat-cell class="p-05" *matCellDef="let row">
+                  {{ row.descripcionCmac | uppercase }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="codigoResultado">
+                <th class="text-center" mat-header-cell *matHeaderCellDef>
+                  RESULTADO EVALUACIÓN
+                </th>
+                <td mat-cell class="p-05" *matCellDef="let row">
+                  <mat-form-field appearance="fill">
+                    <mat-select
+                      placeholder="RESULTADO"
+                      [formControlName]="'r' + row.codSolEvaluacion"
+                      required
+                    >
+                      <mat-option
+                        *ngFor="let row of cmbResultadoCmac"
+                        [value]="row.codigoParametro"
+                        [disabled]="row.codigoParametro === null"
+                      >
+                        {{ row.nombreParametro }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="observaciones">
+                <th mat-header-cell class="text-center" *matHeaderCellDef>
+                  OBSERVACIONES
+                </th>
+                <td mat-cell class="p-05" *matCellDef="let row">
+                  <button
+                    type="button"
+                    class="tableIconButton"
+                    [disabled]="disableBtn"
+                    mat-icon-button
+                    matTooltip="Ingresar Comentario"
+                    (click)="ingresarComentario(row)"
+                  >
+                    <mat-icon>add_comment</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="accion">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let row">
+                  <button
+                    type="button"
+                    class="tableIconButton"
+                    [disabled]="disableBtn"
+                    mat-icon-button
+                    matTooltip="ELIMINAR"
+                    (click)="eliminarEvaluacion(row)"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+              <tr
+                mat-header-row
+                *matHeaderRowDef="displayedColumns; sticky: true"
+              ></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </form>
+
+          <div class="empty" *ngIf="!isLoading && dataSource === null">
+            No existe datos para mostrar en la tabla
+          </div>
+
+          <mat-card *ngIf="isLoading" class="spinerTable">
+            <mat-progress-spinner color="primary" mode="indeterminate">
+            </mat-progress-spinner>
+          </mat-card>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div class="mat-dialog-actions modal-mantenimiento">
+  <button
+    type="button"
+    mat-raised-button
+    color="primary"
+    *ngIf="
+      !registroGrabado && (btnGrabar === valorMostrarOpcion || flagEvaluacion)
+    "
+    [disabled]="bloquearBoton"
+    (click)="grabarEvaluacionCMAC()"
+  >
+    GRABAR
+  </button>
+  <button
+    mat-raised-button
+    [disabled]="disableBuscar"
+    (click)="openDiaRegistroParticipantes($event)"
+  >
+    REGISTRAR
+  </button>
+  <button
+    type="button"
+    mat-raised-button
+    color="primary"
+    *ngIf="
+      registroGrabado && (btnEnviar === valorMostrarOpcion || flagEvaluacion)
+    "
+    (click)="enviarActa()"
+  >
+    ENVIAR ACTA
+  </button>
+  <button
+    type="button"
+    mat-raised-button
+    *ngIf="btnSalir === valorMostrarOpcion || flagEvaluacion"
+    (click)="onNoClick()"
+  >
+    SALIR
+  </button>
+</div>

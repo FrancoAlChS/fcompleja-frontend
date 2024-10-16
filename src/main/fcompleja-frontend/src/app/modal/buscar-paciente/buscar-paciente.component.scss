@@ -1,0 +1,35 @@
+@import "../../main";
+
+.pacienteCtrl {
+  width: 100%;
+}
+
+.table-resultados{
+  box-shadow: none !important;
+}
+
+@include mat-table-columns(
+  (
+    rn: (
+      width: 2rem
+    ),
+    tipdoc: (
+      width: 7rem
+    ),
+    numdoc: (
+      width: 7rem
+    ),
+    codafir: (
+      width: 7rem
+    ),
+    apepat: (
+      width: 10rem
+    ),
+    apemat: (
+      width: 10rem
+    ),
+    nombr1: (
+      width: 15rem
+    )
+  )
+);

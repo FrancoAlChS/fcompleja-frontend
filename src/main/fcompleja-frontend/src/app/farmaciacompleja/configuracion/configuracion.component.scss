@@ -1,0 +1,114 @@
+@import "../../main";
+
+.page-configuracion {
+  .box-filtros {
+    margin-bottom: 0;
+  }
+  .box-resultados {
+    margin-bottom: 0;
+    box-shadow: none;
+  }
+}
+
+.table-container {
+  max-height: 400px;
+}
+
+.table-container th {
+  font-size: 8px;
+}
+
+.btnActions {
+  margin: 0;
+  padding: 0;
+  border-top: 1px $color-secundario solid;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .mat-raised-button {
+    font-size: 0.9em;
+    margin-top: 10px;
+    display: flex;
+    border-radius: 25px;
+    white-space: pre-wrap;
+    justify-content: center;
+    line-height: 1.4;
+    .mat-icon {
+      font-size: 20px;
+      margin-right: 5px;
+    }
+    span.mat-button-wrapper {
+      display: flex;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+  }
+  .btnMnto {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}
+
+.btnSrch {
+  font-size: 0.9em;
+  display: flex;
+  border-radius: 25px;
+  white-space: pre-wrap;
+  justify-content: center;
+  line-height: 1.4;
+  height: 42px;
+}
+.btnAdd {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@include mat-table-columns(
+  (
+    codigoLargo: (
+      width: 4rem
+    ),
+    descripcion: (
+      width: 20rem
+    ),
+    tipo: (
+      width: 6rem
+    ),
+    fechaInscripcion: (
+      width: 6rem
+    ),
+    usuarioCreacion: (
+      width: 15rem
+    ),
+    fechaInicioVigencia: (
+      width: 6rem
+    ),
+    fechaFinVigencia: (
+      width: 6rem
+    ),
+    estado: (
+      width: 5rem
+    ),
+    detalleCheckList: (
+      width: 3rem,
+    ),
+    detalleFichaTecnica: (
+      width: 4rem
+    ),
+    detalleComplicacionesMedicas: (
+      width: 4rem
+    ),
+    detalleProductosAsociados: (
+      width: 4rem
+    ),
+    detalleMarcadores: (
+      width: 4rem
+    ),
+    editar: (
+      width: 3rem
+    )
+  )
+);

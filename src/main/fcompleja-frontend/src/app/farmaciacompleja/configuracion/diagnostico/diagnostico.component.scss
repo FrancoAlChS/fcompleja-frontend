@@ -1,0 +1,45 @@
+@import "../../../main";
+
+.page-reporte-indicador ::ng-deep .mat-form-field-label {
+  padding: 0.25em 0 0 0 !important;
+}
+
+.page-reporte-indicador ::ng-deep .mat-select-value {
+  padding: 0.25em 0 0 0 !important;
+}
+
+.page-reporte-indicador ::ng-deep .mat-button-wrapper {
+  display: flex;
+  align-items: center !important;
+  flex-direction: row !important;
+}
+
+.page-reporte-indicador {
+  .mat-raised-button {
+    font-size: 0.8em;
+    display: flex;
+    border-radius: 25px;
+    white-space: pre-wrap;
+    align-content: center;
+    height: auto;
+    padding: 5px 10px;
+    .mat-icon {
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+@include mat-table-columns(
+  (
+    reportes: (
+      width: 25rem,
+      text-align: left,
+      padding-left: 5%
+    ),
+    verExcel: (
+      width: 3rem
+    )
+  )
+);

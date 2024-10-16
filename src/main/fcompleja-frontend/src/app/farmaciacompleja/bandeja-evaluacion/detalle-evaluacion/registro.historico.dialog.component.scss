@@ -1,0 +1,28 @@
+@import "./../../../main";
+
+.pregunta-dialog {
+    font-size: 1.2em;
+    font-weight: 300;
+    color: $color-secundario;
+    text-align: center;
+}
+.actions-dialog {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.actions-dialog button{
+    margin: 0 8px;
+}
+/* Small devices (portrait tablets and large phones, 600px and up) SM */
+@media only screen and (max-width: 768px) {
+    .pregunta-dialog{
+        font-size: 1em;
+    }
+    h1{
+        font-size: 1.1em;
+    }
+    .mat-dialog-content{
+        width: 100%;
+    }
+}

@@ -1,0 +1,193 @@
+<div class="page-preliminar">
+  <mat-card class="box-filtros">
+    <mat-card-header class="box-section-header">
+      <mat-card-title class="box-section-title"> BANDEJA DE SOLICITUDES PRELIMINARES </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="form form-solicitud" [formGroup]="preliminarFrmGrp" novalidate>
+        <mat-grid-list cols="12" rowHeight="35px">
+          <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 4, lg: 4, xl: 4}"
+            *ngIf="solicitudPrelimTxt === valorMostrarOpcion">
+            <mat-form-field appearance="fill">
+              <mat-label>N° SOLICITUD PRELIMINAR</mat-label>
+              <input matInput  formControlName="nroSolPreFrmCtrl">
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <!-- nroSolPreFrmCtrl -->
+
+          <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 4, lg: 4, xl: 4}"
+            *ngIf="pacienteTxt === valorMostrarOpcion">
+            <mat-form-field appearance="fill">
+              <mat-label>PACIENTE</mat-label>
+              <input matInput formControlName="pacienteFrmCtrl" readonly>
+              <button mat-icon-button matTooltip="Buscar Paciente" *ngIf="pacienteFrmCtrl.value === null" type="button"
+                class="btn-action" color="primary" (click)="abrirBuscarPaciente()">
+                <mat-icon>search</mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Borrar Filtro" *ngIf="pacienteFrmCtrl.value !== null" type="button"
+                class="btn-action" color="primary"
+                (click)="limpiarControl($event, 'pacienteFrmCtrl', 'codigoAfiliado')">
+                <mat-icon>delete_sweep</mat-icon>
+              </button>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 4, lg: 4, xl: 4}"
+            *ngIf="tipoScgSolbenCmb === valorMostrarOpcion">
+            <mat-form-field appearance="fill">
+              <mat-label>TIPO SCG SOLBEN</mat-label>
+              <mat-select formControlName="tipSCGSolFrmCtrl">
+                <mat-option *ngIf="cmbTipoSCG.length === 0" disabled>
+                  <div class="containerSpinner">
+                    <span>Cargando...</span>
+                    <mat-spinner class="spinner" diameter="20"></mat-spinner>
+                  </div>
+                </mat-option>
+                <mat-option *ngFor="let row2 of cmbTipoSCG" [value]="row2.codigoParametro">
+                  {{row2.nombreParametro}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 4, lg: 4, xl: 4}"
+            *ngIf="nroScgSolbenTxt === valorMostrarOpcion">
+            <mat-form-field appearance="fill">
+              <mat-label>N° SCG SOLBEN</mat-label>
+              <input matInput [appAlphaNumerico]='{size: 20}' formControlName="nroSCGSolFrmCtrl">
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 4, lg: 4, xl: 4}"
+            *ngIf="clinicaTxt === valorMostrarOpcion">
+            <mat-form-field appearance="fill">
+              <mat-label>CLÍNICA</mat-label>
+              <input matInput formControlName="clinicaFrmCtrl" readonly>
+              <button mat-icon-button matTooltip="Buscar Clínica" *ngIf="clinicaFrmCtrl.value === null" type="button"
+                class="btn-action" color="primary" (click)="abrirBuscarClinica()">
+                <mat-icon>search</mat-icon>
+              </button>
+              <button mat-icon-button matTooltip="Borrar Filtro" *ngIf="clinicaFrmCtrl.value !== null" type="button"
+                class="btn-action" color="primary" (click)="limpiarControl($event, 'clinicaFrmCtrl', 'codigoClinica')">
+                <mat-icon>delete_sweep</mat-icon>
+              </button>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 4, lg: 4, xl: 4}"
+            *ngIf="estadoSolicPrelimCmb === valorMostrarOpcion">
+            <mat-form-field appearance="fill">
+              <mat-label>ESTADO SOLICITUD PRELIMINAR</mat-label>
+              <mat-select formControlName="estadoPreFrmCtrl">
+                <mat-option *ngIf="cmbEstadoPreliminar.length === 0" disabled>
+                  <div class="containerSpinner">
+                    <span>Cargando...</span>
+                    <mat-spinner class="spinner" diameter="20"></mat-spinner>
+                  </div>
+                </mat-option>
+                <mat-option *ngFor="let row3 of cmbEstadoPreliminar" [value]="row3.codigoParametro">
+                  {{row3.nombreParametro}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 4, lg: 4, xl: 4}"
+            *ngIf="autorizadorPertCmb === valorMostrarOpcion">
+            <mat-form-field appearance="fill">
+              <mat-label>AUTORIZADOR DE PERTENENCIA</mat-label>
+              <mat-select formControlName="autorizadorFrmCtrl">
+                <mat-option *ngIf="cmbUsrRol.length === 0" disabled>
+                  <div class="containerSpinner">
+                    <span>Cargando...</span>
+                    <mat-spinner class="spinner" diameter="20"></mat-spinner>
+                  </div>
+                </mat-option>
+                <mat-option *ngFor="let row1 of cmbUsrRol" [value]="row1.codUsuario">
+                  {{row1.nombre }} {{row1.apellidoPaterno }} {{row1.apellidoMaterno }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 4, lg: 4, xl: 4}">
+            <mat-form-field appearance="fill" *ngIf="fecRegPrelimIniTxt === valorMostrarOpcion">
+              <mat-label>FECHA REG. PRELIMINAR INICIO</mat-label>
+              <input matInput [matDatepicker]="dpDesde" formControlName="fechaRegDesdeFrmCtrl"
+                (dateChange)="validarFechaInicio()" [max]="maxDate" [appOnlyDate]="{type: 'date'}">
+              <mat-datepicker-toggle matSuffix [for]="dpDesde"></mat-datepicker-toggle>
+              <mat-datepicker #dpDesde></mat-datepicker>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile [responsiveRows]="{xs: 12, sm: 6, md: 4, lg: 4, xl: 4}">
+            <mat-form-field appearance="fill" *ngIf="fecRegPrelimFinTxt === valorMostrarOpcion">
+              <mat-label>FECHA REG. PRELIMINAR FIN</mat-label>
+              <input matInput [matDatepicker]="dpHasta" formControlName="fechaRegHastaFrmCtrl"
+                (dateChange)="validarFechaFin()" [max]="maxDate" [appOnlyDate]="{type: 'date'}">
+              <mat-datepicker-toggle matSuffix [for]="dpHasta"></mat-datepicker-toggle>
+              <mat-datepicker #dpHasta></mat-datepicker>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </form>
+    </mat-card-content>
+    <mat-card-actions class="btnRigth" align="end">
+      <button mat-raised-button color="primary" (click)="listaDetallesSolicitudes()"
+        *ngIf="buscarPrelimBtn === valorMostrarOpcion" [disabled]="disableBuscar">
+        <mat-icon inline=true>search</mat-icon>
+        <strong>BUSCAR</strong>
+      </button>
+      <button mat-raised-button (click)="exportExcelBandejaPreliminar()" *ngIf="exportarExcelBtn === valorMostrarOpcion"
+        [disabled]="disableBuscar">
+        <mat-icon svgIcon="excel-icon"></mat-icon>
+        <strong>EXPORTAR EXCEL</strong>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card class="table-resultados">
+    <mat-card-header>
+      <mat-card-title> RESULTADOS DE LA BÚSQUEDA </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="card-container">
+      <div class="table-container clear-both">
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <ng-container *ngFor="let column of columnsGrilla" [matColumnDef]="column.columnDef">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ column.header }} </th>
+            <td mat-cell *matCellDef="let row"> {{ column.cell(row) }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="verDetalle" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button class="tableIconButton" mat-icon-button matTooltip="Ver Detalle"
+                (click)="verFichaDeSolicitud(element)">
+                <mat-icon>find_in_page</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{solbenRow: row.alertSCGSolben}"></tr>
+        </table>
+
+        <div class="empty" *ngIf="!isLoading && dataSource === null">
+          No existe datos para mostrar en la tabla
+        </div>
+
+        <mat-card *ngIf="isLoading" class="spinerTable">
+          <mat-progress-spinner color="primary" mode="indeterminate">
+          </mat-progress-spinner>
+        </mat-card>
+
+        <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[10, 25, 100, 200]" showFirstLastButtons
+          [length]="totalResultadoBandeja" [pageSize]="pageSize" (page)="cambiarPagina($event)" #paginator>
+        </mat-paginator>
+
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

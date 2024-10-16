@@ -1,0 +1,212 @@
+<div>
+  <ng4-loading-spinner [timeout]="400000" [zIndex]="9999"></ng4-loading-spinner>
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="reporteFrmGrp">
+        <mat-grid-list cols="12" rowHeight="60px">
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 3, lg: 3, xl: 3 }"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>PACIENTE</mat-label>
+              <input matInput formControlName="pacienteFrmCtrl" readonly />
+              <button
+                mat-icon-button
+                matTooltip="Buscar Paciente"
+                *ngIf="pacienteFrmCtrl.value === null"
+                type="button"
+                class="btn-action buscar-boton"
+                color="primary"
+                (click)="abrirBuscarPaciente()"
+              >
+                <mat-icon>search</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                matTooltip="Borrar Filtro"
+                *ngIf="pacienteFrmCtrl.value !== null"
+                type="button"
+                class="btn-action buscar-boton"
+                color="primary"
+                (click)="
+                  limpiarControl($event, 'pacienteFrmCtrl', 'codigoAfiliado')
+                "
+              >
+                <mat-icon>delete_sweep</mat-icon>
+              </button>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 2, lg: 2, xl: 2 }"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>CODIGO DEL AFILIADO</mat-label>
+              <input
+                matInput
+                [appOnlyNumber]="{ size: 20 }"
+                formControlName="codPacienteFrmCtrl"
+                (ngModelChange)="cambiarEstadoCodPaciente($event)"
+              />
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 3, lg: 3, xl: 3 }"
+          >
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 2, lg: 2, xl: 2 }"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>FECHA REGISTRO DEL</mat-label>
+              <input
+                matInput
+                [matDatepicker]="dpfecharegistro"
+                [appOnlyDate]="{ type: 'date' }"
+                formControlName="fechaRegistroFrmCtrl"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="dpfecharegistro"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #dpfecharegistro></mat-datepicker>
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 2, lg: 2, xl: 2 }"
+          >
+            <mat-form-field appearance="fill">
+              <mat-label>FECHA REGISTRO AL</mat-label>
+              <input
+                matInput
+                [matDatepicker]="dpfechaalregistro"
+                [appOnlyDate]="{ type: 'date' }"
+                formControlName="fechaRegistroAlFrmCtrl"
+                (dateChange)="validarFechaFinal()"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="dpfechaalregistro"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #dpfechaalregistro></mat-datepicker>
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list cols="12" rowHeight="60px">
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 3, lg: 3, xl: 3 }"
+          >
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 2, lg: 2, xl: 2 }"
+          >
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 3, lg: 3, xl: 3 }"
+          >
+            <button
+              mat-raised-button
+              color="primary"
+              [disabled]="isGenerarReporte"
+              (click)="generarReporteAntecedentesTratamientos()"
+            >
+              <mat-icon>build</mat-icon> GENERAR REPORTES
+            </button>
+            <!-- <button
+              mat-raised-button
+              color="primary"
+              [disabled]="isGenerarReporte"
+              (click)="visualizarCamposPre()"
+            >
+              <mat-icon>build</mat-icon> GENERAR REPORTES
+            </button> -->
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 2, lg: 2, xl: 2 }"
+          >
+          </mat-grid-tile>
+
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 6, md: 2, lg: 2, xl: 2 }"
+          >
+          </mat-grid-tile>
+        </mat-grid-list>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="table-resultados">
+    <mat-card-content>
+      <div class="table-container clear-both">
+        <table mat-table [dataSource]="dataSourceReporteC" matSort>
+          <ng-container matColumnDef="reportes">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              INDICADORES {{ fecha }}
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <b>Rango:</b> {{row.fechaIni}} - {{row.fechaFin}}   <b>Fecha Creación:</b> {{ row.fechaCreacion }}    <b>Estado:</b> {{row.status}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="verExcel">
+            <th mat-header-cell *matHeaderCellDef>
+
+               <button
+                class="tableIconButton"
+                mat-icon-button
+                matTooltip="Recargar"
+                (click)="reloadPatientReport()"
+              >
+              <mat-icon svgIcon="reload-icon"></mat-icon>
+              </button>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <button
+                class="tableIconButton"
+                mat-icon-button
+                [disabled]="verReportes"
+                matTooltip="Ver Reporte"
+                (click)="descargarReporte()"
+              >
+                <mat-icon svgIcon="excel-icon"></mat-icon>
+              </button>
+              <button
+                class="tableIconButton"
+                mat-icon-button
+                matTooltip="Descargar Actividades"
+                [disabled]="verReportes"
+                (click)="downloadPatientActivityLog()"
+              >
+                <mat-icon svgIcon="activity-log"></mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayColumnsReporteC; sticky: true"
+          ></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayColumnsReporteC"
+            [ngClass]="{ solbenRow: row.alertSCGSolben }"
+          ></tr>
+        </table>
+
+        <mat-paginator
+          class="mat-paginator-sticky"
+          [pageSizeOptions]="[10, 25, 100, 200]"
+          showFirstLastButtons
+        >
+        </mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

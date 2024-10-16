@@ -1,0 +1,351 @@
+<div class="mat-dialog-header">
+  <h1 class="mat-dialog-title" mat-dialog-title>{{ data.title }}</h1>
+</div>
+
+<div class="mat-dialog-content pb-12px" mat-dialog-content>
+  <form class="form" [formGroup]="programarCmacFrmGrp" novalidate>
+    <!-- <mat-grid-list cols="12" rowHeight="50px"> -->
+    <mat-grid-list cols="4" rowHeight="50px">
+      <!-- <mat-grid-tile
+        [responsiveRows]="{ xs: 6, sm: 6, md: 4, lg: 3, xl: 3 }"
+        *ngIf="txtFechaReunion === valorMostrarOpcion"
+      > -->
+      <mat-grid-tile
+        [colspan]="2"
+        [rowspan]="1"
+        *ngIf="txtFechaReunion === valorMostrarOpcion"
+      >
+        <mat-form-field class="p-06em item" appearance="fill">
+          <mat-label>FECHA DE REUNION</mat-label>
+          <input
+            matInput
+            [appOnlyDate]="{ type: 'date' }"
+            [min]="minDate"
+            [matDatepicker]="dateCmac"
+            formControlName="dateCmacFrmCtrl"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="dateCmac"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #dateCmac></mat-datepicker>
+          <mat-error
+            *ngIf="
+              dateCmacFrmCtrl.touched && dateCmacFrmCtrl.hasError('required')
+            "
+          >
+            Indicar la fecha de la reunión
+          </mat-error>
+          <mat-error
+            *ngIf="
+              dateCmacFrmCtrl.touched && dateCmacFrmCtrl.hasError('dateValid')
+            "
+          >
+            Colocar una fecha válida (dd/mm/yyyy)
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="2" [rowspan]="3">
+        <!-- <mat-grid-tile [responsiveRows]="{xs: 6, sm: 6,md: 4, lg: 6, xl: 6}"> -->
+        <div class="contenido">
+          <h3>PARTICIPANTES DEL COMITE</h3>
+          <div class="table-container participantes clear-both">
+            <table mat-table [dataSource]="dataSourceParticipantes" matSort>
+              <ng-container matColumnDef="select" sticky>
+                <th mat-header-cell *matHeaderCellDef>
+                  <mat-checkbox
+                    (change)="$event ? masterToggle() : null"
+                    [checked]="
+                      selectionParticipante.hasValue() && isAllSelected()
+                    "
+                    [indeterminate]="
+                      selectionParticipante.hasValue() && !isAllSelected()
+                    "
+                    [disabled]="
+                      dataSourceParticipantes === null ||
+                      dataSourceParticipantes?.data.length === 0 ||
+                      registroGrabado
+                    "
+                  >
+                  </mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let row">
+                  <mat-checkbox
+                    (click)="$event.stopPropagation()"
+                    (change)="
+                      $event ? selectionParticipante.toggle(row) : null
+                    "
+                    [checked]="selectionParticipante.isSelected(row)"
+                    [disabled]="registroGrabado"
+                  >
+                  </mat-checkbox>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="nombreUsuarioRol">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Nombres y Apellidos
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.nombreApellido }} {{ element.apellidoPaterno }}
+                  {{ element.apellidoMaterno }}
+                </td>
+              </ng-container>
+
+              <tr
+                mat-header-row
+                *matHeaderRowDef="displayedColumnsParticipantes; sticky: true"
+              ></tr>
+              <tr
+                mat-row
+                *matRowDef="let row; columns: displayedColumnsParticipantes"
+              ></tr>
+            </table>
+
+            <div
+              class="empty"
+              *ngIf="
+                !isLoadingParticipantes && dataSourceParticipantes === null
+              "
+            >
+              No existe datos para mostrar en la tabla
+            </div>
+
+            <mat-card *ngIf="isLoadingParticipantes" class="spinerTable">
+              <mat-progress-spinner color="primary" mode="indeterminate">
+              </mat-progress-spinner>
+            </mat-card>
+          </div>
+        </div>
+      </mat-grid-tile>
+
+      <mat-grid-tile
+        [colspan]="2"
+        [rowspan]="1"
+        *ngIf="txtHoraReunion === valorMostrarOpcion"
+      >
+        <mat-form-field class="p-06em item" appearance="fill">
+          <mat-label>HORA DE REUNION</mat-label>
+          <input
+            matInput
+            type="time"
+            [appOnlyDate]="{ type: 'hour' }"
+            formControlName="horaCmacFrmCtrl"
+          />
+          <mat-error
+            *ngIf="
+              horaCmacFrmCtrl.touched && horaCmacFrmCtrl.hasError('required')
+            "
+          >
+            Indicar la hora de la reunión
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+  <form class="form" novalidate *ngIf="abrirPanel">
+    <mat-divider></mat-divider>
+    <mat-grid-list cols="12" rowHeight="55px">
+      <mat-grid-tile [responsiveRows]="{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }">
+        <mat-form-field class="p-06em item" appearance="fill">
+          <mat-label>CÓDIGO SOLICITUD</mat-label>
+          <input
+            matInput
+            [appOnlyNumber]="{ size: 10 }"
+            [formControl]="codSolicitudFrmCtrl"
+          />
+          <mat-error
+            *ngIf="
+              codSolicitudFrmCtrl.touched &&
+              codSolicitudFrmCtrl.hasError('required')
+            "
+          >
+            Digitar el código de la solicitud
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile [responsiveRows]="{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }">
+        <div class="btns-right">
+          <button
+            class="iconBtn"
+            type="button"
+            mat-icon-button
+            color="primary"
+            [disabled]="agregarSolicitudBtn"
+            (click)="addSolicitud($event)"
+            matTooltip="Agregar solicitud"
+          >
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+          <button
+            class="iconBtn"
+            type="button"
+            mat-icon-button
+            matTooltip="Cancelar"
+            (click)="cancelar()"
+          >
+            <mat-icon class="gray">cancel</mat-icon>
+          </button>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+    <mat-divider></mat-divider>
+  </form>
+  <div class="p-06em">
+    <h3 class="title-table">CASOS DE EVALUACIÓN</h3>
+    <div class="btns-right">
+      <button
+        class="iconBtn"
+        *ngIf="!grabarOk && btnAgregarSolEva === valorMostrarOpcion"
+        type="button"
+        mat-icon-button
+        [disabled]="disableBtn"
+        color="primary"
+        (click)="agregarSolicitud()"
+        matTooltip="AGREGAR SOLICITUD A EVALUACIÓN"
+      >
+        <mat-icon>add_circle_outline</mat-icon>
+      </button>
+      <button
+        class="iconBtn"
+        *ngIf="grabarOk && btnImprimirCasos === valorMostrarOpcion"
+        color="primary"
+        type="button"
+        mat-icon-button
+        (click)="generarListaCasosPDF(true)"
+        matTooltip="IMPRIMIR LISTA DE CASOS"
+      >
+        <mat-icon class="gray">print</mat-icon>
+      </button>
+    </div>
+
+    <div class="table-container clear-both">
+      <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="numeroSolEvaluacion">
+          <th
+            class="no-padding"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            N° SOLICITUD DE EVALUACIÓN
+          </th>
+          <td class="no-padding text-center" mat-cell *matCellDef="let row">
+            {{ row.numeroSolEvaluacion | uppercase }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="paciente">
+          <th
+            class="text-center"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            PACIENTE
+          </th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.nombrePaciente | uppercase }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="diagnostico">
+          <th
+            class="text-center"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            DIAGNÓSTICO
+          </th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.nombreDiagnostico | uppercase }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="codMac">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            CÓDICO MEDICAMENTO
+          </th>
+          <td class="text-center" mat-cell *matCellDef="let row">
+            {{ row.codMac | uppercase }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="descripcionCmac">
+          <th
+            class="text-center"
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+          >
+            MEDICAMENTO SOLICITADO
+          </th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.descripcionCmac | uppercase }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="accion">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let row">
+            <button
+              type="button"
+              class="tableIconButton"
+              mat-icon-button
+              matTooltip="ELIMINAR"
+              (click)="eliminarEvaluacion(row)"
+              [disabled]="disableBtn"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns; sticky: true"
+        ></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <div class="empty" *ngIf="!isLoading && dataSource.data.length === 0">
+        No existe datos para mostrar en la tabla
+      </div>
+
+      <mat-card *ngIf="isLoading" class="spinerTable">
+        <mat-progress-spinner color="primary" mode="indeterminate">
+        </mat-progress-spinner>
+      </mat-card>
+
+      <mat-paginator
+        class="mat-paginator-sticky"
+        [pageSizeOptions]="[3, 5, 10, 50]"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</div>
+<div class="mat-dialog-actions divBtnAgregar">
+  <button
+    type="button"
+    mat-raised-button
+    color="primary"
+    *ngIf="!showPrimero && btnGrabar === valorMostrarOpcion"
+    (click)="grabarReunionCMAC()"
+    [disabled]="disableGrabarReunion"
+  >
+    GRABAR
+  </button>
+  <button
+    mat-raised-button
+    [disabled]="disableRegistrarPartc"
+    (click)="openDiaRegistroParticipantes($event)"
+  >
+    REGISTRAR
+  </button>
+  <button
+    type="button"
+    mat-raised-button
+    *ngIf="btnGrabar === valorMostrarOpcion"
+    (click)="onNoClick()"
+  >
+    SALIR
+  </button>
+</div>

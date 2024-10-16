@@ -1,0 +1,70 @@
+<div class="mat-dialog-header">
+  <h1 class="mat-dialog-title" mat-dialog-title>REGISTRAR PARTICIPANTES</h1>
+</div>
+
+<div class="mat-dialog-content pb-12px" mat-dialog-content>
+  <form class="form" [formGroup]="agregarPartiFrmGrp" novalidate>
+    <mat-divider></mat-divider>
+    <mat-card class="cardAdd">
+      <mat-card-content>
+        <mat-grid-list cols="12" rowHeight="45px">
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }"
+          >
+            <mat-form-field class="p-06em item" appearance="fill">
+              <mat-label>NOMBRES COMPLETOS</mat-label>
+              <input matInput [formControl]="nombresFrmCtrl" />
+              <!-- <mat-error *ngIf="codSolicitudFrmCtrl.touched && codSolicitudFrmCtrl.hasError('required')">
+                Digitar el código de la solicitud
+              </mat-error> -->
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }"
+          >
+            <mat-form-field class="p-06em item" appearance="fill">
+              <mat-label>APELLIDOS COMPLETOS</mat-label>
+              <input matInput [formControl]="apellidosFrmCtrl" />
+              <!-- <mat-error *ngIf="codSolicitudFrmCtrl.touched && codSolicitudFrmCtrl.hasError('required')">
+                Digitar el código de la solicitud
+              </mat-error> -->
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile
+            [responsiveRows]="{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }"
+          >
+            <mat-form-field class="p-06em item" appearance="fill">
+              <mat-label>CORREO ELECTRÓNICO</mat-label>
+              <input matInput [formControl]="correoFrmCtrl" />
+              <!-- <mat-error *ngIf="codSolicitudFrmCtrl.touched && codSolicitudFrmCtrl.hasError('required')">
+                Digitar el código de la solicitud
+              </mat-error> -->
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card-content>
+    </mat-card>
+    <mat-divider></mat-divider>
+  </form>
+</div>
+
+
+<div class="mat-dialog-actions modal-mantenimiento">
+  <button
+    type="button"
+    mat-raised-button
+    color="primary"
+    (click)="grabarParticipanteCMAC()"
+  >
+    GRABAR
+  </button>
+
+  <button
+    type="button"
+    mat-raised-button
+    *ngIf="btnSalir === valorMostrarOpcion || flagEvaluacion"
+    (click)="onNoClick()"
+  >
+    SALIR
+  </button>
+</div>

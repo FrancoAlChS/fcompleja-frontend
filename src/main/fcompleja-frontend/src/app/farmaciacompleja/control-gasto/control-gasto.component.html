@@ -1,0 +1,151 @@
+<div class="page-preliminar">
+
+  <mat-card class="box-filtros">
+
+    <mat-card-header class="box-section-header">
+      <mat-card-title class="box-section-title">CARGA DE CONTROL DE GASTO</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+
+      <p align="center"> {{showDate}} </p><br>
+
+      <br>
+
+      <form [formGroup]="mac2FrmGrp" novalidate>
+        <mat-grid-list cols="12" rowHeight="80px">
+          <mat-grid-tile [responsiveRows]="{xs: 8, sm: 4, md: 4, lg: 4, xl: 4}">
+            <mat-form-field appearance="fill">
+              <mat-label>ARCHIVO DE CARGA - CONTROL DE GASTO</mat-label>
+              <input matInput formControlName="nameFileFrmCtrl">
+              <mat-hint align="end">(Solo formato Excel: *.xls, *.xlsx)</mat-hint>
+              <!--<mat-hint align="end">(Solo formato Excel: *.xls, *.xlsx, *.csv)</mat-hint>-->
+            </mat-form-field>
+          </mat-grid-tile>
+
+          <mat-grid-tile [responsiveRows]="{xs: 1, sm: 1, md: 1, lg: 1, xl: 1}">
+
+            <button class="input-file" type="button" mat-icon-button (click)="openInput($event)" matTooltip="Cargar Archivo">
+              <mat-icon>attach_file</mat-icon>
+            </button>
+
+            <input id="fileInput" #archivoCargado class="none input-archivo-sust" type="file" accept="application/vnd.ms-excel,
+                    application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" (change)="cargarArchivo()">
+            <!--application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, .csv" (change)="cargarArchivo()">-->
+
+
+          </mat-grid-tile>
+
+          <mat-grid-tile [responsiveRows]="{xs: 4, sm: 4, md: 4, lg: 4, xl: 4}">
+            <button mat-raised-button color="primary" type="button" class="btn-left"
+                    (click)="enviarArchivoConsumo()" [disabled]="bloqInscripcion">
+              <mat-icon inline=true>file_upload</mat-icon>
+              CARGAR ARCHIVO
+            </button>
+          </mat-grid-tile>
+
+        </mat-grid-list>
+    </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+      <mat-list>
+        <form class="form form-solicitud" [formGroup]="controlGastoFrmGrp" novalidate>
+        <h3 mat-subheader>FECHA CARGA:</h3>
+
+          <mat-grid-list cols="12" rowHeight="35px">
+
+            <mat-grid-tile [responsiveRows]="{xs: 11, sm: 11, md: 5, lg: 3, xl: 3}">
+              <mat-form-field appearance="fill">
+                <mat-label>INICIO</mat-label>
+                <input matInput [matDatepicker]="dpDesde" formControlName="fechaRegDesdeFrmCtrl"
+                       (dateChange)="validarFechaInicio()" [max]="maxDateFin" [appOnlyDate]="{type: 'date'}">
+                <mat-datepicker-toggle matSuffix [for]="dpDesde"></mat-datepicker-toggle>
+                <mat-datepicker #dpDesde></mat-datepicker>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile [responsiveRows]="{xs: 11, sm: 11, md: 5, lg: 3, xl: 3}">
+              <mat-form-field appearance="fill">
+                <mat-label>FIN</mat-label>
+                <input matInput [matDatepicker]="dpHasta" formControlName="fechaRegHastaFrmCtrl"
+                       (dateChange)="validarFechaFin()" [max]="maxDateFin" [appOnlyDate]="{type: 'date'}">
+                <!-- <input matInput [matDatepicker]="dpHasta" formControlName="fechaRegHastaFrmCtrl"
+                       (dateChange)="validarFechaFin()" [appOnlyDate]="{type: 'date'}"> -->
+                <mat-datepicker-toggle matSuffix [for]="dpHasta"></mat-datepicker-toggle>
+                <mat-datepicker #dpHasta></mat-datepicker>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile [responsiveRows]="{xs: 1, sm: 1, md: 1, lg: 1, xl: 1}">
+              <button mat-icon-button type="button" class="btn-action-search" color="primary"
+                      (click)="listarTabla()" [disabled]="disableBuscar" matTooltip="Buscar">
+                <mat-icon>search</mat-icon>
+              </button>
+            </mat-grid-tile>
+
+          </mat-grid-list>
+          </form>
+        <br>
+        <mat-divider></mat-divider>
+        <h3 mat-subheader>HISTORIAL DE CARGA</h3>
+
+        <mat-card class="table-resultados">
+          <mat-card-content class="card-container">
+          <div class="table-container clear-both">
+            <table mat-table [dataSource]="dataSource" matSort>
+
+              <ng-container *ngFor="let column of columnsGrilla" [matColumnDef]="column.columnDef">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ column.header }} </th>
+                <td mat-cell *matCellDef="let row"> {{ column.cell(row) }} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="verLog" stickyEnd>
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                  <button *ngIf="element.desEstadoCarga!=='CON ERROR' && element.desEstadoCarga!=='EN PROCESO' && element.codArchivoLog!=0" class="tableIconButton" mat-icon-button matTooltip="Ver Log"
+                          (click)="verLog(element.codArchivoLog)">
+                    <mat-icon>find_in_page</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="descargar" stickyEnd>
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                  <button *ngIf="element.desEstadoCarga!=='CON ERROR' && element.desEstadoCarga!=='EN PROCESO'" class="tableIconButton" mat-icon-button matTooltip="Descargar"
+                          (click)="descargar(element.codArchivoDescarga)">
+                    <mat-icon>cloud_download</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <div class="empty" *ngIf="!isLoading && dataSource === null">
+              No existe datos para mostrar en la tabla
+            </div>
+
+            <mat-card *ngIf="isLoading" class="spinerTable">
+              <mat-progress-spinner color="primary" mode="indeterminate">
+              </mat-progress-spinner>
+            </mat-card>
+
+          <!--  <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[10, 25, 100, 200]" showFirstLastButtons
+                           [length]="totalResultadoBandeja" [pageSize]="pageSize" (page)="cambiarPagina($event)" #paginator>
+            </mat-paginator>-->
+
+            <mat-paginator class="mat-paginator-sticky" [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons>
+            </mat-paginator>
+
+          </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-list>
+
+    <ng4-loading-spinner *ngIf="loadFile" [timeout]="50000000"></ng4-loading-spinner>
+  </mat-card>
+</div>

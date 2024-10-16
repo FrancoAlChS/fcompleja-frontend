@@ -1,0 +1,43 @@
+@import "../../main";
+
+.macModal {
+  width: 100%;
+}
+
+.table-resultados {
+  box-shadow: none !important;
+}
+
+.table-container {
+  max-height: 218px;
+}
+
+mat-form-field {
+  padding-left: 0 !important;
+}
+
+// ::ng-deep .mat-paginator-page-size {
+//   display: flex !important;
+//   align-items: center !important;
+//   margin-right: 8px;
+//   .mat-form-field-infix {
+//     border-top: 1.1em solid transparent;
+//   }
+// }
+
+@include mat-table-columns(
+  (
+    select: (
+      width: 2rem
+    ),
+    codigo: (
+      width: 2rem
+    ),
+    codigoLargo: (
+      width: 4rem
+    ),
+    descripcion: (
+      width: 15rem
+    )
+  )
+);

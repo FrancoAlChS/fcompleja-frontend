@@ -1,0 +1,68 @@
+@import "../../../../main";
+
+.cardTratamiento {
+  padding: 0.8em 0 0.4em 0 !important;
+  margin: 0;
+  mat-card-header {
+    display: flex;
+    justify-content: flex-start;
+    border-bottom: 2px solid $color-primario;
+    mat-card-title {
+      font-size: 1em;
+      font-weight: bold;
+      color: $color-titulo;
+      margin-bottom: 0 !important;
+      padding-bottom: 0.3em;
+    }
+  }
+}
+
+.cardPreferencia {
+  padding: 0.4em 0 0.8em 0 !important;
+  margin: 0 !important;
+  mat-card-header {
+    display: flex;
+    justify-content: flex-start;
+    border-bottom: 2px solid $color-primario;
+    mat-card-title {
+      font-size: 1em;
+      font-weight: bold;
+      color: $color-titulo;
+      margin-bottom: 0 !important;
+      padding-bottom: 0.3em;
+    }
+  }
+}
+
+mat-card {
+  :not([class*="mat-elevation-z"]) {
+    box-shadow: none;
+  }
+}
+
+.noCriterios {
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 2.5em 2.5em 2em 2.5em;
+}
+
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+
+.formPersonal {
+  &.mat-form-field-appearance-fill {
+    .mat-form-field-wrapper {
+      .mat-form-field-flex {
+        background-color: $table-bg-solben !important;
+      }
+    }
+  }
+}

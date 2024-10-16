@@ -1,0 +1,33 @@
+@import "../../../../../main";
+
+.page-preliminar {
+  .table-resultados {
+    margin-bottom: 0px;
+    .table-container {
+      max-height: 200px;
+    }
+  }
+}
+
+@include mat-table-columns(
+  (
+    codIndicadorLargo: (
+      width: 4rem
+    ),
+    descripcion: (
+      width: 20rem
+    ),
+    fechaIniVigencia: (
+      width: 6rem
+    ),
+    fechaFinVigencia: (
+      width: 6rem
+    ),
+    estado: (
+      width: 5rem
+    ),
+    editar: (
+      width: 3rem
+    )
+  )
+);

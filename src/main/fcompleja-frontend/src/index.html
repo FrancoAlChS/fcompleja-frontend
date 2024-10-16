@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <!--<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">-->
+    <!--<meta http-equiv="Pragma" content="no-cache">-->
+    <!--<meta http-equiv="Expires" content="0">-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Sistema de Farmacia Compleja</title>
+    <base href="/fcompleja/" />
+    <!-- <base href="/" /> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  </head>
+
+  <body>
+    <app-root></app-root>
+  </body>
+  <script>
+    function alfanumerico(e) {
+      let regex = new RegExp("^[a-zA-Z0-9\s]+$");
+      let str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+      if (regex.test(str)) {
+        return true;
+      }
+      e.preventDefault();
+      return false;
+    }
+
+    function validateNumberAndForwardSlash(event) {
+      var key = window.event ? event.keyCode : event.which;
+
+      if (
+        (event.keyCode >= 48 && event.keyCode <= 57) ||
+        event.keyCode == 191 ||
+        event.keyCode == 47
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function valMedicamentoSolicitado(event) {
+      var key = window.event ? event.keyCode : event.which;
+
+      if (
+        (event.keyCode >= 48 && event.keyCode <= 57) ||
+        event.keyCode == 191 ||
+        event.keyCode == 47
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+
+      /*function validarMayorEdad(){
+             var ed= calcular_edad($("#MedicamentoFormControl").val());
+             if(ed == null || ed == '' ){
+                  $("#MedicamentoFormControl").val("");
+                  alert("El cliente debe ser mayor de edad");
+             }
+          }*/
+    }
+  </script>
+</html>

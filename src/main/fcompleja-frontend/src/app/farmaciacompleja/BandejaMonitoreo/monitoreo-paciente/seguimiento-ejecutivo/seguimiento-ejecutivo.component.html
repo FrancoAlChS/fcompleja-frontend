@@ -1,0 +1,548 @@
+<div class="mat-dialog-header">
+  <h1 class="mat-dialog-title" mat-dialog-title>{{ data.title }}</h1>
+</div>
+<!-- <mat-card class="modalCard" *ngIf="data.tipo == 1 && data.user != 5"></mat-card> -->
+<mat-card class="modalCard">
+  <mat-card-content>
+    <form novalidate [formGroup]="segEjecutivoFrmGrp">
+      <mat-grid-list cols="12" rowHeight="46px">
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12 }"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>COD. TAREA DE MONITOREO</mat-label>
+            <input matInput readonly formControlName="codMonitoreoFrmCtrl" />
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="modalCard" *ngIf="data.user != 5">
+  <mat-card-content>
+    <form
+      class="form form-solicitud validateForm"
+      [formGroup]="marcadorFrmGrp"
+      novalidate
+    >
+      <mat-grid-list cols="12" rowHeight="46px">
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12 }"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>MEDICAMENTO MAC</mat-label>
+            <input matInput formControlName="descMACFrmCtrl" readonly />
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 6, md: 6, lg: 6, xl: 6 }"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>FECHA INICIO LINEA TRATAMIENTO</mat-label>
+            <input
+              readonly
+              matInput
+              formControlName="fecInicioFrmCtrl"
+              [appOnlyDate]="{ type: 'date' }"
+            />
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 6, md: 6, lg: 6, xl: 6 }"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>N° EVOLUCIÓN</mat-label>
+            <input matInput formControlName="nroEvolucionFrmCtrl" readonly />
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 6, md: 6, lg: 6, xl: 6 }"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>FECHA MONITOREO</mat-label>
+            <input
+              matInput
+              formControlName="fMonitoreoFrmCtrl"
+              readonly
+              [appOnlyDate]="{ type: 'date' }"
+            />
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>RESPUESTA CLINICA</mat-label>
+            <mat-select formControlName="rptaClinicaFrmCtrl" disabled>
+              <mat-option
+                *ngFor="let rptaClinica of cmbRptaClinica"
+                [value]="rptaClinica.codigoParametro"
+              >
+                {{ rptaClinica.nombreParametro }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>ATENCION DE ALERTAS</mat-label>
+            <mat-select formControlName="atenAlertaFrmCtrl" disabled>
+              <mat-option
+                *ngFor="let alerta of cmbAtenAlerta"
+                [value]="alerta.codigoParametro"
+              >
+                {{ alerta.nombreParametro }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>TOLERANCIA</mat-label>
+            <mat-select formControlName="toleranciaFrmCtrl" disabled>
+              <mat-option
+                *ngFor="let tolerancia of cmbTolerancia"
+                [value]="tolerancia.codigoParametro"
+              >
+                {{ tolerancia.nombreParametro }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }"
+        >
+          <div class="containerRadio">
+            <div class="radioGroup">
+              <mat-label>EXISTE TOXICIDAD</mat-label>
+              <mat-radio-group
+                formControlName="existeToxFrmCtrl"
+                disabled
+                (change)="enableFrmToxicidad()"
+              >
+                <mat-radio-button
+                  *ngFor="let row of rbtExisteToxi"
+                  [value]="row.codigo"
+                  >{{ row.titulo }}
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<form
+  class="form form-solicitud validateForm"
+  *ngIf="data.user != 5"
+  novalidate
+>
+  <div class="table-container clear-both">
+    <table
+      mat-table
+      [dataSource]="dataSourceToxicidad"
+      class="mat-elevation-z8"
+      matSort
+    >
+      <!-- Position Column
+      <ng-container matColumnDef="tipo_toxicidad">
+        <th mat-header-cell *matHeaderCellDef>TIPO TOXICIDAD</th>
+        <td mat-cell appearance="fill" *matCellDef="let element; let i = index">
+          <mat-select [formControl]="element.tipo_toxicidad" (click)="imprimir(i, element)">
+            <mat-option disabled>
+              <div class="containerSpinner">
+                <span>Cargando...</span>
+                <mat-spinner class="spinner" diameter="20"></mat-spinner>
+              </div>
+            </mat-option>
+            <mat-option *ngFor="let toxicidad of cmbToxicidad" [value]="toxicidad.codigoParametro"
+              [disabled]="toxicidad.codigoParametro === null">
+              {{ toxicidad.nombreParametro }}
+            </mat-option>
+          </mat-select>
+        </td>
+      </ng-container>-->
+      <!-- Name Column
+      <ng-container matColumnDef="grado_toxicidad">
+        <th mat-header-cell *matHeaderCellDef>GRADO TOXICIDAD</th>
+        <td mat-cell appearance="fill" *matCellDef="let element; let i = index">
+          <input matInput (click)="imprimir(i, element)" [formControl]="element.grado_toxicidad"
+            placeholder="Grado de toxicidad" type="text" />
+        </td>
+      </ng-container> -->
+      <ng-container matColumnDef="no">
+        <th mat-header-cell *matHeaderCellDef>N°</th>
+        <td mat-cell *matCellDef="let row; let i = index">
+          {{ i + 1 }}
+        </td>
+      </ng-container>
+      <ng-container
+        *ngFor="let column of columnsToxicidad"
+        [matColumnDef]="column.columnDef"
+      >
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ column.header }}
+        </th>
+        <td mat-cell *matCellDef="let row">{{ column.cell(row) }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedTablaToxicidad"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedTablaToxicidad"></tr>
+    </table>
+    <div class="empty" *ngIf="!isLoading && dataSourceToxicidad === null">
+      No existe datos para mostrar en la tabla
+    </div>
+  </div>
+</form>
+
+<mat-card *ngIf="user.getCodRol != 5" class="modalCard">
+  <mat-card-content>
+    <form novalidate [formGroup]="pendienteInformacionFrmGrp">
+      <mat-checkbox
+        formControlName="pendienteInfoFrmCtrl"
+        style="margin-left: 13px"
+        value="1"
+        readonly
+      >
+        Pendiente de información
+      </mat-checkbox>
+      <br /><br />
+      <mat-grid-list cols="12" rowHeight="45px">
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>RESULTADO DE LA EVOLUCIÓN</mat-label>
+            <mat-select formControlName="resEvolFrmCtrl" disabled>
+              <mat-option
+                *ngFor="let row1 of cmbResEvolucion"
+                [value]="row1.codigoParametro"
+              >
+                {{ row1.nombreParametro }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 6, md: 6, lg: 6, xl: 6 }"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>MOTIVO DE INACTIVACIÓN</mat-label>
+            <mat-select formControlName="motivoInactFrmCtrl" disabled>
+              <mat-option
+                *ngFor="let row2 of cmbMotInactivacion"
+                [value]="row2.codigoParametro"
+              >
+                {{ row2.nombreParametro }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>FECHA DE INACTIVACIÓN</mat-label>
+            <input
+              matInput
+              [matDatepicker]="dpMonitoreo2"
+              formControlName="fecInactFormControl"
+              [appOnlyDate]="{ type: 'date' }"
+              readonly
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dpMonitoreo2"
+              disabled
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dpMonitoreo2 disable></mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 6, lg: 6, xl: 6 }"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>FECHA DE PRÓXIMO MONITOREO</mat-label>
+            <input
+              matInput
+              [matDatepicker]="dpMonitoreo"
+              formControlName="fecProxMonFormControl"
+              [appOnlyDate]="{ type: 'date' }"
+              readonly
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="dpMonitoreo"
+              disabled
+            ></mat-datepicker-toggle>
+            <mat-datepicker #dpMonitoreo></mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12 }"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>COMENTARIOS</mat-label>
+            <textarea
+              matInput
+              formControlName="comentarioFrmCtrl"
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="1"
+              cdkAutosizeMaxRows="4"
+              readonly
+            ></textarea>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </form>
+  </mat-card-content>
+</mat-card>
+<br />
+
+<mat-card class="modalCard" *ngIf="data.tipo == 1 || data.user == 5">
+  <mat-card-header class="box-section-header">
+    <mat-card-title class="box-section-title">
+      REGISTRO DE SEGUIMIENTO
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div
+      class="page-seguimiento-ejecutivo mat-dialog-content modalTable"
+      mat-dialog-content
+    >
+      <div
+        class="table-container clear-both"
+        [ngClass]="{ 'table-container-size': user.getCodRol == 6 }"
+      >
+        <table mat-table [dataSource]="dataSource" matSort id="tablex">
+          <ng-container matColumnDef="no">
+            <th mat-header-cell *matHeaderCellDef>N°</th>
+            <td mat-cell *matCellDef="let row; let i = index">
+              {{ i + 1 }}
+            </td>
+          </ng-container>
+
+          <ng-container
+            *ngFor="let column of columnsGrilla"
+            [matColumnDef]="column.columnDef"
+          >
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ column.header }}
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <dfn style="font-style: initial" title="{{ column.cell(row) }}">{{
+                column.cell(row)
+              }}</dfn>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="vistaPreliminarDelInforme" stickyEnd>
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let row">
+              <span>
+                <button
+                  class="tableIconButton"
+                  mat-icon-button
+                  matTooltip="Descargar archivo"
+                  (click)="descargarDocumento(row)"
+                  [disabled]="row.codigoArchivo == 0"
+                >
+                  <mat-icon inline="true">picture_as_pdf</mat-icon>
+                </button>
+              </span>
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="displayedColumns; sticky: true"
+          ></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <div class="empty" *ngIf="!isLoading && dataSource === null">
+          No existe datos para mostrar en la tabla
+        </div>
+
+        <mat-card *ngIf="isLoading" class="spinerTable">
+          <mat-progress-spinner color="primary" mode="indeterminate">
+          </mat-progress-spinner>
+        </mat-card>
+
+        <mat-paginator
+          class="mat-paginator-sticky"
+          [pageSizeOptions]="[5, 10, 25, 100]"
+          showFirstLastButtons
+        >
+        </mat-paginator>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="modalCard" *ngIf="data.tipo == 1 && data.user != 5">
+  <mat-card-header class="box-section-header">
+    <mat-card-title class="box-section-title">
+      REGISTRO DEL SEGUIMIENTO
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form novalidate [formGroup]="segEjecutivoFrmGrp">
+      <mat-grid-list cols="12" rowHeight="46px">
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12 }"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>COD. TAREA DE MONITOREO</mat-label>
+            <input matInput formControlName="codMonitoreoFrmCtrl" />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 6, md: 6, lg: 6, xl: 6 }"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>EJECUTIVO MONITOREO</mat-label>
+            <input matInput formControlName="ejecutMonitoreoFrmCtrl" />
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 6, md: 6, lg: 6, xl: 6 }"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>FECHA REGISTRO</mat-label>
+            <input
+              matInput
+              [matDatepicker]="dpSeguimiento"
+              formControlName="fecRegistroFrmCtrl"
+              [appOnlyDate]="{ type: 'date' }"
+            />
+            <mat-datepicker-toggle matSuffix [for]="dpSeguimiento">
+            </mat-datepicker-toggle>
+            <mat-datepicker #dpSeguimiento></mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12 }"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>ESTADO SEGUIMIENTO</mat-label>
+            <mat-select formControlName="pEstSeguimientoFrmCtrl">
+              <mat-option *ngIf="cmbEstadoSeguimiento.length === 0" disabled>
+                <div class="containerSpinner">
+                  <span>Cargando...</span>
+                  <mat-spinner class="spinner" diameter="20"></mat-spinner>
+                </div>
+              </mat-option>
+              <mat-option
+                *ngFor="let estado of cmbEstadoSeguimiento"
+                [value]="estado.codigoParametro"
+                [disabled]="estado.codigoParametro === null"
+              >
+                {{ estado.nombreParametro }}
+              </mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="
+                pEstSeguimientoFrmCtrl.touched &&
+                pEstSeguimientoFrmCtrl.hasError('required')
+              "
+            >
+              Estado de seguimiento es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 12, md: 12, lg: 12, xl: 12 }"
+        >
+          <mat-form-field appearance="fill">
+            <mat-label>DETALLE DEL EVENTO</mat-label>
+            <textarea
+              matInput
+              formControlName="detalleEventoFrmCtrl"
+              placeholder="DETALLES"
+            ></textarea>
+            <mat-error
+              *ngIf="
+                detalleEventoFrmCtrl.touched &&
+                detalleEventoFrmCtrl.hasError('required')
+              "
+            >
+              Detalle de evento <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile
+          [responsiveRows]="{ xs: 12, sm: 6, md: 2, lg: 1, xl: 1 }"
+        >
+          <mat-label
+            style="
+              position: absolute;
+              left: 7px;
+              top: 25px;
+              white-space: nowrap;
+            "
+            >Cargar archivo
+          </mat-label>
+          <button
+            mat-icon-button
+            matTooltip="Cargar Archivo"
+            [disabled]="activarOpenFile"
+            (click)="fileUpload.click()"
+          >
+            <mat-icon style="position: absolute; left: 100px"
+              >attach_file</mat-icon
+            >
+            <input
+              #fileUpload
+              type="file"
+              type="file"
+              (click)="fileUpload.value = null"
+              (change)="cargarArchivo($event)"
+              accept="application/pdf"
+              style="display: none"
+            />
+          </button>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<div class="mat-dialog-actions">
+  <button
+    mat-raised-button
+    color="primary"
+    class="btn-xl"
+    matTooltip="Reg. Seguimiento del ejecutivo"
+    (click)="regSeguimientoEjecutivo()"
+    *ngIf="data.tipo == 1 && user.getCodRol == 6"
+  >
+    GRABAR
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    class="btn-xl"
+    matTooltip="Cancelar"
+    (click)="onClose()"
+  >
+    SALIR
+  </button>
+</div>
